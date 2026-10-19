@@ -38,3 +38,15 @@ test('package.json leaves the macOS identity to the plan, so a signed build find
   const pkg = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8')) as { build: { mac: object } };
   assert.equal('identity' in pkg.build.mac, false);
 });
+
+// Published to npm, the package is the command-line front end: its command runs the built CLI,
+// which starts as a script, and carries everything the CLI loads (the launchers included).
+test('the npm package installs the vibe-usage command with what the CLI needs', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const pkg: unknown = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'));
+  assert.ok(typeof pkg === 'object' && pkg !== null && 'bin' in pkg && 'files' in pkg && !('private' in pkg));
+  assert.deepEqual(pkg.bin, { 'vibe-usage': 'build/cli.js' });
+  assert.deepEqual(pkg.files, ['build/cli.js', 'build/core/', 'build/providers/', 'build/shared/', 'build/launchers/']);
+  const cli = await readFile(new URL('../src/cli.ts', import.meta.url), 'utf8');
+  assert.ok(cli.startsWith('#!/usr/bin/env node\n'), 'the command runs with node on macOS and Linux');
+});

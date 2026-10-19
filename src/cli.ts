@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // Terminal front end: quota status, a live watch, running a provider CLI with verified quota,
 // and handing a task over. Uses the desktop app's settings and language.
 import { spawn } from 'node:child_process';
@@ -54,8 +55,7 @@ export function renderSnapshot(snapshot: Snapshot, context: FormatContext): stri
     }
     lines.push('');
   }
-  lines.push(t('cliWatchFooter'));
-  return lines.join('\n');
+  return lines.join('\n').trimEnd();
 }
 
 // Everything a command needs from the outside, so that commands run in tests without a
@@ -73,7 +73,8 @@ export interface CliContext {
 
 function watch({ service, print }: CliContext, t: Translate, locale: string): Promise<number> {
   const draw = (snapshot: Snapshot): void => {
-    print(`${process.stdout.isTTY ? CLEAR_SCREEN : ''}${renderSnapshot(snapshot, { t, locale })}`);
+    // Only the live view says how to leave it.
+    print(`${process.stdout.isTTY ? CLEAR_SCREEN : ''}${renderSnapshot(snapshot, { t, locale })}\n\n${t('cliWatchFooter')}`);
   };
   draw(service.snapshot());
   return service.refresh().then(snapshot => {

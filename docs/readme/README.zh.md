@@ -135,16 +135,26 @@ xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
 
 ## 命令行
 
-同样的数据也可以在终端中查看。CLI 与桌面应用共享设置和语言。
+同样的数据也可以在终端中查看，支持 Windows 和 macOS，无论是否安装桌面应用。需要 Node.js 24 或更高版本，读取的是与应用相同的已登录会话；两者都安装时共享设置和语言。
 
 ```sh
-npm run cli -- status [--json]
-npm run watch
-npm run cli -- run <claude|codex|cursor> [--account ID] [--cwd PATH] [--model MODEL] [--dry-run]
-npm run cli -- handover [--from TOOL] [--to TOOL] [--session ID] [--cwd PATH]
+npm install -g vibe-usage
+vibe-usage status
 ```
 
-`run` 只使用额度已验证的账户；否则请用 `--account` 指定一个。`--dry-run` 会打印将使用的账户和命令，但不启动任何程序。
+<img src="../media/cli.png" width="640" alt="终端中的 vibe-usage status：两个 Claude、两个 Codex、一个 Cursor 和两个 Antigravity 账户的所有窗口" />
+
+```sh
+vibe-usage status [--json]   # 显示一次所有账户的额度；脚本可用 --json
+vibe-usage watch             # 同上，持续刷新直到 Ctrl+C
+vibe-usage run <claude|codex|cursor> [--account ID] [--cwd PATH] [--model MODEL] [--dry-run]
+vibe-usage handover [--from TOOL] [--to TOOL] [--session ID] [--cwd PATH]
+vibe-usage help
+```
+
+不安装也可以试用：`npx vibe-usage status`。
+
+`run` 会用额度已验证的账户在当前终端启动工具；否则请用 `--account` 指定一个（ID 见 `status --json`）。`--dry-run` 只打印账户和命令，不启动任何程序。`handover` 为文件夹中最新的会话（或 `--session`）写入 `VIBE_HANDOVER.md`，并用它打开目标工具。
 
 ## 开发
 

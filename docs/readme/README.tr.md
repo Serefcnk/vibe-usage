@@ -161,17 +161,26 @@ xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
 
 ## Komut satırı
 
-Aynı veriler terminalde de var. CLI, masaüstü uygulamasıyla aynı ayarları ve dili kullanır.
+Aynı veriler terminalde de var; Windows ve macOS’ta, masaüstü uygulamasıyla ya da onsuz çalışır. Node.js 24 veya üstü gerekir ve uygulamanın okuduğu, oturumu açık aynı hesapları okur; ikisi birlikte kuruluysa ayarları ve dili paylaşırlar.
 
 ```sh
-npm run cli -- status [--json]
-npm run watch
-npm run cli -- run <claude|codex|cursor> [--account ID] [--cwd PATH] [--model MODEL] [--dry-run]
-npm run cli -- handover [--from TOOL] [--to TOOL] [--session ID] [--cwd PATH]
+npm install -g vibe-usage
+vibe-usage status
 ```
 
-`run` yalnızca kotası doğrulanmış bir hesabı kullanır; yoksa `--account` ile birini belirt. `--dry-run` hiçbir şey
-başlatmadan hesabı ve komutu yazdırır.
+<img src="../media/cli.png" width="640" alt="Terminalde vibe-usage status: iki Claude, iki Codex, bir Cursor ve iki Antigravity hesabının tüm pencereleri" />
+
+```sh
+vibe-usage status [--json]   # tüm hesapların kotası bir kez; betikler için --json
+vibe-usage watch             # aynısı, Ctrl+C’ye kadar yenilenir
+vibe-usage run <claude|codex|cursor> [--account ID] [--cwd PATH] [--model MODEL] [--dry-run]
+vibe-usage handover [--from TOOL] [--to TOOL] [--session ID] [--cwd PATH]
+vibe-usage help
+```
+
+Kurmadan denemek için `npx vibe-usage status` çalıştır.
+
+`run`, aracı bu terminalde kotası doğrulanmış bir hesapla başlatır; yoksa `--account` ile birini belirt (kimlikler `status --json` çıktısında). `--dry-run` hiçbir şey başlatmadan hesabı ve komutu yazdırır. `handover`, klasörün en son oturumu (ya da `--session`) için `VIBE_HANDOVER.md` yazar ve hedef aracı onunla açar.
 
 ## Geliştirme
 

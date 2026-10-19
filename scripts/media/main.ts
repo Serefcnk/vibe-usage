@@ -1,11 +1,13 @@
 // Regenerates the README media from the built UI and invented demo accounts: screenshots, and a
 // walkthrough recorded frame by frame and encoded with ffmpeg (from PATH, or the FFMPEG variable).
-// Usage: npm run media   Output: docs/media/
+// Usage: npm run media [-- --screenshots]   Output: docs/media/ (with --screenshots, no walkthrough)
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { app, type BrowserWindow } from 'electron';
+import { app, BrowserWindow } from 'electron';
+import { renderSnapshot } from '../../src/cli.ts';
+import { translator } from '../../src/shared/i18n/index.ts';
 import { capture, isNumber, openFixtureWindow, quiet, ROOT, run, runFor, serveFixture, settle } from '../fixture-app.ts';
 import { MODELS, PROJECT_DIR, sessions, SMART_LAUNCH, snapshot } from './demo.ts';
 
@@ -85,6 +87,32 @@ async function screenshots(win: BrowserWindow): Promise<void> {
   // Next time Settings opens at its top, as the walkthrough expects.
   await run(win, "(() => { const dialog = document.querySelector('#settings-dialog'); dialog.scrollTop = 0; dialog.close(); })()");
   await quiet(win);
+}
+
+// The CLI's own `status` output for the demo accounts, in a terminal window.
+const CLI_WIDTH = 760;
+async function cliScreenshot(): Promise<void> {
+  const output = renderSnapshot(snapshot('en'), { t: translator('en'), locale: 'en' });
+  const escape = (text: string): string => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+  // Tool names (the unindented lines) stand out as a terminal shows headings in bold.
+  const body = output
+    .split('\n')
+    .map(line => (line && !line.startsWith(' ') && line === line.toUpperCase() ? `<b>${escape(line)}</b>` : escape(line)))
+    .join('\n');
+  const html = `<!doctype html><meta charset="utf-8"><body style="margin:0;background:#0d1117">
+<div style="margin:18px;border:1px solid #30363d;border-radius:10px;overflow:hidden;font:13px/1.55 Consolas,Menlo,monospace;color:#c9d1d9">
+<div style="background:#161b22;padding:9px 14px;color:#8b949e;border-bottom:1px solid #30363d">Terminal</div>
+<pre style="margin:0;padding:14px 18px;white-space:pre-wrap"><span style="color:#7ee787">$</span> vibe-usage status\n${body}</pre></div></body>`;
+  const win = new BrowserWindow({ show: false, width: CLI_WIDTH, height: 900, useContentSize: true, backgroundColor: '#0d1117' });
+  await win.loadURL(`data:text/html;charset=utf-8,${encodeURIComponent(html)}`);
+  // As tall as the terminal box and its margin (the page itself fills the window).
+  win.setContentSize(
+    CLI_WIDTH,
+    await runFor(win, 'Math.ceil(document.body.firstElementChild.getBoundingClientRect().bottom) + 18', isNumber)
+  );
+  await settle(SETTLE_MS);
+  fs.writeFileSync(path.join(OUT_DIR, 'cli.png'), (await capture(win)).toPNG());
+  win.destroy();
 }
 
 // Captures never include the system pointer, so the walkthrough draws one.
@@ -253,13 +281,21 @@ function hasFfmpeg(): boolean {
   }
 }
 
+// Only the screenshots: no walkthrough, so neither ffmpeg nor a re-encoded video.
+const SCREENSHOTS_ONLY = process.argv.includes('--screenshots');
+
 async function main(): Promise<void> {
-  if (!hasFfmpeg()) throw new Error(`ffmpeg was not found (${FFMPEG}); install it or set FFMPEG to its path`);
+  if (!SCREENSHOTS_ONLY && !hasFfmpeg()) throw new Error(`ffmpeg was not found (${FFMPEG}); install it or set FFMPEG to its path`);
   fs.mkdirSync(OUT_DIR, { recursive: true });
   const win = await openFixtureWindow(WIDTH, HEIGHT);
   win.setContentSize(WIDTH, HEIGHT);
   await settle(SETTLE_MS);
   await screenshots(win);
+  await cliScreenshot();
+  if (SCREENSHOTS_ONLY) {
+    console.log(`Screenshots written to ${OUT_DIR}`);
+    return;
+  }
   await run(win, POINTER);
   const framesDir = fs.mkdtempSync(path.join(os.tmpdir(), 'vibe-media-'));
   try {

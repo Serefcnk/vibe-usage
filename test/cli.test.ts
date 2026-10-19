@@ -85,6 +85,7 @@ test('help, status and JSON status succeed; unknown commands and flags fail in w
   const status = await cli(t, []);
   assert.deepEqual([status.code, status.err], [0, '']);
   assert.match(status.out, /^CODEX\n.*80% remaining/s);
+  assert.doesNotMatch(status.out, /Ctrl\+C/, 'a one-off status has no live view to close');
   const json = await cli(t, ['status', '--json']);
   assert.equal((JSON.parse(json.out) as { providers: unknown[] }).providers.length, 1);
   assert.deepEqual(await cli(t, ['status', '--bogus']), { code: 1, out: '', err: 'Invalid argument.\n', attached: [], spawned: [] });

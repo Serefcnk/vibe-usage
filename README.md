@@ -209,17 +209,30 @@ macOS lets only a signed app replace itself, so until releases are signed a new 
 
 ## Command line
 
-The same data is available in the terminal. The CLI shares the desktop app's settings and language.
+The same data is available in the terminal on Windows and macOS, with or without the desktop app. It needs Node.js 24
+or later and reads the same signed-in sessions as the app; when both are installed they share settings and language.
 
 ```sh
-npm run cli -- status [--json]
-npm run watch
-npm run cli -- run <claude|codex|cursor> [--account ID] [--cwd PATH] [--model MODEL] [--dry-run]
-npm run cli -- handover [--from TOOL] [--to TOOL] [--session ID] [--cwd PATH]
+npm install -g vibe-usage
+vibe-usage status
 ```
 
-`run` only uses an account whose quota is verified; otherwise name one with `--account`. `--dry-run` prints the
-account and the command without starting anything.
+<img src="docs/media/cli.png" width="640" alt="vibe-usage status in a terminal: every window of two Claude, two Codex, one Cursor and two Antigravity accounts" />
+
+```sh
+vibe-usage status [--json]   # every account's quota once; --json for scripts
+vibe-usage watch             # the same, refreshed until Ctrl+C
+vibe-usage run <claude|codex|cursor> [--account ID] [--cwd PATH] [--model MODEL] [--dry-run]
+vibe-usage handover [--from TOOL] [--to TOOL] [--session ID] [--cwd PATH]
+vibe-usage help
+```
+
+To try it without installing, run `npx vibe-usage status`.
+
+`run` starts the tool in this terminal with an account whose quota is verified; otherwise name one with `--account`
+(the IDs are in `status --json`). `--dry-run` prints the account and the command without starting anything.
+`handover` writes `VIBE_HANDOVER.md` for the folder's latest session (or `--session`) and opens the target tool with
+it.
 
 ## Development
 

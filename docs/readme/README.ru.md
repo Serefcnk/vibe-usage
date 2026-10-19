@@ -164,17 +164,26 @@ xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
 
 ## Командная строка
 
-Те же данные доступны в терминале. CLI использует те же настройки и язык, что и приложение.
+Те же данные доступны в терминале, в Windows и macOS, с настольным приложением или без него. Нужен Node.js 24 или новее; CLI читает те же сессии с выполненным входом, что и приложение, а если установлены оба, у них общие настройки и язык.
 
 ```sh
-npm run cli -- status [--json]
-npm run watch
-npm run cli -- run <claude|codex|cursor> [--account ID] [--cwd PATH] [--model MODEL] [--dry-run]
-npm run cli -- handover [--from TOOL] [--to TOOL] [--session ID] [--cwd PATH]
+npm install -g vibe-usage
+vibe-usage status
 ```
 
-`run` использует только аккаунт с подтверждённой квотой; иначе укажите аккаунт через `--account`. `--dry-run` выводит
-аккаунт и команду, ничего не запуская.
+<img src="../media/cli.png" width="640" alt="vibe-usage status в терминале: все окна двух аккаунтов Claude, двух Codex, одного Cursor и двух Antigravity" />
+
+```sh
+vibe-usage status [--json]   # квота всех аккаунтов один раз; --json для скриптов
+vibe-usage watch             # то же самое, обновляется до Ctrl+C
+vibe-usage run <claude|codex|cursor> [--account ID] [--cwd PATH] [--model MODEL] [--dry-run]
+vibe-usage handover [--from TOOL] [--to TOOL] [--session ID] [--cwd PATH]
+vibe-usage help
+```
+
+Чтобы попробовать без установки, выполните `npx vibe-usage status`.
+
+`run` запускает инструмент в этом терминале с аккаунтом, квота которого подтверждена; иначе укажите аккаунт через `--account` (ID есть в `status --json`). `--dry-run` выводит аккаунт и команду, ничего не запуская. `handover` записывает `VIBE_HANDOVER.md` для последней сессии папки (или `--session`) и открывает с ним целевой инструмент.
 
 ## Разработка
 

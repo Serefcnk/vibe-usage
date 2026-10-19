@@ -135,16 +135,26 @@ xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
 
 ## コマンドライン
 
-同じデータをターミナルでも確認できます。CLI はデスクトップアプリと設定・言語を共有します。
+同じデータはターミナルでも見られます。Windows と macOS で、デスクトップアプリの有無にかかわらず動きます。Node.js 24 以降が必要で、アプリと同じサインイン済みセッションを読みます。両方をインストールしている場合は設定と言語を共有します。
 
 ```sh
-npm run cli -- status [--json]
-npm run watch
-npm run cli -- run <claude|codex|cursor> [--account ID] [--cwd PATH] [--model MODEL] [--dry-run]
-npm run cli -- handover [--from TOOL] [--to TOOL] [--session ID] [--cwd PATH]
+npm install -g vibe-usage
+vibe-usage status
 ```
 
-`run` はクォータが確認できたアカウントだけを使います。そうでない場合は `--account` でアカウントを指定してください。`--dry-run` は何も起動せずに、使われるアカウントとコマンドを表示します。
+<img src="../media/cli.png" width="640" alt="ターミナルでの vibe-usage status: Claude 2 件、Codex 2 件、Cursor 1 件、Antigravity 2 件のアカウントのすべてのウィンドウ" />
+
+```sh
+vibe-usage status [--json]   # 全アカウントのクォータを 1 回表示。スクリプト向けに --json
+vibe-usage watch             # 同じ内容を Ctrl+C まで更新し続ける
+vibe-usage run <claude|codex|cursor> [--account ID] [--cwd PATH] [--model MODEL] [--dry-run]
+vibe-usage handover [--from TOOL] [--to TOOL] [--session ID] [--cwd PATH]
+vibe-usage help
+```
+
+インストールせずに試すには `npx vibe-usage status` を実行します。
+
+`run` はクォータが確認できたアカウントでツールをこのターミナルで起動します。そうでない場合は `--account` でアカウントを指定してください (ID は `status --json` に出ます)。`--dry-run` は何も起動せずにアカウントとコマンドを表示します。`handover` はフォルダーの最新セッション (または `--session`) の `VIBE_HANDOVER.md` を書き、それを使って移行先のツールを開きます。
 
 ## 開発
 

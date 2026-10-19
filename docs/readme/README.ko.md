@@ -135,16 +135,26 @@ xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
 
 ## 명령줄
 
-같은 데이터를 터미널에서도 볼 수 있습니다. CLI는 데스크톱 앱과 설정과 언어를 공유합니다.
+같은 데이터를 터미널에서도 볼 수 있습니다. Windows와 macOS에서 데스크톱 앱 없이도 동작합니다. Node.js 24 이상이 필요하며 앱과 같은 로그인된 세션을 읽습니다. 둘 다 설치되어 있으면 설정과 언어를 공유합니다.
 
 ```sh
-npm run cli -- status [--json]
-npm run watch
-npm run cli -- run <claude|codex|cursor> [--account ID] [--cwd PATH] [--model MODEL] [--dry-run]
-npm run cli -- handover [--from TOOL] [--to TOOL] [--session ID] [--cwd PATH]
+npm install -g vibe-usage
+vibe-usage status
 ```
 
-`run`은 할당량이 확인된 계정만 사용합니다. 그렇지 않으면 `--account`로 계정을 지정하세요. `--dry-run`은 아무것도 실행하지 않고 사용할 계정과 명령을 출력합니다.
+<img src="../media/cli.png" width="640" alt="터미널의 vibe-usage status: Claude 계정 2개, Codex 2개, Cursor 1개, Antigravity 2개의 모든 창" />
+
+```sh
+vibe-usage status [--json]   # 모든 계정의 할당량을 한 번 표시, 스크립트용 --json
+vibe-usage watch             # 같은 내용을 Ctrl+C까지 계속 새로 고침
+vibe-usage run <claude|codex|cursor> [--account ID] [--cwd PATH] [--model MODEL] [--dry-run]
+vibe-usage handover [--from TOOL] [--to TOOL] [--session ID] [--cwd PATH]
+vibe-usage help
+```
+
+설치하지 않고 써 보려면 `npx vibe-usage status`를 실행하세요.
+
+`run`은 할당량이 확인된 계정으로 이 터미널에서 도구를 시작합니다. 그렇지 않으면 `--account`로 계정을 지정하세요 (ID는 `status --json`에 있습니다). `--dry-run`은 아무것도 시작하지 않고 계정과 명령을 출력합니다. `handover`는 폴더의 최신 세션(또는 `--session`)에 대한 `VIBE_HANDOVER.md`를 쓰고 그것으로 대상 도구를 엽니다.
 
 ## 개발
 
