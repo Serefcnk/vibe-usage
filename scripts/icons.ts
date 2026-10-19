@@ -13,7 +13,8 @@ const COLORS: Readonly<Record<'stroke' | 'disc' | 'transparent', Rgba>> = {
   disc: [43, 76, 62, 255],
   transparent: [0, 0, 0, 0]
 };
-const SIZES = { 'icon.png': 256, 'tray.png': 32 };
+// macOS builds its .icns from icon.png and needs 512 px at 2x; Windows scales it down.
+const SIZES = { 'icon.png': 1024, 'tray.png': 32 };
 
 function crc32(buffer: Buffer): number {
   let crc = 0xffffffff;

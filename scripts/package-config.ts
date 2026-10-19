@@ -18,6 +18,9 @@ export interface PackagePlan {
   // Deep-merged over the `build` section of package.json.
   config: Record<string, unknown>;
   env: Record<string, string>;
+  // Removed from the environment: electron-builder takes even an empty CSC_LINK (as the release
+  // workflow passes for an unsigned build) for a certificate path.
+  unset: string[];
 }
 
 const present = (env: NodeJS.ProcessEnv, name: string): boolean => Boolean(env[name]?.trim());
@@ -35,12 +38,17 @@ export function missingSigningCredentials(platform: PackagePlatform, env: NodeJS
 export function packagePlan(platform: PackagePlatform, { signed, env }: { signed: boolean; env: NodeJS.ProcessEnv }): PackagePlan {
   // Turning discovery off keeps electron-builder from signing with any identity it finds in the
   // keychain. An unsigned macOS app is still signed ad hoc (`-`): Apple silicon requires that.
-  if (!signed) return { config: platform === 'mac' ? { mac: { identity: '-' } } : {}, env: { CSC_IDENTITY_AUTO_DISCOVERY: 'false' } };
+  if (!signed)
+    return {
+      config: platform === 'mac' ? { mac: { identity: '-' } } : {},
+      env: { CSC_IDENTITY_AUTO_DISCOVERY: 'false' },
+      unset: [...WINDOWS_SIGNING, ...MAC_SIGNING, ...MAC_NOTARIZATION.flat()]
+    };
   const missing = missingSigningCredentials(platform, env);
   if (missing.length) throw new Error(`A signed ${platform} build needs ${missing.join(', ')}; nothing was built.`);
   // Without an identity electron-builder finds the certificate from CSC_LINK; forceCodeSigning
   // makes the build fail rather than finish unsigned should it still not sign.
   return platform === 'win'
-    ? { config: { forceCodeSigning: true, win: { signExecutable: true } }, env: {} }
-    : { config: { forceCodeSigning: true, mac: { hardenedRuntime: true, notarize: true } }, env: {} };
+    ? { config: { forceCodeSigning: true, win: { signExecutable: true } }, env: {}, unset: [] }
+    : { config: { forceCodeSigning: true, mac: { hardenedRuntime: true, notarize: true } }, env: {}, unset: [] };
 }

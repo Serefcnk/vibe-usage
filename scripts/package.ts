@@ -9,6 +9,7 @@ const platform: PackagePlatform | undefined = process.argv.includes('--win') ? '
 if (!platform) throw new Error('Choose --win or --mac');
 const signed = process.argv.includes('--signed') || process.env.VIBE_SIGNED_RELEASE === 'true';
 const plan = packagePlan(platform, { signed, env: process.env });
+for (const name of plan.unset) Reflect.deleteProperty(process.env, name);
 Object.assign(process.env, plan.env);
 console.log(`Packaging ${platform}, ${signed ? 'signed' : 'unsigned'}`);
 await build({ [platform]: [], config: plan.config, publish: 'never' });

@@ -4,8 +4,14 @@ import { missingSigningCredentials, packagePlan } from '../scripts/package-confi
 
 test('an unsigned package never picks up a certificate on its own; macOS signs it ad hoc', () => {
   const env = { CSC_IDENTITY_AUTO_DISCOVERY: 'false' };
-  assert.deepEqual(packagePlan('win', { signed: false, env: { CSC_LINK: 'present' } }), { config: {}, env });
-  assert.deepEqual(packagePlan('mac', { signed: false, env: { CSC_LINK: 'present' } }), { config: { mac: { identity: '-' } }, env });
+  const win = packagePlan('win', { signed: false, env: { CSC_LINK: 'present' } });
+  const mac = packagePlan('mac', { signed: false, env: { CSC_LINK: '' } });
+  assert.deepEqual([win.config, win.env], [{}, env]);
+  assert.deepEqual([mac.config, mac.env], [{ mac: { identity: '-' } }, env]);
+  // The workflow passes the credentials empty when unsigned; none may reach electron-builder.
+  for (const name of ['CSC_LINK', 'CSC_KEY_PASSWORD', 'WIN_CSC_LINK', 'APPLE_ID', 'APPLE_API_KEY'])
+    assert.ok(win.unset.includes(name) && mac.unset.includes(name), name);
+  assert.deepEqual(packagePlan('win', { signed: true, env: { WIN_CSC_LINK: 'x', WIN_CSC_KEY_PASSWORD: 'y' } }).unset, []);
 });
 
 test('a signed package needs every credential, and fails before building without one', () => {
@@ -30,6 +36,17 @@ test('a signed package needs every credential, and fails before building without
       forceCodeSigning: true,
       mac: { hardenedRuntime: true, notarize: true }
     });
+});
+
+// Without an icon of its own (at least 512 px for the .icns) a package shows Electron's.
+test('both packages use the app icon, large enough for macOS', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const pkg = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8')) as {
+    build: Record<'win' | 'mac', { icon?: string }>;
+  };
+  assert.deepEqual([pkg.build.win.icon, pkg.build.mac.icon], ['assets/icon.png', 'assets/icon.png']);
+  const icon = await readFile(new URL('../assets/icon.png', import.meta.url));
+  assert.ok(Math.min(icon.readUInt32BE(16), icon.readUInt32BE(20)) >= 512);
 });
 
 // electron-builder deep-merges the plan over package.json; an identity left there would win.
