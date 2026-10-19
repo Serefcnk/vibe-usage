@@ -13,7 +13,7 @@ une tâche à moitié faite d'un outil à l'autre sans avoir à la réexpliquer.
 
 Zone de notification Windows · barre des menus macOS · 13 langues · aucun mot de passe, aucun jeton conservé
 
-**[Télécharger pour Windows et macOS](https://github.com/mustafacagri/vibe-usage/releases/latest)** · Terminal: `npm install -g vibe-usage-cli`
+**[Télécharger pour Windows et macOS](https://github.com/mustafacagri/vibe-usage/releases/latest)** · Terminal: [`npm install -g vibe-usage-cli`](https://www.npmjs.com/package/vibe-usage-cli)
 
 <img src="../media/demo.gif" width="400" alt="Démonstration de Vibe Usage : changement de compte, tous les comptes côte à côte, la vue compacte, Lancement Intelligent et Transférer" />
 

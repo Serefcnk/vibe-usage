@@ -12,7 +12,7 @@
 
 Windows 托盘 · macOS 菜单栏 · 13 种语言 · 无需密码，不保存令牌
 
-**[下载 Windows 和 macOS 版](https://github.com/mustafacagri/vibe-usage/releases/latest)** · 终端: `npm install -g vibe-usage-cli`
+**[下载 Windows 和 macOS 版](https://github.com/mustafacagri/vibe-usage/releases/latest)** · 终端: [`npm install -g vibe-usage-cli`](https://www.npmjs.com/package/vibe-usage-cli)
 
 <img src="../media/demo.gif" width="400" alt="Vibe Usage 演示：切换账户、所有账户并排显示、紧凑视图、智能启动和移交任务" />
 

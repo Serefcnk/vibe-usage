@@ -13,7 +13,7 @@ your session continues on another account or tool, without re-explaining the tas
 
 Windows tray · macOS menu bar · 13 languages · no passwords, no tokens stored
 
-**[Download for Windows and macOS](https://github.com/mustafacagri/vibe-usage/releases/latest)** · Terminal: `npm install -g vibe-usage-cli`
+**[Download for Windows and macOS](https://github.com/mustafacagri/vibe-usage/releases/latest)** · Terminal: [`npm install -g vibe-usage-cli`](https://www.npmjs.com/package/vibe-usage-cli)
 
 <img src="docs/media/demo.gif" width="400" alt="Vibe Usage walkthrough: switching accounts, every account side by side, the compact view, Smart Launch and Handover" />
 

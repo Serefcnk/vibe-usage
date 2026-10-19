@@ -13,7 +13,7 @@ przekaż niedokończone zadanie z jednego narzędzia do drugiego bez tłumaczeni
 
 Zasobnik systemowy Windows · pasek menu macOS · 13 języków · bez haseł, bez zapisanych tokenów
 
-**[Pobierz dla Windows i macOS](https://github.com/mustafacagri/vibe-usage/releases/latest)** · Terminal: `npm install -g vibe-usage-cli`
+**[Pobierz dla Windows i macOS](https://github.com/mustafacagri/vibe-usage/releases/latest)** · Terminal: [`npm install -g vibe-usage-cli`](https://www.npmjs.com/package/vibe-usage-cli)
 
 <img src="../media/demo.gif" width="400" alt="Prezentacja Vibe Usage: przełączanie kont, wszystkie konta obok siebie, widok kompaktowy, Inteligentny Start i przekazanie zadania" />
 

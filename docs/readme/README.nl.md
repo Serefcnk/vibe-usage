@@ -13,7 +13,7 @@ half afgemaakte taak door aan een andere tool zonder alles opnieuw uit te leggen
 
 Windows-systeemvak · macOS-menubalk · 13 talen · geen wachtwoorden, geen opgeslagen tokens
 
-**[Downloaden voor Windows en macOS](https://github.com/mustafacagri/vibe-usage/releases/latest)** · Terminal: `npm install -g vibe-usage-cli`
+**[Downloaden voor Windows en macOS](https://github.com/mustafacagri/vibe-usage/releases/latest)** · Terminal: [`npm install -g vibe-usage-cli`](https://www.npmjs.com/package/vibe-usage-cli)
 
 <img src="../media/demo.gif" width="400" alt="Rondleiding door Vibe Usage: wisselen tussen accounts, alle accounts naast elkaar, de compacte weergave, Slimme Start en Overdragen" />
 

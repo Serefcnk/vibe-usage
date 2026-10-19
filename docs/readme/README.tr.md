@@ -13,7 +13,7 @@ bir işi baştan anlatmadan bir araçtan diğerine devret.
 
 Windows sistem tepsisi · macOS menü çubuğu · 13 dil · şifre yok, token saklanmaz
 
-**[Windows ve macOS için indir](https://github.com/mustafacagri/vibe-usage/releases/latest)** · Terminal: `npm install -g vibe-usage-cli`
+**[Windows ve macOS için indir](https://github.com/mustafacagri/vibe-usage/releases/latest)** · Terminal: [`npm install -g vibe-usage-cli`](https://www.npmjs.com/package/vibe-usage-cli)
 
 <img src="../media/demo.gif" width="400" alt="Vibe Usage tanıtımı: hesaplar arasında geçiş, tüm hesaplar yan yana, kompakt görünüm, Akıllı Başlat ve Görev Devret" />
 

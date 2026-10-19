@@ -13,7 +13,7 @@ lavoro a metà da uno strumento all'altro senza doverlo rispiegare.
 
 Area di notifica di Windows · barra dei menu di macOS · 13 lingue · nessuna password, nessun token salvato
 
-**[Scarica per Windows e macOS](https://github.com/mustafacagri/vibe-usage/releases/latest)** · Terminale: `npm install -g vibe-usage-cli`
+**[Scarica per Windows e macOS](https://github.com/mustafacagri/vibe-usage/releases/latest)** · Terminale: [`npm install -g vibe-usage-cli`](https://www.npmjs.com/package/vibe-usage-cli)
 
 <img src="../media/demo.gif" width="400" alt="Panoramica di Vibe Usage: cambio di account, tutti gli account affiancati, la vista compatta, Avvio Intelligente e Trasferisci" />
 

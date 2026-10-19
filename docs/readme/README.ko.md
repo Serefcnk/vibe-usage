@@ -12,7 +12,7 @@ Claude Code, Codex, Cursor, Antigravity의 남은 할당량을 확인하고, 아
 
 Windows 트레이 · macOS 메뉴 막대 · 13개 언어 · 비밀번호 없음, 토큰 저장 안 함
 
-**[Windows·macOS용 다운로드](https://github.com/mustafacagri/vibe-usage/releases/latest)** · 터미널: `npm install -g vibe-usage-cli`
+**[Windows·macOS용 다운로드](https://github.com/mustafacagri/vibe-usage/releases/latest)** · 터미널: [`npm install -g vibe-usage-cli`](https://www.npmjs.com/package/vibe-usage-cli)
 
 <img src="../media/demo.gif" width="400" alt="Vibe Usage 둘러보기: 계정 전환, 모든 계정 나란히 보기, 간단히 보기, 스마트 실행, 작업 인계" />
 

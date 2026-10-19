@@ -13,7 +13,7 @@
 
 Трей Windows · строка меню macOS · 13 языков · без паролей, токены не сохраняются
 
-**[Скачать для Windows и macOS](https://github.com/mustafacagri/vibe-usage/releases/latest)** · Терминал: `npm install -g vibe-usage-cli`
+**[Скачать для Windows и macOS](https://github.com/mustafacagri/vibe-usage/releases/latest)** · Терминал: [`npm install -g vibe-usage-cli`](https://www.npmjs.com/package/vibe-usage-cli)
 
 <img src="../media/demo.gif" width="400" alt="Обзор Vibe Usage: переключение аккаунтов, все аккаунты рядом, компактный вид, Умный запуск и передача задачи" />
 

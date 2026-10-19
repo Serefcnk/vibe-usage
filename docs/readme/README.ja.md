@@ -12,7 +12,7 @@ Claude Code、Codex、Cursor、Antigravity の残りクォータを確認し、�
 
 Windows タスクトレイ · macOS メニューバー · 13 言語 · パスワード不要、トークンは保存しません
 
-**[Windows・macOS 版をダウンロード](https://github.com/mustafacagri/vibe-usage/releases/latest)** · ターミナル: `npm install -g vibe-usage-cli`
+**[Windows・macOS 版をダウンロード](https://github.com/mustafacagri/vibe-usage/releases/latest)** · ターミナル: [`npm install -g vibe-usage-cli`](https://www.npmjs.com/package/vibe-usage-cli)
 
 <img src="../media/demo.gif" width="400" alt="Vibe Usage の操作デモ: アカウントの切り替え、全アカウントの並列表示、コンパクト表示、スマート起動、引き継ぎ" />
 

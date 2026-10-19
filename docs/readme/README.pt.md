@@ -13,7 +13,7 @@ uma tarefa pela metade de uma ferramenta para outra sem precisar explicá-la de 
 
 Bandeja do Windows · barra de menus do macOS · 13 idiomas · sem senhas, sem tokens armazenados
 
-**[Baixar para Windows e macOS](https://github.com/mustafacagri/vibe-usage/releases/latest)** · Terminal: `npm install -g vibe-usage-cli`
+**[Baixar para Windows e macOS](https://github.com/mustafacagri/vibe-usage/releases/latest)** · Terminal: [`npm install -g vibe-usage-cli`](https://www.npmjs.com/package/vibe-usage-cli)
 
 <img src="../media/demo.gif" width="400" alt="Demonstração do Vibe Usage: troca de contas, todas as contas lado a lado, a vista compacta, Início Inteligente e Transferir" />
 

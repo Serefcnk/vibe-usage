@@ -13,7 +13,7 @@ und übergib eine halb fertige Aufgabe an ein anderes Tool, ohne sie neu zu erkl
 
 Windows-Infobereich · macOS-Menüleiste · 13 Sprachen · keine Passwörter, keine gespeicherten Tokens
 
-**[Für Windows und macOS herunterladen](https://github.com/mustafacagri/vibe-usage/releases/latest)** · Terminal: `npm install -g vibe-usage-cli`
+**[Für Windows und macOS herunterladen](https://github.com/mustafacagri/vibe-usage/releases/latest)** · Terminal: [`npm install -g vibe-usage-cli`](https://www.npmjs.com/package/vibe-usage-cli)
 
 <img src="../media/demo.gif" width="400" alt="Vibe Usage im Überblick: Wechsel zwischen Konten, alle Konten nebeneinander, die kompakte Ansicht, Smart-Start und Übergabe" />
 
