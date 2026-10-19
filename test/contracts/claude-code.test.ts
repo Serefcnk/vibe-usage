@@ -344,11 +344,14 @@ const walk = async (d: string): Promise<string[]> =>
 // may hold.
 async function machineIdentifiers(): Promise<RegExp[]> {
   const identifiers = new Set<string>();
-  try {
-    identifiers.add(os.userInfo().username);
-  } catch {
-    // Unknown user: nothing to add.
-  }
+  // A CI runner's account belongs to no person (GitHub's is "runner", a word any text may
+  // hold), and nothing written there is committed.
+  if (!process.env.CI)
+    try {
+      identifiers.add(os.userInfo().username);
+    } catch {
+      // Unknown user: nothing to add.
+    }
   const home = os.homedir();
   for (const file of [
     path.join(home, '.claude.json'),

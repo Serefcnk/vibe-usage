@@ -1,2 +1,2 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Text files are LF everywhere, including a Windows checkout: Prettier and the tests expect it.
+* text=auto eol=lf
