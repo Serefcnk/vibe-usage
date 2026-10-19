@@ -110,6 +110,31 @@ Un accesso non completato entro dieci minuti rimuove di nuovo l'account, e l'acc
 </tr>
 </table>
 
+### Impostazioni, cronologia e diagnostica
+
+<table>
+<tr>
+<td width="33%" valign="top"><img src="../media/settings-general.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/settings-continue.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/settings-order.png" width="100%" alt="" /></td>
+</tr>
+<tr>
+<td valign="top"><b>Generale:</b> avvio all’accesso, notifiche alla tua soglia di quota bassa, ore silenziose, account affiancati e controllo degli aggiornamenti.</td>
+<td valign="top"><b>Quando un limite si esaurisce:</b> solo suggerirlo, continuare sugli altri account dello strumento o poi sugli altri strumenti in ordine di riserva; anche per progetto.</td>
+<td valign="top"><b>Ordine e modelli:</b> come sono elencati gli strumenti, quale subentra dopo, con quale modello parte ciascuno e ogni quanto si legge la quota.</td>
+</tr>
+<tr>
+<td width="33%" valign="top"><img src="../media/history.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/diagnostics.png" width="100%" alt="" /></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><b>Cronologia dei passaggi:</b> quale lavoro è passato da quale account a quale; riprova uno fallito con un clic.</td>
+<td valign="top"><b>Diagnostica:</b> se ogni strumento è installato e come sta ogni account; un report senza nomi né cartelle da copiare o salvare.</td>
+<td></td>
+</tr>
+</table>
+
 ## Strumenti supportati
 
 | Strumento   | Da dove arriva la quota                                                    | Sessioni da trasferire                         | Avvio                                    |

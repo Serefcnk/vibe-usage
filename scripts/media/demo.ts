@@ -3,8 +3,8 @@
 // spent, so Smart Launch recommends Codex; times are relative to `now`.
 import type { Language } from '../../src/shared/i18n/index.ts';
 import type { ModelCatalog, SessionSummary, SmartLaunchPreview } from '../../src/shared/ipc.ts';
-import type { Account, MeasuredAccount, QuotaWindow, Settings, Snapshot } from '../../src/shared/types.ts';
-import { DURATION_MS, PROVIDER_IDS } from '../../src/shared/catalog.ts';
+import type { Account, Diagnostics, MeasuredAccount, QuotaWindow, Settings, Snapshot, TransitionRecord } from '../../src/shared/types.ts';
+import { DURATION_MS, PROVIDER_IDS, type ProviderId } from '../../src/shared/catalog.ts';
 
 const { MINUTE, HOUR, DAY } = DURATION_MS;
 
@@ -65,15 +65,17 @@ export function snapshot(
       pinned: false,
       notifications: true,
       compareAccounts: view.compareAccounts ?? false,
-      autoContinue: 'off',
+      // Settings as someone who uses them would have them, for the screenshots of Settings.
+      autoContinue: 'tools',
       returnToPrimary: 'ask',
-      reopenAfterRestart: 'ask',
+      reopenAfterRestart: 'auto',
       compact: view.compact ?? false,
       checkUpdates: true,
-      projectPreferences: [],
+      projectPreferences: [{ projectDir: PROJECT_DIR, tool: 'claude', model: 'opus', accountId: 'claude:work', autoContinue: 'accounts' }],
       lowQuotaPercent: 20,
+      quietHours: { start: '23:00', end: '08:00' },
       providerOrder: [...PROVIDER_IDS],
-      preferredModels: {},
+      preferredModels: { claude: 'opus', codex: 'gpt-6-luna' },
       dismissedAccountIds: [],
       accounts: ACCOUNTS
     },
@@ -146,6 +148,81 @@ export function snapshot(
         ]
       }
     ]
+  };
+}
+
+// Work that moved when a limit ran out: to the other Claude account, then on to Codex; the last
+// start failed and can be tried again.
+export function transitions(now = Date.now()): TransitionRecord[] {
+  const moved = (
+    id: string,
+    minutesAgo: number,
+    source: TransitionRecord['source'],
+    target: TransitionRecord['target'],
+    failed = false
+  ): TransitionRecord => ({
+    id,
+    suggestionId: `limit:${id}`,
+    createdAt: now - minutesAgo * MINUTE,
+    updatedAt: now - minutesAgo * MINUTE,
+    projectDir: PROJECT_DIR,
+    source,
+    target,
+    status: failed ? 'failed' : 'dispatched',
+    errorCode: failed ? 'launch_failed' : null,
+    ...(failed && { retryable: true })
+  });
+  return [
+    moved(
+      'to-work',
+      150,
+      { providerId: 'claude', accountId: 'claude:default', sessionId: 'csv-export' },
+      { providerId: 'claude', accountId: 'claude:work', sessionId: 'csv-export' }
+    ),
+    moved(
+      'to-codex',
+      45,
+      { providerId: 'claude', accountId: 'claude:work', sessionId: 'csv-export' },
+      { providerId: 'codex', accountId: 'codex:default', sessionId: null }
+    ),
+    moved(
+      'to-cursor',
+      8,
+      { providerId: 'codex', accountId: 'codex:work', sessionId: 'flaky-login' },
+      { providerId: 'cursor', accountId: 'cursor:default', sessionId: null },
+      true
+    )
+  ];
+}
+
+// Every tool installed and read a moment ago.
+export function diagnostics(): Diagnostics {
+  const counts: Record<ProviderId, number> = { claude: 2, codex: 2, cursor: 1, antigravity: 2 };
+  return {
+    generatedAt: 0,
+    intervalSeconds: 120,
+    refreshing: false,
+    providers: PROVIDER_IDS.map(id => ({
+      id,
+      installed: true,
+      status: 'ok' as const,
+      messageCode: null,
+      accountCount: counts[id],
+      enabledCount: counts[id],
+      ageMs: 40 * 1000,
+      stale: false,
+      remedy: null,
+      accounts: Array.from({ length: counts[id] }, (_, i) => ({
+        ordinal: i + 1,
+        enabled: true,
+        primary: i === 0,
+        status: 'ok' as const,
+        messageCode: null,
+        ageMs: 40 * 1000,
+        stale: false,
+        remedy: null
+      }))
+    }))
   };
 }
 

@@ -110,6 +110,31 @@ Une connexion non terminée en dix minutes retire de nouveau le compte, et le co
 </tr>
 </table>
 
+### Réglages, historique et diagnostic
+
+<table>
+<tr>
+<td width="33%" valign="top"><img src="../media/settings-general.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/settings-continue.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/settings-order.png" width="100%" alt="" /></td>
+</tr>
+<tr>
+<td valign="top"><b>Général :</b> ouverture à la connexion, notifications à votre seuil de quota bas, heures calmes, comptes côte à côte et recherche de mises à jour.</td>
+<td valign="top"><b>Quand une limite est atteinte :</b> seulement le suggérer, continuer sur les autres comptes de l’outil, ou ensuite sur les autres outils par ordre de relais ; aussi par projet.</td>
+<td valign="top"><b>Ordre et modèles :</b> l’ordre d’affichage des outils, celui qui prend le relais, le modèle de départ de chacun et la fréquence de lecture du quota.</td>
+</tr>
+<tr>
+<td width="33%" valign="top"><img src="../media/history.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/diagnostics.png" width="100%" alt="" /></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><b>Historique des transferts :</b> quel travail est passé de quel compte à quel autre ; relancez un échec en un clic.</td>
+<td valign="top"><b>Diagnostic :</b> si chaque outil est installé et l’état de chaque compte ; un rapport sans noms ni dossiers à copier ou enregistrer.</td>
+<td></td>
+</tr>
+</table>
+
 ## Outils pris en charge
 
 | Outil       | Origine du quota                                                          | Sessions à transférer                         | Lancement                              |

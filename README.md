@@ -123,8 +123,27 @@ A sign-in not finished within ten minutes takes the account off again, and the n
 </tr>
 </table>
 
-### Per-project choices, history and diagnostics
+### Settings, history and diagnostics
 
+<table>
+<tr>
+<td width="33%" valign="top"><img src="docs/media/settings-general.png" width="100%" alt="Settings: language, open at login, notifications with a low-quota line, quiet hours and the update check" /></td>
+<td width="33%" valign="top"><img src="docs/media/settings-continue.png" width="100%" alt="Settings: what happens when a limit runs out, and a project's own tool, model, account and continuation" /></td>
+<td width="33%" valign="top"><img src="docs/media/settings-order.png" width="100%" alt="Settings: the order tools appear in, the fallback priority and the preferred model per tool" /></td>
+</tr>
+<tr>
+<td valign="top"><b>General:</b> open at login, notifications at your low-quota line, quiet hours, accounts side by side and the update check.</td>
+<td valign="top"><b>When a limit runs out:</b> only suggest, continue on the tool's other accounts, or then on the other tools in fallback order; per project as well.</td>
+<td valign="top"><b>Order and models:</b> how tools are listed, which one takes over next, the model each one starts with, and how often quota is read.</td>
+</tr>
+</table>
+
+- **When a limit runs out** (Settings): *only suggest it*, *continue with the tool's other accounts*, or *then also with
+  the other tools, in fallback order*. **When the main account has quota again**, work that moved off it can go back
+  (off, ask, or on its own once the session is idle). **When the computer goes down**, open Claude Code sessions can
+  open again where they left off.
+- **Home order and fallback priority** are separate: one is how tools are listed in the window and the tray, the other
+  which tool takes over next. **Preferred models** set the model Smart Launch and handover start each tool with.
 - **Project preferences** (Settings): give a folder its own tool, model, account and automatic continuation. They narrow
   what Smart Launch and continuation pick, never replace the verified-quota check, and a project set to *off* stays off
   even when continuation is on globally.
@@ -136,6 +155,13 @@ A sign-in not finished within ten minutes takes the account off again, and the n
   **Copy report** gives a version without names, e-mail addresses or folders, ready for an issue.
 - **Backup and restore**: export, import or reset the settings. Every save keeps the previous good copy; a damaged
   settings file is restored from it (and kept aside), and a file written by a newer version is never overwritten.
+
+<table>
+<tr>
+<td width="50%" valign="top"><img src="docs/media/history.png" width="100%" alt="Handover history: work moved from one Claude account to the other, then to Codex, and a failed start with Try again" /></td>
+<td width="50%" valign="top"><img src="docs/media/diagnostics.png" width="100%" alt="Diagnostics: every tool installed and each account live, with Copy report and Save report" /></td>
+</tr>
+</table>
 
 ## Supported tools
 

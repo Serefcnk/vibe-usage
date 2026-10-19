@@ -91,6 +91,31 @@ Claude와 Codex는 프로필 폴더마다 하나의 로그인을 보관합니다
 </tr>
 </table>
 
+### 설정, 기록, 진단
+
+<table>
+<tr>
+<td width="33%" valign="top"><img src="../media/settings-general.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/settings-continue.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/settings-order.png" width="100%" alt="" /></td>
+</tr>
+<tr>
+<td valign="top"><b>일반:</b> 로그인 시 실행, 할당량이 낮을 때 알림, 방해 금지 시간, 계정 나란히 보기, 업데이트 확인.</td>
+<td valign="top"><b>한도에 도달하면:</b> 제안만 하기, 도구의 다른 계정에서 계속하기, 또는 대체 순서대로 다른 도구로 넘기기. 프로젝트별로도 설정할 수 있습니다.</td>
+<td valign="top"><b>순서와 모델:</b> 도구 표시 순서, 다음에 이어받을 도구, 각 도구가 시작할 모델, 할당량을 읽는 주기.</td>
+</tr>
+<tr>
+<td width="33%" valign="top"><img src="../media/history.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/diagnostics.png" width="100%" alt="" /></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><b>인계 기록:</b> 어떤 작업이 어느 계정에서 어디로 옮겨졌는지. 실패한 작업은 한 번의 클릭으로 다시 시도합니다.</td>
+<td valign="top"><b>진단:</b> 각 도구의 설치 여부와 각 계정의 상태. 이름과 폴더가 빠진 보고서를 복사하거나 저장합니다.</td>
+<td></td>
+</tr>
+</table>
+
 ## 지원 도구
 
 | 도구        | 할당량을 읽는 곳                                          | 인계할 세션                                   | 실행                               |

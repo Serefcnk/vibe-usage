@@ -110,6 +110,31 @@ Si el inicio de sesión no termina en diez minutos, la cuenta se quita de nuevo 
 </tr>
 </table>
 
+### Ajustes, historial y diagnóstico
+
+<table>
+<tr>
+<td width="33%" valign="top"><img src="../media/settings-general.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/settings-continue.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/settings-order.png" width="100%" alt="" /></td>
+</tr>
+<tr>
+<td valign="top"><b>General:</b> abrir al iniciar sesión, avisos en tu límite de cuota baja, horas de silencio, cuentas lado a lado y la búsqueda de actualizaciones.</td>
+<td valign="top"><b>Cuando se agota un límite:</b> solo sugerirlo, seguir en las otras cuentas de la herramienta o después en las otras herramientas por orden de respaldo; también por proyecto.</td>
+<td valign="top"><b>Orden y modelos:</b> cómo se listan las herramientas, cuál toma el relevo, con qué modelo arranca cada una y cada cuánto se lee la cuota.</td>
+</tr>
+<tr>
+<td width="33%" valign="top"><img src="../media/history.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/diagnostics.png" width="100%" alt="" /></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><b>Historial de traspasos:</b> qué trabajo pasó de qué cuenta a cuál; reintenta uno fallido con un clic.</td>
+<td valign="top"><b>Diagnóstico:</b> si cada herramienta está instalada y cómo está cada cuenta; un informe sin nombres ni carpetas para copiar o guardar.</td>
+<td></td>
+</tr>
+</table>
+
 ## Herramientas compatibles
 
 | Herramienta | De dónde sale la cuota                                                    | Sesiones para transferir                       | Inicio                                 |

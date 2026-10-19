@@ -110,6 +110,31 @@ Eine Anmeldung, die nicht innerhalb von zehn Minuten abgeschlossen ist, entfernt
 </tr>
 </table>
 
+### Einstellungen, Verlauf und Diagnose
+
+<table>
+<tr>
+<td width="33%" valign="top"><img src="../media/settings-general.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/settings-continue.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/settings-order.png" width="100%" alt="" /></td>
+</tr>
+<tr>
+<td valign="top"><b>Allgemein:</b> Start bei der Anmeldung, Benachrichtigung an deiner Knapp-Grenze, Ruhezeiten, Konten nebeneinander und die Update-Prüfung.</td>
+<td valign="top"><b>Wenn ein Limit erreicht ist:</b> nur vorschlagen, auf den anderen Konten des Tools weitermachen oder danach mit den anderen Tools in Ausweichreihenfolge; auch pro Projekt.</td>
+<td valign="top"><b>Reihenfolge und Modelle:</b> wie die Tools aufgelistet werden, welches als Nächstes übernimmt, mit welchem Modell jedes startet und wie oft das Kontingent gelesen wird.</td>
+</tr>
+<tr>
+<td width="33%" valign="top"><img src="../media/history.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/diagnostics.png" width="100%" alt="" /></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><b>Übergabeverlauf:</b> welche Arbeit von welchem Konto wohin gewechselt ist; eine fehlgeschlagene mit einem Klick erneut versuchen.</td>
+<td valign="top"><b>Diagnose:</b> ob jedes Tool installiert ist und wie es jedem Konto geht; ein Bericht ohne Namen und Ordner zum Kopieren oder Speichern.</td>
+<td></td>
+</tr>
+</table>
+
 ## Unterstützte Tools
 
 | Tool        | Woher das Kontingent kommt                                              | Sitzungen für die Übergabe                    | Start                                 |

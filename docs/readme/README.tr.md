@@ -107,6 +107,31 @@ On dakika içinde tamamlanmayan bir giriş hesabı yeniden kaldırır; sonraki h
 </tr>
 </table>
 
+### Ayarlar, geçmiş ve tanılama
+
+<table>
+<tr>
+<td width="33%" valign="top"><img src="../media/settings-general.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/settings-continue.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/settings-order.png" width="100%" alt="" /></td>
+</tr>
+<tr>
+<td valign="top"><b>Genel:</b> oturum açınca başlatma, düşük kota sınırında bildirim, sessiz saatler, hesapları yan yana gösterme ve güncelleme kontrolü.</td>
+<td valign="top"><b>Limit dolunca:</b> sadece öner, aracın diğer hesaplarında devam et ya da yedek sırasıyla diğer araçlara geç; proje bazında da ayarlanır.</td>
+<td valign="top"><b>Sıra ve modeller:</b> araçların listelenme sırası, sıradaki yedek araç, her aracın başlayacağı model ve kotanın ne sıklıkla okunacağı.</td>
+</tr>
+<tr>
+<td width="33%" valign="top"><img src="../media/history.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/diagnostics.png" width="100%" alt="" /></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><b>Görev devir geçmişi:</b> hangi işin hangi hesaptan hangisine geçtiği; başarısız olanı tek tıkla yeniden dene.</td>
+<td valign="top"><b>Tanılama:</b> her araç kurulu mu, her hesap ne durumda; isim ve klasör içermeyen raporu kopyala ya da kaydet.</td>
+<td></td>
+</tr>
+</table>
+
 ## Desteklenen araçlar
 
 | Araç        | Kota nereden okunur                                                  | Devir için oturumlar                         | Başlatma                         |

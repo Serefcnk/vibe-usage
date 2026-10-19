@@ -109,6 +109,31 @@ Een aanmelding die niet binnen tien minuten klaar is, haalt het account weer weg
 </tr>
 </table>
 
+### Instellingen, geschiedenis en diagnose
+
+<table>
+<tr>
+<td width="33%" valign="top"><img src="../media/settings-general.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/settings-continue.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/settings-order.png" width="100%" alt="" /></td>
+</tr>
+<tr>
+<td valign="top"><b>Algemeen:</b> openen bij aanmelden, meldingen bij je lage-quotumgrens, stille uren, accounts naast elkaar en de updatecontrole.</td>
+<td valign="top"><b>Als een limiet op is:</b> alleen voorstellen, doorgaan op de andere accounts van de tool, of daarna op de andere tools in reservevolgorde; ook per project.</td>
+<td valign="top"><b>Volgorde en modellen:</b> hoe tools worden getoond, welke het daarna overneemt, met welk model elk start en hoe vaak het quotum wordt gelezen.</td>
+</tr>
+<tr>
+<td width="33%" valign="top"><img src="../media/history.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/diagnostics.png" width="100%" alt="" /></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><b>Overdrachtsgeschiedenis:</b> welk werk van welk account naar welk ging; probeer een mislukte met één klik opnieuw.</td>
+<td valign="top"><b>Diagnose:</b> of elke tool is geïnstalleerd en hoe elk account ervoor staat; een rapport zonder namen of mappen om te kopiëren of op te slaan.</td>
+<td></td>
+</tr>
+</table>
+
 ## Ondersteunde tools
 
 | Tool        | Waar het quotum vandaan komt                                              | Sessies om over te dragen                      | Starten                                  |

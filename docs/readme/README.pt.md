@@ -108,6 +108,31 @@ Um login não concluído em dez minutos remove a conta outra vez, e a próxima c
 </tr>
 </table>
 
+### Configurações, histórico e diagnóstico
+
+<table>
+<tr>
+<td width="33%" valign="top"><img src="../media/settings-general.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/settings-continue.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/settings-order.png" width="100%" alt="" /></td>
+</tr>
+<tr>
+<td valign="top"><b>Geral:</b> abrir ao iniciar sessão, avisos no seu limite de cota baixa, horas de silêncio, contas lado a lado e a verificação de atualizações.</td>
+<td valign="top"><b>Quando um limite acaba:</b> só sugerir, continuar nas outras contas da ferramenta ou depois nas outras ferramentas pela ordem de reserva; também por projeto.</td>
+<td valign="top"><b>Ordem e modelos:</b> como as ferramentas são listadas, qual assume em seguida, com que modelo cada uma começa e a frequência de leitura da cota.</td>
+</tr>
+<tr>
+<td width="33%" valign="top"><img src="../media/history.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/diagnostics.png" width="100%" alt="" /></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><b>Histórico de transferências:</b> que trabalho passou de qual conta para qual; tente de novo um que falhou com um clique.</td>
+<td valign="top"><b>Diagnóstico:</b> se cada ferramenta está instalada e como está cada conta; um relatório sem nomes nem pastas para copiar ou salvar.</td>
+<td></td>
+</tr>
+</table>
+
 ## Ferramentas compatíveis
 
 | Ferramenta  | De onde vem a cota                                                         | Sessões para transferir                        | Início                                   |

@@ -110,6 +110,31 @@ Logowanie nieukończone w ciągu dziesięciu minut ponownie usuwa konto, a nast�
 </tr>
 </table>
 
+### Ustawienia, historia i diagnostyka
+
+<table>
+<tr>
+<td width="33%" valign="top"><img src="../media/settings-general.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/settings-continue.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/settings-order.png" width="100%" alt="" /></td>
+</tr>
+<tr>
+<td valign="top"><b>Ogólne:</b> uruchamianie przy logowaniu, powiadomienia przy Twoim progu niskiego limitu, godziny ciszy, konta obok siebie i sprawdzanie aktualizacji.</td>
+<td valign="top"><b>Gdy limit się wyczerpie:</b> tylko zasugeruj, kontynuuj na innych kontach narzędzia albo potem na innych narzędziach w kolejności zapasowej; także dla projektu.</td>
+<td valign="top"><b>Kolejność i modele:</b> jak narzędzia są wyświetlane, które przejmuje pracę, z jakim modelem startuje każde i jak często odczytywany jest limit.</td>
+</tr>
+<tr>
+<td width="33%" valign="top"><img src="../media/history.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/diagnostics.png" width="100%" alt="" /></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><b>Historia przekazań:</b> jaka praca przeszła z którego konta na które; ponów nieudaną jednym kliknięciem.</td>
+<td valign="top"><b>Diagnostyka:</b> czy każde narzędzie jest zainstalowane i w jakim stanie jest każde konto; raport bez nazw i folderów do skopiowania lub zapisania.</td>
+<td></td>
+</tr>
+</table>
+
 ## Obsługiwane narzędzia
 
 | Narzędzie   | Skąd pochodzi limit                                                       | Sesje do przekazania                           | Uruchamianie                             |

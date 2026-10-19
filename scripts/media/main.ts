@@ -9,7 +9,7 @@ import { app, BrowserWindow } from 'electron';
 import { renderSnapshot } from '../../src/cli.ts';
 import { translator } from '../../src/shared/i18n/index.ts';
 import { capture, isNumber, openFixtureWindow, quiet, ROOT, run, runFor, serveFixture, settle } from '../fixture-app.ts';
-import { MODELS, PROJECT_DIR, sessions, SMART_LAUNCH, snapshot } from './demo.ts';
+import { diagnostics, MODELS, PROJECT_DIR, sessions, SMART_LAUNCH, snapshot, transitions } from './demo.ts';
 
 const OUT_DIR = path.join(ROOT, 'docs', 'media');
 const FFMPEG = process.env.FFMPEG ?? 'ffmpeg';
@@ -17,12 +17,33 @@ const WIDTH = 430;
 const HEIGHT = 860;
 // The compact view's rows hold an account's name, bar, reset and next limit side by side.
 const COMPACT_WIDTH = 500;
+// Settings, by the element its screenshot starts at: the general options, what happens when a
+// limit runs out, the orders and models, and the accounts (several of each tool, the primary marked).
+const SETTINGS_PARTS = [
+  ['settings-general', '#language-select'],
+  ['settings-continue', '#auto-continue'],
+  ['settings-order', '#home-order'],
+  ['settings', '.connected-accounts-section']
+] as const;
+// Screenshot, the button that opens it and its dialog.
+const SETTINGS_DIALOGS = [
+  ['history', '#transitions-button', '#transitions-dialog'],
+  ['diagnostics', '#diagnostics-button', '#diagnostics-dialog']
+] as const;
 const SETTLE_MS = 600;
 // Pause between captures; capturing itself takes about as long again.
 const FRAME_GAP_MS = 40;
 const GIF = { width: 480, fps: 12, colors: 128 };
 
-serveFixture({ snapshot: () => snapshot('en'), models: MODELS, smartLaunch: SMART_LAUNCH, sessions, projectDir: PROJECT_DIR });
+serveFixture({
+  snapshot: () => snapshot('en'),
+  models: MODELS,
+  smartLaunch: SMART_LAUNCH,
+  sessions,
+  projectDir: PROJECT_DIR,
+  transitions,
+  diagnostics
+});
 
 async function screenshot(win: BrowserWindow, name: string, height = HEIGHT, width = WIDTH): Promise<void> {
   win.setContentSize(width, height);
@@ -84,16 +105,31 @@ async function screenshots(win: BrowserWindow): Promise<void> {
     )
   );
   await run(win, "document.querySelector('#handover-dialog').close()");
-  // Settings at its accounts: several of each tool, the primary marked.
+  // Settings, part by part, each scrolled to the top of the dialog.
   await press(win, '#settings-button');
-  await run(
-    win,
-    "(() => { const dialog = document.querySelector('#settings-dialog'); const section = dialog.querySelector('.connected-accounts-section'); const top = dialog.querySelector('.dialog-top').getBoundingClientRect().bottom; dialog.scrollTop += section.getBoundingClientRect().top - top - 12; })()"
-  );
-  await screenshot(win, 'settings');
+  for (const [name, selector] of SETTINGS_PARTS) {
+    await run(
+      win,
+      `(() => {
+        const dialog = document.querySelector('#settings-dialog');
+        const part = dialog.querySelector(${JSON.stringify(selector)});
+        const section = part.closest('.settings-card') ?? part;
+        const top = dialog.querySelector('.dialog-top').getBoundingClientRect().bottom;
+        dialog.scrollTop += section.getBoundingClientRect().top - top - 12;
+      })()`
+    );
+    await screenshot(win, name);
+  }
   // Next time Settings opens at its top, as the walkthrough expects.
   await run(win, "(() => { const dialog = document.querySelector('#settings-dialog'); dialog.scrollTop = 0; dialog.close(); })()");
   await quiet(win);
+  // The handover history and the diagnostics, which Settings opens.
+  for (const [name, button, dialog] of SETTINGS_DIALOGS) {
+    await press(win, button);
+    await screenshot(win, name);
+    await run(win, `document.querySelector(${JSON.stringify(dialog)}).close()`);
+    await quiet(win);
+  }
 }
 
 // The CLI's own `status` output for the demo accounts, in a terminal window.

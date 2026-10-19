@@ -91,6 +91,31 @@ Claude 和 Codex 每个配置文件文件夹保存一个登录。**添加账户*
 </tr>
 </table>
 
+### 设置、历史与诊断
+
+<table>
+<tr>
+<td width="33%" valign="top"><img src="../media/settings-general.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/settings-continue.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/settings-order.png" width="100%" alt="" /></td>
+</tr>
+<tr>
+<td valign="top"><b>常规：</b>登录时启动、在你设定的低额度线发出通知、免打扰时段、账户并排显示以及检查更新。</td>
+<td valign="top"><b>额度用完时：</b>仅提示、在该工具的其他账户上继续，或再按备用顺序交给其他工具；也可按项目设置。</td>
+<td valign="top"><b>顺序与模型：</b>工具的显示顺序、下一个接手的工具、每个工具启动时使用的模型，以及读取额度的频率。</td>
+</tr>
+<tr>
+<td width="33%" valign="top"><img src="../media/history.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/diagnostics.png" width="100%" alt="" /></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><b>交接历史：</b>哪项工作从哪个账户转到了哪里；失败的可一键重试。</td>
+<td valign="top"><b>诊断：</b>每个工具是否已安装、每个账户的状态；可复制或保存不含名称和文件夹的报告。</td>
+<td></td>
+</tr>
+</table>
+
 ## 支持的工具
 
 | 工具        | 额度来源                                         | 可移交的会话                            | 启动方式                         |

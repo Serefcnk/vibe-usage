@@ -91,6 +91,31 @@ Claude と Codex はプロファイルフォルダーごとに 1 つのサイン
 </tr>
 </table>
 
+### 設定・履歴・診断
+
+<table>
+<tr>
+<td width="33%" valign="top"><img src="../media/settings-general.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/settings-continue.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/settings-order.png" width="100%" alt="" /></td>
+</tr>
+<tr>
+<td valign="top"><b>一般:</b> ログイン時に起動、残量が少ないときの通知、通知しない時間帯、アカウントの横並び表示、更新の確認。</td>
+<td valign="top"><b>上限に達したとき:</b> 提案のみ、同じツールの別アカウントで続行、さらにフォールバック順で他のツールへ。プロジェクトごとにも設定できます。</td>
+<td valign="top"><b>順序とモデル:</b> ツールの表示順、次に引き継ぐツール、各ツールが起動時に使うモデル、クォータを読む間隔。</td>
+</tr>
+<tr>
+<td width="33%" valign="top"><img src="../media/history.png" width="100%" alt="" /></td>
+<td width="33%" valign="top"><img src="../media/diagnostics.png" width="100%" alt="" /></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><b>引き継ぎ履歴:</b> どの作業がどのアカウントからどこへ移ったか。失敗したものはワンクリックで再試行できます。</td>
+<td valign="top"><b>診断:</b> 各ツールがインストールされているか、各アカウントの状態。名前やフォルダーを含まないレポートをコピー・保存できます。</td>
+<td></td>
+</tr>
+</table>
+
 ## 対応ツール
 
 | ツール      | クォータの取得元                                              | 引き継ぎ用のセッション                     | 起動                                 |
