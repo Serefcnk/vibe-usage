@@ -15,6 +15,8 @@ const OUT_DIR = path.join(ROOT, 'docs', 'media');
 const FFMPEG = process.env.FFMPEG ?? 'ffmpeg';
 const WIDTH = 430;
 const HEIGHT = 860;
+// The compact view's rows hold an account's name, bar, reset and next limit side by side.
+const COMPACT_WIDTH = 500;
 const SETTLE_MS = 600;
 // Pause between captures; capturing itself takes about as long again.
 const FRAME_GAP_MS = 40;
@@ -22,8 +24,8 @@ const GIF = { width: 480, fps: 12, colors: 128 };
 
 serveFixture({ snapshot: () => snapshot('en'), models: MODELS, smartLaunch: SMART_LAUNCH, sessions, projectDir: PROJECT_DIR });
 
-async function screenshot(win: BrowserWindow, name: string, height = HEIGHT): Promise<void> {
-  win.setContentSize(WIDTH, height);
+async function screenshot(win: BrowserWindow, name: string, height = HEIGHT, width = WIDTH): Promise<void> {
+  win.setContentSize(width, height);
   await settle(SETTLE_MS);
   fs.writeFileSync(path.join(OUT_DIR, `${name}.png`), (await capture(win)).toPNG());
   win.setContentSize(WIDTH, HEIGHT);
@@ -48,13 +50,18 @@ async function screenshots(win: BrowserWindow): Promise<void> {
   await toggleCompare(win);
   await screenshot(win, 'main', await runFor(win, 'document.documentElement.scrollHeight', isNumber));
   await toggleCompare(win);
-  // One line per account; the window is as tall as its rows.
+  // One line per account, wide enough for the longest account name; the window is as tall as
+  // its rows at that width.
   await press(win, '#compact-button');
-  await screenshot(
-    win,
-    'compact',
-    await runFor(win, "Math.ceil(document.querySelector('#providers').getBoundingClientRect().bottom) + 12", isNumber)
-  );
+  win.setContentSize(COMPACT_WIDTH, HEIGHT);
+  // The page learns its new width a moment later: measured before, the rows are still wrapped.
+  const rowsBottom = `new Promise(resolve => {
+    const measure = () => innerWidth === ${COMPACT_WIDTH}
+      ? resolve(Math.ceil(document.querySelector('#providers').getBoundingClientRect().bottom) + 12)
+      : setTimeout(measure, 20);
+    measure();
+  })`;
+  await screenshot(win, 'compact', await runFor(win, rowsBottom, isNumber), COMPACT_WIDTH);
   await press(win, '#compact-button');
   await press(win, '#smart-launch-btn');
   await screenshot(win, 'smart-launch');
