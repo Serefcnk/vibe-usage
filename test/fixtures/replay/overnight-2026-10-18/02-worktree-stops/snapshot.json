@@ -1,0 +1,106 @@
+{
+  "settings": {
+    "autoContinue": "accounts",
+    "returnToPrimary": "auto",
+    "lowQuotaPercent": 20,
+    "accounts": [
+      {
+        "id": "claude:main",
+        "providerId": "claude",
+        "label": "Main",
+        "configDir": "<home>/.claude",
+        "configDirExplicit": false,
+        "primary": true,
+        "enabled": true
+      },
+      {
+        "id": "claude:spare",
+        "providerId": "claude",
+        "label": "Spare",
+        "configDir": "<home>/.claude-secondary",
+        "configDirExplicit": true,
+        "primary": false,
+        "enabled": true
+      }
+    ]
+  },
+  "providers": [
+    {
+      "id": "claude",
+      "status": "ok",
+      "accounts": [
+        {
+          "id": "claude:main",
+          "providerId": "claude",
+          "label": "Main",
+          "configDir": "<home>/.claude",
+          "configDirExplicit": false,
+          "primary": true,
+          "enabled": true,
+          "status": "ok",
+          "fetchedAt": "<clock>",
+          "plan": "team",
+          "windows": [
+            {
+              "id": "five_hour",
+              "usedPercent": 100,
+              "remainingPercent": 0,
+              "resetsAt": "2026-10-18T03:00:00.000Z",
+              "labelKey": "labelNHours",
+              "labelParams": {
+                "n": 5
+              },
+              "durationMinutes": 300,
+              "active": true
+            },
+            {
+              "id": "limit:weekly_scoped:6489664b94f0",
+              "usedPercent": 0,
+              "remainingPercent": 100,
+              "resetsAt": "2026-10-25T12:59:59.000Z",
+              "labelKey": "labelWeekly",
+              "durationMinutes": 10080,
+              "scope": "Fable",
+              "active": false
+            }
+          ]
+        },
+        {
+          "id": "claude:spare",
+          "providerId": "claude",
+          "label": "Spare",
+          "configDir": "<home>/.claude-secondary",
+          "configDirExplicit": true,
+          "primary": false,
+          "enabled": true,
+          "status": "ok",
+          "fetchedAt": "<clock>",
+          "plan": "pro",
+          "windows": [
+            {
+              "id": "five_hour",
+              "usedPercent": 19,
+              "remainingPercent": 81,
+              "resetsAt": "2026-10-18T05:00:00.000Z",
+              "labelKey": "labelNHours",
+              "labelParams": {
+                "n": 5
+              },
+              "durationMinutes": 300,
+              "active": false
+            },
+            {
+              "id": "seven_day",
+              "usedPercent": 68,
+              "remainingPercent": 32,
+              "resetsAt": "2026-10-18T13:59:59.000Z",
+              "labelKey": "labelWeekly",
+              "durationMinutes": 10080,
+              "active": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

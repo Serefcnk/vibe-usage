@@ -1,0 +1,6 @@
+{
+  "note": "Six hours later the main account has room again and returns are automatic; the copy on the spare account has been idle and quiet since 00:42, so it goes back to the main account. It was not cut off, so it opens without a prompt.",
+  "starts": [{ "sessionId": "4d2f9a10-0000-4000-8000-00000000c0de", "from": "claude:spare", "to": "claude:main", "prompt": "none" }],
+  "notices": ["returned"],
+  "cards": []
+}

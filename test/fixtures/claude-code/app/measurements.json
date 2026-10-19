@@ -1,0 +1,201 @@
+{
+  "version": 1,
+  "accounts": {
+    "claude:default": {
+      "configDir": "C:\\Users\\me\\.claude",
+      "fetchedAt": "2026-10-18T14:15:08.441Z",
+      "plan": "team",
+      "windows": [
+        {
+          "id": "five_hour",
+          "usedPercent": 28,
+          "remainingPercent": 72,
+          "resetsAt": "2026-10-18T18:40:00.354Z",
+          "labelKey": "labelNHours",
+          "labelParams": {
+            "n": 5
+          },
+          "durationMinutes": 300,
+          "active": true
+        },
+        {
+          "id": "limit:weekly_scoped:6489664b94f0",
+          "usedPercent": 7,
+          "remainingPercent": 93,
+          "resetsAt": "2026-10-25T13:00:00.354Z",
+          "labelKey": "labelWeekly",
+          "durationMinutes": 10080,
+          "scope": "Fable",
+          "active": false
+        }
+      ]
+    },
+    "claude:secondary": {
+      "configDir": "[configDir]",
+      "fetchedAt": "2026-10-18T14:15:08.512Z",
+      "plan": "pro",
+      "windows": [
+        {
+          "id": "five_hour",
+          "usedPercent": 86,
+          "remainingPercent": 14,
+          "resetsAt": "2026-10-18T15:00:00.381Z",
+          "labelKey": "labelNHours",
+          "labelParams": {
+            "n": 5
+          },
+          "durationMinutes": 300,
+          "active": true
+        },
+        {
+          "id": "seven_day",
+          "usedPercent": 5,
+          "remainingPercent": 95,
+          "resetsAt": "2026-10-25T14:00:00.381Z",
+          "labelKey": "labelWeekly",
+          "durationMinutes": 10080,
+          "active": false
+        }
+      ]
+    },
+    "cursor:default": {
+      "configDir": null,
+      "fetchedAt": "2026-10-18T14:15:08.461Z",
+      "plan": "pro",
+      "windows": [
+        {
+          "id": "plan:auto",
+          "usedPercent": 24.306666666666665,
+          "remainingPercent": 75.69333333333333,
+          "resetsAt": "2026-11-07T20:30:22.000Z",
+          "labelKey": "labelAutoScope"
+        },
+        {
+          "id": "plan:api",
+          "usedPercent": 100,
+          "remainingPercent": 0,
+          "resetsAt": "2026-11-07T20:30:22.000Z",
+          "labelKey": "labelApiScope",
+          "detailKey": "cursorApiLimitNote",
+          "partial": true,
+          "except": [
+            "auto"
+          ]
+        },
+        {
+          "id": "plan:total",
+          "usedPercent": 31.248484848484846,
+          "remainingPercent": 68.75151515151515,
+          "resetsAt": "2026-11-07T20:30:22.000Z",
+          "labelKey": "labelTotalUsage",
+          "detailKey": "totalQuotaDesc",
+          "section": "details"
+        },
+        {
+          "id": "plan:spend",
+          "usedPercent": null,
+          "remainingPercent": null,
+          "resetsAt": "2026-11-07T20:30:22.000Z",
+          "labelKey": "labelIncludedSpend",
+          "section": "details",
+          "amounts": {
+            "used": 2000,
+            "limit": 2000,
+            "remaining": 0,
+            "bonus": 13468
+          }
+        },
+        {
+          "id": "individual:onDemand",
+          "usedPercent": null,
+          "remainingPercent": null,
+          "resetsAt": "2026-11-07T20:30:22.000Z",
+          "labelKey": "labelOnDemandSpend",
+          "valueKey": "disabled",
+          "section": "details",
+          "amounts": {
+            "used": 0
+          }
+        }
+      ]
+    },
+    "codex:default": {
+      "configDir": "C:\\Users\\me\\.codex",
+      "fetchedAt": "2026-10-18T14:15:08.870Z",
+      "plan": "plus",
+      "windows": [
+        {
+          "id": "codex:primary",
+          "usedPercent": 71,
+          "remainingPercent": 29,
+          "resetsAt": "2026-10-18T17:00:04.000Z",
+          "labelKey": "labelNHours",
+          "labelParams": {
+            "n": 5
+          },
+          "durationMinutes": 300
+        },
+        {
+          "id": "codex:secondary",
+          "usedPercent": 31,
+          "remainingPercent": 69,
+          "resetsAt": "2026-10-24T20:53:41.000Z",
+          "labelKey": "labelWeekly",
+          "durationMinutes": 10080
+        }
+      ]
+    },
+    "antigravity:5a116e8f9b501f9c": {
+      "configDir": null,
+      "fetchedAt": "2026-10-18T14:15:12.341Z",
+      "windows": [
+        {
+          "id": "quota:7bc987abb25680b6891d2af5",
+          "usedPercent": 6.681689999999989,
+          "remainingPercent": 93.31831000000001,
+          "resetsAt": "2026-10-24T18:44:12.000Z",
+          "labelKey": "labelWeekly",
+          "detailKey": "antigravitySourceNote",
+          "durationMinutes": 10080,
+          "scope": "Gemini Models"
+        },
+        {
+          "id": "quota:6017a39acdc2fa69ea0b8b5e",
+          "usedPercent": 0,
+          "remainingPercent": 100,
+          "resetsAt": "2026-10-18T19:15:12.000Z",
+          "labelKey": "labelNHours",
+          "labelParams": {
+            "n": 5
+          },
+          "detailKey": "antigravitySourceNote",
+          "durationMinutes": 300,
+          "scope": "Gemini Models"
+        },
+        {
+          "id": "quota:fcd80d9e221e72171539d8ef",
+          "usedPercent": 0,
+          "remainingPercent": 100,
+          "resetsAt": "2026-10-25T14:15:12.000Z",
+          "labelKey": "labelWeekly",
+          "detailKey": "antigravitySourceNote",
+          "durationMinutes": 10080,
+          "scope": "Claude and GPT models"
+        },
+        {
+          "id": "quota:3b24cad6d5ef7b9d4cb1b9df",
+          "usedPercent": 0,
+          "remainingPercent": 100,
+          "resetsAt": "2026-10-18T19:15:12.000Z",
+          "labelKey": "labelNHours",
+          "labelParams": {
+            "n": 5
+          },
+          "detailKey": "antigravitySourceNote",
+          "durationMinutes": 300,
+          "scope": "Claude and GPT models"
+        }
+      ]
+    }
+  }
+}

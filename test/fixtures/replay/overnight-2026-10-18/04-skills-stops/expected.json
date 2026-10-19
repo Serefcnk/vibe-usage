@@ -1,0 +1,15 @@
+{
+  "note": "The skills session stopped and moves: all four work on Spare now.",
+  "starts": [
+    {
+      "sessionId": "2cb40000-0000-4000-8000-000000000004",
+      "from": "claude:main",
+      "to": "claude:spare",
+      "prompt": "resume"
+    }
+  ],
+  "notices": [
+    "continued"
+  ],
+  "cards": []
+}

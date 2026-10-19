@@ -1,0 +1,11 @@
+{
+  "pid": 5202,
+  "sessionId": "4d2f9a10-0000-4000-8000-00000000c0de",
+  "cwd": "/work/app",
+  "startedAt": 1792284065000,
+  "kind": "interactive",
+  "entrypoint": "cli",
+  "status": "idle",
+  "updatedAt": 1792284120000,
+  "statusUpdatedAt": 1792284120000
+}

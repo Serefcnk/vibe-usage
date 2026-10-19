@@ -1,0 +1,195 @@
+<div align="center">
+
+[English](../../README.md) · [Türkçe](README.tr.md) · [Deutsch](README.de.md) · [Español](README.es.md) · **Français** · [Italiano](README.it.md) · [Português](README.pt.md) · [Nederlands](README.nl.md) · [Polski](README.pl.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [简体中文](README.zh.md) · [Русский](README.ru.md)
+
+<img src="../../assets/icon.png" width="96" alt="" />
+
+# Vibe Usage
+
+**Tous vos abonnements de code par IA, dans une seule fenêtre de la barre des menus.**
+
+Voyez le quota restant sur Claude Code, Codex, Cursor et Antigravity, lancez l'outil qui a encore de la marge et passez
+une tâche à moitié faite d'un outil à l'autre sans avoir à la réexpliquer.
+
+Zone de notification Windows · barre des menus macOS · 13 langues · aucun mot de passe, aucun jeton conservé
+
+<img src="../media/demo.gif" width="400" alt="Démonstration de Vibe Usage : changement de compte, tous les comptes côte à côte, la vue compacte, Lancement Intelligent et Transférer" />
+
+<sub>[Voir en pleine résolution (MP4)](../media/demo.mp4)</sub>
+
+</div>
+
+> Cette traduction peut être en retard sur le README anglais ; la [version anglaise](../../README.md) fait foi.
+
+## Pourquoi
+
+Si vous codez avec plusieurs outils d'IA, vous butez sans cesse sur le même mur : la limite de 5 heures s'épuise en
+pleine tâche, vous ouvrez un autre outil et vous réexpliquez tout depuis le début. Chaque fournisseur affiche son usage à
+un endroit différent, quand il l'affiche.
+
+Vibe Usage lit les sessions déjà connectées sur votre machine et affiche toutes les limites côte à côte : ce qui reste et
+quand cela se réinitialise. Quand un outil arrive à court, il lance le suivant dont le quota est vérifié dans votre
+dossier de projet, et rédige un résumé de la session en cours pour que le nouvel outil reprenne là où l'ancien s'est
+arrêté.
+
+## Fonctionnalités
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### Les quotas d'un coup d'œil
+
+Chaque limite de chaque compte : fenêtres de 5 heures et hebdomadaires, quotas par modèle, enveloppes de dépenses. Des
+comptes à rebours indiquent quand chacune se réinitialise. Si une actualisation échoue, la dernière mesure reste visible
+et est clairement marquée comme périmée. Une valeur inconnue n'est jamais affichée comme un quota plein. Survolez
+l’icône de la barre pour voir ce qu’il reste à chaque outil ; activez si vous le souhaitez une notification quand une
+limite s’épuise ou redevient disponible. L’app peut s’ouvrir à l’ouverture de session.
+
+</td>
+<td width="50%" valign="top">
+
+<img src="../media/main.png" width="100%" alt="Cartes de quota pour Claude, Codex, Cursor et Antigravity, les comptes de chaque outil côte à côte" />
+
+<img src="../media/compact.png" width="100%" alt="La vue compacte : une ligne par compte" />
+
+</td>
+</tr>
+<tr>
+<td valign="top">
+
+### Lancement Intelligent
+
+Choisit le premier outil de votre ordre de priorité dont le quota a une marge **vérifiée**, puis l'ouvre dans un
+nouveau terminal dans le dossier de projet choisi. Si aucun outil ne peut être vérifié, il le dit au lieu de deviner.
+
+</td>
+<td valign="top">
+
+<img src="../media/smart-launch.png" width="100%" alt="Le Lancement Intelligent recommande Codex car la limite de 5 heures de Claude est presque épuisée" />
+
+</td>
+</tr>
+<tr>
+<td valign="top">
+
+### Transférer
+
+Choisissez une session de Claude Code, Codex, Cursor Agent ou Antigravity. Vibe Usage la résume dans
+`VIBE_HANDOVER.md` dans le dossier du projet : l'objectif, les derniers échanges, les fichiers modifiés et l'état git.
+Il lance ensuite l'outil cible avec une consigne de lire ce résumé. Seules les sessions démarrées dans le dossier choisi
+sont listées.
+
+</td>
+<td valign="top">
+
+<img src="../media/handover.png" width="100%" alt="Fenêtre de transfert d'une session Claude vers Codex" />
+
+</td>
+</tr>
+<tr>
+<td valign="top">
+
+### Plusieurs comptes
+
+Claude et Codex gardent une connexion par dossier de profil. **Ajouter un compte** crée un nouveau dossier et y ouvre la
+connexion de l'outil ; les dossiers `~/.claude-*` et `~/.codex-*` que vous avez créés vous-même sont détectés
+automatiquement. Chaque compte est affiché avec l'e-mail de sa connexion, et chaque compte Antigravity connecté est
+aussi suivi séparément. Choisissez le compte principal, lancez Claude Code avec un compte précis, et définissez l'ordre
+de repli et le modèle préféré de chaque outil.
+Une connexion non terminée en dix minutes retire de nouveau le compte, et le compte suivant réutilise son dossier.
+
+</td>
+<td valign="top">
+
+<img src="../media/settings.png" width="100%" alt="Paramètres : comptes connectés, deux pour Claude et deux pour Codex" />
+
+</td>
+</tr>
+</table>
+
+## Outils pris en charge
+
+| Outil       | Origine du quota                                                          | Sessions à transférer                         | Lancement                              |
+| ----------- | ------------------------------------------------------------------------- | --------------------------------------------- | -------------------------------------- |
+| Claude Code | Point d'accès d'usage OAuth du profil (Trousseau sur macOS)               | `~/.claude/projects`                          | CLI `claude` avec le profil choisi     |
+| Codex       | Méthodes de limites de l'app-server de la CLI installée                   | `~/.codex/sessions`                           | CLI `codex`                            |
+| Cursor      | Résumé d'usage de la session connectée                                    | Discussions Cursor Agent CLI (`~/.cursor/chats`) | `cursor-agent`, sinon l'application |
+| Antigravity | Service local de l'application en cours (processus et port vérifiés)      | `~/.gemini/antigravity-ide`                   | Application Antigravity                |
+
+Les listes de modèles viennent des données propres à chaque outil : les alias de Claude Code et les modèles que vous avez
+utilisés, le cache de modèles de Codex et `cursor-agent --list-models` (mis en cache 24 heures).
+
+## Confidentialité et sécurité
+
+- **Lecture seule.** Il utilise les sessions existantes. Il ne demande jamais de mot de passe, ne
+  stocke jamais de jeton, ne vous déconnecte jamais et ne touche jamais au travail en cours.
+- **Connexion expirée.** Quand le travail peut passer seul d'un compte à l'autre, Claude Code renouvelle lui-même une connexion expirée : une requête Haiku minimale (un mot, aucun outil, rien d'enregistré), au plus toutes les 30 minutes par compte. L'app ne lit ni n'utilise jamais le jeton d'actualisation.
+- **Deux points d'accès.** Les requêtes de quota ne vont qu'aux points d'accès d'usage d'Anthropic et de Cursor, avec
+  vérification TLS active. Codex et Antigravity sont lus en local.
+- **Rien de secret sur le disque.** Les paramètres sont dans `%APPDATA%\Vibe Usage\settings.json` (Windows) ou
+  `~/Library/Application Support/Vibe Usage/settings.json` (macOS). Les quotas restent uniquement en mémoire.
+- **Une application verrouillée.** La fenêtre tourne dans un bac à sable avec une CSP stricte, ne peut ni naviguer ni
+  ouvrir d'autres fenêtres et ne répond qu'à sa propre page. Les fuses Electron désactivent `runAsNode`, `NODE_OPTIONS`
+  et l'inspecteur, et imposent l'intégrité ASAR.
+
+## Installation
+
+### Windows
+
+Téléchargez `Vibe-Usage-<version>-win-x64.zip` (ou `-arm64`) depuis les
+[Releases](https://github.com/mustafacagri/vibe-usage/releases), décompressez-le et lancez `Vibe Usage.exe`.
+L'application se loge dans la zone de notification.
+
+L'application n'est pas signée ; au premier lancement, Windows SmartScreen peut afficher **Windows a protégé votre ordinateur**. Cliquez sur **Informations complémentaires**, puis sur **Exécuter quand même**.
+
+### macOS
+
+L'application n'est pas encore signée avec un Apple Developer ID ; la compiler soi-même est donc le plus simple. Il
+suffit de Node.js 24 :
+
+```sh
+git clone https://github.com/mustafacagri/vibe-usage.git && cd vibe-usage
+npm ci
+npm run build:mac
+cp -R "release/mac-arm64/Vibe Usage.app" /Applications/
+```
+
+Sur un Mac Intel, le dossier est `release/mac`. Une application compilée sur votre machine n'est pas mise en quarantaine
+et s'ouvre directement. Si vous téléchargez plutôt le `.zip` ou le `.dmg`, Gatekeeper la bloque au premier lancement :
+faites un clic droit sur l'application et choisissez **Ouvrir**, ou lancez :
+
+```sh
+xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
+```
+
+## Ligne de commande
+
+Les mêmes données sont disponibles dans le terminal. La CLI partage les paramètres et la langue de l'application.
+
+```sh
+npm run cli -- status [--json]
+npm run watch
+npm run cli -- run <claude|codex|cursor> [--account ID] [--cwd PATH] [--model MODEL] [--dry-run]
+npm run cli -- handover [--from TOOL] [--to TOOL] [--session ID] [--cwd PATH]
+```
+
+`run` n'utilise qu'un compte dont le quota est vérifié ; sinon, indiquez-en un avec `--account`. `--dry-run` affiche le
+compte et la commande sans rien lancer.
+
+## Développement
+
+Les commandes, la structure du projet et les variables d'environnement sont dans la
+[section « Development » du README anglais](../../README.md#development).
+
+## Limites
+
+- La version macOS n'est pas notarisée (voir [macOS](#macos)).
+- Le modèle d'une session Antigravity provient d'un enregistrement local non documenté ; s'il est illisible, le modèle
+  reste vide.
+- Les discussions de Cursor IDE (Composer) ne peuvent pas être transférées ; seules les sessions Cursor Agent CLI sont
+  lues.
+
+## Licence
+
+[MIT](../../LICENSE)

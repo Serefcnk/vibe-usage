@@ -1,0 +1,121 @@
+{
+  "name": "vibe-usage",
+  "version": "0.1.1",
+  "description": "Track the quota left on Claude Code, Codex, Cursor and Antigravity from the Windows tray or the macOS menu bar",
+  "author": "Mustafa Çağrı Güven",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mustafacagri/vibe-usage.git"
+  },
+  "homepage": "https://github.com/mustafacagri/vibe-usage#readme",
+  "bugs": {
+    "url": "https://github.com/mustafacagri/vibe-usage/issues"
+  },
+  "private": true,
+  "type": "module",
+  "main": "build/main/main.js",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "node scripts/build.ts",
+    "start": "npm run build && electron .",
+    "test": "node scripts/test.ts",
+    "test:coverage": "node scripts/test.ts --coverage",
+    "cli": "node src/cli.ts",
+    "watch": "node src/cli.ts watch",
+    "build:win": "npm run build && node scripts/package.ts --win",
+    "build:mac": "npm run build && node scripts/package.ts --mac",
+    "ui-check": "npm run build && electron scripts/ui-check/main.ts",
+    "probe:claude": "node scripts/probe-claude.ts",
+    "media": "npm run build && electron scripts/media/main.ts",
+    "icons": "node scripts/icons.ts",
+    "release:manifests": "node scripts/release-manifests.ts",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "24.19.2",
+    "electron": "44.8.0",
+    "electron-builder": "26.15.3",
+    "eslint": "10.13.0",
+    "prettier": "3.9.10",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.2"
+  },
+  "build": {
+    "appId": "dev.vibe.usage",
+    "productName": "Vibe Usage",
+    "publish": {
+      "provider": "github",
+      "owner": "mustafacagri",
+      "repo": "vibe-usage",
+      "releaseType": "release"
+    },
+    "artifactName": "Vibe-Usage-${version}-${os}-${arch}.${ext}",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "build/**/*.js",
+      "!build/cli.js",
+      "build/**/*.cjs",
+      "build/ui/index.html",
+      "build/ui/style.css",
+      "build/launchers/*",
+      "assets/*",
+      "LICENSE",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "build/launchers/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "zip",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        },
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.png",
+      "signExecutable": false
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "artifactName": "Vibe-Usage-${version}-win-setup.${ext}"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.developer-tools",
+      "hardenedRuntime": false
+    },
+    "electronFuses": {
+      "runAsNode": false,
+      "enableCookieEncryption": true,
+      "enableNodeOptionsEnvironmentVariable": false,
+      "enableNodeCliInspectArguments": false,
+      "enableEmbeddedAsarIntegrityValidation": true,
+      "onlyLoadAppFromAsar": true
+    }
+  },
+  "dependencies": {
+    "electron-updater": "6.8.10"
+  }
+}

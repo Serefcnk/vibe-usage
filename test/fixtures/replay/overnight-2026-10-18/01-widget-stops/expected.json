@@ -1,0 +1,15 @@
+{
+  "note": "Main stopped the widget session at its limit while the other three still work; Spare has room and continuation is on for accounts: the stopped one moves to Spare and is told to go on, the busy ones stay (as the real run did).",
+  "starts": [
+    {
+      "sessionId": "9f6a0000-0000-4000-8000-000000000001",
+      "from": "claude:main",
+      "to": "claude:spare",
+      "prompt": "resume"
+    }
+  ],
+  "notices": [
+    "continued"
+  ],
+  "cards": []
+}

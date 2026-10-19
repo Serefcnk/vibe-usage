@@ -1,0 +1,13 @@
+{
+  "pid": 6304,
+  "sessionId": "2cb40000-0000-4000-8000-000000000004",
+  "cwd": "C:\\work\\skills",
+  "startedAt": 1792292710000,
+  "version": "2.1.302",
+  "kind": "interactive",
+  "entrypoint": "cli",
+  "pidDomain": "win32:developer",
+  "status": "busy",
+  "updatedAt": 1792293000000,
+  "statusUpdatedAt": 1792293000000
+}

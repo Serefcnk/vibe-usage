@@ -1,0 +1,21 @@
+version: 2
+updates:
+  # Tooling plus electron-updater, the only runtime dependency (grouped with the tooling).
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      tooling:
+        patterns: ['*']
+    ignore:
+      # Node types follow the Node.js that Electron embeds (24); they move with Electron.
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
+      # typescript-eslint supports TypeScript only up to 6.x.
+      - dependency-name: typescript
+        update-types: ['version-update:semver-major']
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

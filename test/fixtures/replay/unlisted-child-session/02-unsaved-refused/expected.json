@@ -1,0 +1,6 @@
+{
+  "note": "The process is found by its key file and --resume argument. It started after the transcript's last write, so it holds a conversation it never saved (a child session): moving would lose it, so the move is refused.",
+  "starts": [],
+  "notices": ["failed"],
+  "refusals": ["session_unsaved"]
+}

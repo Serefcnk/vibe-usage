@@ -1,0 +1,193 @@
+<div align="center">
+
+[English](../../README.md) · [Türkçe](README.tr.md) · [Deutsch](README.de.md) · [Español](README.es.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Português](README.pt.md) · **Nederlands** · [Polski](README.pl.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [简体中文](README.zh.md) · [Русский](README.ru.md)
+
+<img src="../../assets/icon.png" width="96" alt="" />
+
+# Vibe Usage
+
+**Al je betaalde AI-codeerabonnementen in één menubalkvenster.**
+
+Zie hoeveel quotum Claude Code, Codex, Cursor en Antigravity nog hebben, start de tool die nog ruimte heeft en geef een
+half afgemaakte taak door aan een andere tool zonder alles opnieuw uit te leggen.
+
+Windows-systeemvak · macOS-menubalk · 13 talen · geen wachtwoorden, geen opgeslagen tokens
+
+<img src="../media/demo.gif" width="400" alt="Rondleiding door Vibe Usage: wisselen tussen accounts, alle accounts naast elkaar, de compacte weergave, Slimme Start en Overdragen" />
+
+<sub>[Bekijk in volle resolutie (MP4)](../media/demo.mp4)</sub>
+
+</div>
+
+> Deze vertaling kan achterlopen op de Engelse README; de [Engelse versie](../../README.md) is leidend.
+
+## Waarom
+
+Wie met meerdere AI-tools programmeert, loopt steeds tegen dezelfde muur: de limiet van 5 uur raakt midden in een taak
+op, je opent een andere tool en begint alles opnieuw uit te leggen. Elke aanbieder toont het gebruik op een andere
+plek, en sommige helemaal niet.
+
+Vibe Usage leest de sessies die al op je computer zijn aangemeld en toont alle limieten naast elkaar: hoeveel er over is
+en wanneer het wordt gereset. Raakt een tool bijna op, dan start het de volgende met geverifieerd quotum in je
+projectmap en schrijft het een samenvatting van de huidige sessie, zodat de nieuwe tool verdergaat waar de oude stopte.
+
+## Functies
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### Quota in één oogopslag
+
+Elke limiet van elk account: vensters van 5 uur en per week, quota per model, bestedingsbudgetten. Aftellers tonen
+wanneer elk wordt gereset. Mislukt een verversing, dan blijft de laatste meting zichtbaar en wordt duidelijk als
+verouderd gemarkeerd. Onbekende waarden worden nooit als vol quotum getoond. Beweeg over het systeemvakpictogram om te
+zien wat elke tool nog heeft; kies desgewenst voor een melding wanneer een limiet bijna op is of weer beschikbaar wordt.
+De app kan openen bij aanmelden.
+
+</td>
+<td width="50%" valign="top">
+
+<img src="../media/main.png" width="100%" alt="Quotumkaarten voor Claude, Codex, Cursor en Antigravity, met de accounts van elke tool naast elkaar" />
+
+<img src="../media/compact.png" width="100%" alt="De compacte weergave: één regel per account" />
+
+</td>
+</tr>
+<tr>
+<td valign="top">
+
+### Slimme Start
+
+Kiest de eerste tool in je prioriteitsvolgorde waarvan het quotum **geverifieerd** ruimte heeft en opent die in een
+nieuwe terminal in de gekozen projectmap. Kan geen enkele tool worden geverifieerd, dan zegt het dat in plaats van te
+gokken.
+
+</td>
+<td valign="top">
+
+<img src="../media/smart-launch.png" width="100%" alt="Slimme Start raadt Codex aan omdat de limiet van 5 uur van Claude bijna op is" />
+
+</td>
+</tr>
+<tr>
+<td valign="top">
+
+### Overdragen
+
+Kies een sessie uit Claude Code, Codex, Cursor Agent of Antigravity. Vibe Usage vat die samen in `VIBE_HANDOVER.md` in
+de projectmap: het doel, de laatste beurten, de aangeraakte bestanden en de git-status. Daarna start het de doeltool met
+de opdracht die samenvatting te lezen. Alleen sessies die in de gekozen map zijn gestart, worden getoond.
+
+</td>
+<td valign="top">
+
+<img src="../media/handover.png" width="100%" alt="Overdrachtsvenster dat een Claude-sessie naar Codex verplaatst" />
+
+</td>
+</tr>
+<tr>
+<td valign="top">
+
+### Meerdere accounts
+
+Claude en Codex bewaren één aanmelding per profielmap. **Account toevoegen** maakt een nieuwe map en opent daar de
+aanmelding van de tool; `~/.claude-*`- en `~/.codex-*`-mappen die je zelf hebt gemaakt, worden automatisch gevonden. Elk
+account wordt getoond met het e-mailadres waarmee het is aangemeld, en ook elk aangemeld Antigravity-account wordt apart
+gevolgd. Kies het hoofdaccount, start Claude Code met een bepaald account en stel per tool de terugvalvolgorde en het
+voorkeursmodel in.
+Een aanmelding die niet binnen tien minuten klaar is, haalt het account weer weg; het volgende account hergebruikt de map.
+
+</td>
+<td valign="top">
+
+<img src="../media/settings.png" width="100%" alt="Instellingen: gekoppelde accounts, twee voor Claude en twee voor Codex" />
+
+</td>
+</tr>
+</table>
+
+## Ondersteunde tools
+
+| Tool        | Waar het quotum vandaan komt                                              | Sessies om over te dragen                      | Starten                                  |
+| ----------- | ------------------------------------------------------------------------- | ---------------------------------------------- | ---------------------------------------- |
+| Claude Code | OAuth-gebruiksendpoint van het profiel (Sleutelhanger op macOS)           | `~/.claude/projects`                           | `claude` CLI met het gekozen profiel     |
+| Codex       | Limietmethoden van de app-server van de geïnstalleerde CLI                | `~/.codex/sessions`                            | `codex` CLI                              |
+| Cursor      | Gebruiksoverzicht van de aangemelde sessie                                | Cursor Agent CLI-chats (`~/.cursor/chats`)     | `cursor-agent`, anders de app            |
+| Antigravity | Lokale dienst van de draaiende app (proces en poort geverifieerd)         | `~/.gemini/antigravity-ide`                    | Antigravity-app                          |
+
+Modellijsten komen uit de eigen gegevens van elke tool: Claude Code-aliassen en de modellen die je gebruikte, de
+modelcache van Codex en `cursor-agent --list-models` (24 uur gecachet).
+
+## Privacy en veiligheid
+
+- **Alleen lezen.** Het gebruikt de bestaande sessies. Het vraagt nooit om een wachtwoord, bewaart nooit
+  een token, meldt je nooit af en raakt lopend werk nooit aan.
+- **Verlopen aanmelding.** Als werk vanzelf tussen accounts mag verhuizen, vernieuwt Claude Code zelf een verlopen aanmelding: met één minimaal Haiku-verzoek (één woord, geen tools, niets opgeslagen), hooguit eens per 30 minuten per account. De app leest of gebruikt het vernieuwingstoken nooit.
+- **Twee endpoints.** Quotumverzoeken gaan alleen naar de gebruiksendpoints van Anthropic en Cursor, met TLS-verificatie
+  aan. Codex en Antigravity worden lokaal gelezen.
+- **Niets geheims op schijf.** Instellingen staan in `%APPDATA%\Vibe Usage\settings.json` (Windows) of
+  `~/Library/Application Support/Vibe Usage/settings.json` (macOS). Quota blijven alleen in het geheugen.
+- **Een afgeschermde app.** Het venster draait in een sandbox met een strikte CSP, kan niet navigeren of andere vensters
+  openen en antwoordt alleen zijn eigen pagina. Electron-fuses schakelen `runAsNode`, `NODE_OPTIONS` en de inspector uit
+  en dwingen ASAR-integriteit af.
+
+## Installatie
+
+### Windows
+
+Download `Vibe-Usage-<versie>-win-x64.zip` (of `-arm64`) via
+[Releases](https://github.com/mustafacagri/vibe-usage/releases), pak het uit en start `Vibe Usage.exe`. De app staat in
+het systeemvak.
+
+De app is niet ondertekend, dus bij de eerste start kan Windows SmartScreen **Uw pc is beveiligd door Windows** tonen. Klik op **Meer informatie** en daarna op **Toch uitvoeren**.
+
+### macOS
+
+De app is nog niet ondertekend met een Apple Developer ID, dus zelf bouwen is de eenvoudigste weg. Je hebt alleen
+Node.js 24 nodig:
+
+```sh
+git clone https://github.com/mustafacagri/vibe-usage.git && cd vibe-usage
+npm ci
+npm run build:mac
+cp -R "release/mac-arm64/Vibe Usage.app" /Applications/
+```
+
+Op een Intel-Mac heet de map `release/mac`. Een app die je zelf bouwt, wordt niet in quarantaine geplaatst en opent
+direct. Download je in plaats daarvan de `.zip` of `.dmg`, dan blokkeert Gatekeeper hem bij de eerste start: klik met
+de rechtermuisknop op de app en kies **Open**, of voer uit:
+
+```sh
+xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
+```
+
+## Opdrachtregel
+
+Dezelfde gegevens zijn beschikbaar in de terminal. De CLI deelt instellingen en taal met de desktop-app.
+
+```sh
+npm run cli -- status [--json]
+npm run watch
+npm run cli -- run <claude|codex|cursor> [--account ID] [--cwd PATH] [--model MODEL] [--dry-run]
+npm run cli -- handover [--from TOOL] [--to TOOL] [--session ID] [--cwd PATH]
+```
+
+`run` gebruikt alleen een account met geverifieerd quotum; noem anders een account met `--account`. `--dry-run` toont
+het account en de opdracht zonder iets te starten.
+
+## Ontwikkeling
+
+Opdrachten, projectstructuur en omgevingsvariabelen staan in de
+[sectie "Development" van de Engelse README](../../README.md#development).
+
+## Beperkingen
+
+- De macOS-build is niet genotariseerd (zie [macOS](#macos)).
+- Het model van een Antigravity-sessie komt uit een ongedocumenteerd lokaal record; als dat niet leesbaar is, blijft het
+  model leeg.
+- Chats uit Cursor IDE (Composer) kunnen niet worden overgedragen; alleen sessies van Cursor Agent CLI worden gelezen.
+
+## Licentie
+
+[MIT](../../LICENSE)

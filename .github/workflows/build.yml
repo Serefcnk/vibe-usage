@@ -1,0 +1,114 @@
+name: Build desktop
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      signed:
+        description: Sign (and on macOS notarize) the packages; fails when a credential is missing
+        type: boolean
+        default: false
+
+# The workflow only reads the repository; artifacts are uploaded with the run's own token.
+permissions:
+  contents: read
+
+# A newer push to the same branch or pull request supersedes a running build.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  package:
+    strategy:
+      # Each platform reports its own result even when the other fails.
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          # Electron 44 embeds Node 24; test on the runtime the app ships with.
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run format:check
+      # Type-checks every project and emits build/.
+      - run: npm run build
+      # Fails when line, branch or function coverage drops below the thresholds.
+      - run: npm run test:coverage
+      - run: npm run ui-check
+      # A signed build is asked for explicitly: by a manual run, or for version tags when the
+      # repository variable SIGNED_RELEASE is 'true'. It then fails without its credentials instead
+      # of publishing unsigned packages. Pull requests never receive the signing secrets.
+      - name: Decide whether to sign
+        shell: bash
+        env:
+          REQUESTED: ${{ github.event_name != 'pull_request' && (inputs.signed || (startsWith(github.ref, 'refs/tags/v') && vars.SIGNED_RELEASE == 'true')) }}
+        run: echo "VIBE_SIGNED_RELEASE=$REQUESTED" >> "$GITHUB_ENV"
+      - name: Write the App Store Connect API key
+        if: runner.os == 'macOS' && env.VIBE_SIGNED_RELEASE == 'true'
+        shell: bash
+        env:
+          APPLE_API_KEY_P8: ${{ secrets.APPLE_API_KEY_P8 }}
+        run: |
+          if [ -n "$APPLE_API_KEY_P8" ]; then
+            printf '%s' "$APPLE_API_KEY_P8" > "$RUNNER_TEMP/AuthKey.p8"
+            echo "APPLE_API_KEY=$RUNNER_TEMP/AuthKey.p8" >> "$GITHUB_ENV"
+          fi
+      - run: npm run build:win
+        if: runner.os == 'Windows'
+        env:
+          WIN_CSC_LINK: ${{ env.VIBE_SIGNED_RELEASE == 'true' && secrets.WIN_CSC_LINK || '' }}
+          WIN_CSC_KEY_PASSWORD: ${{ env.VIBE_SIGNED_RELEASE == 'true' && secrets.WIN_CSC_KEY_PASSWORD || '' }}
+      - run: npm run build:mac
+        if: runner.os == 'macOS'
+        env:
+          CSC_LINK: ${{ env.VIBE_SIGNED_RELEASE == 'true' && secrets.MAC_CSC_LINK || '' }}
+          CSC_KEY_PASSWORD: ${{ env.VIBE_SIGNED_RELEASE == 'true' && secrets.MAC_CSC_KEY_PASSWORD || '' }}
+          APPLE_API_KEY_ID: ${{ env.VIBE_SIGNED_RELEASE == 'true' && secrets.APPLE_API_KEY_ID || '' }}
+          APPLE_API_ISSUER: ${{ env.VIBE_SIGNED_RELEASE == 'true' && secrets.APPLE_API_ISSUER || '' }}
+          APPLE_ID: ${{ env.VIBE_SIGNED_RELEASE == 'true' && secrets.APPLE_ID || '' }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ env.VIBE_SIGNED_RELEASE == 'true' && secrets.APPLE_APP_SPECIFIC_PASSWORD || '' }}
+          APPLE_TEAM_ID: ${{ env.VIBE_SIGNED_RELEASE == 'true' && secrets.APPLE_TEAM_ID || '' }}
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: Vibe-Usage-${{ runner.os }}
+          if-no-files-found: error
+          # The installer, the archives, and what the in-app updater reads: latest*.yml (versions and
+          # SHA-512 checksums) and the blockmaps for partial downloads.
+          path: |
+            release/*.zip
+            release/*.dmg
+            release/*.exe
+            release/*.blockmap
+            release/latest*.yml
+
+  # A pushed version tag publishes the packages built above as a GitHub release.
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: package
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Check that the tag names the package version
+        run: test "v$(node -p "require('./package.json').version")" = "$GITHUB_REF_NAME"
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          path: packages
+          merge-multiple: true
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" packages/* --verify-tag --title "Vibe Usage $GITHUB_REF_NAME" --generate-notes

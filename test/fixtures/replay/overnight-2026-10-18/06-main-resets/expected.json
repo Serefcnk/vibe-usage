@@ -1,0 +1,36 @@
+{
+  "note": "Main has room again and returns are automatic; each copy on Spare was cut off there and has been quiet for two hours, so each goes back to Main with the prompt to go on — the widget one too, whose held process took a queued notice (a user record, no reply) after its stop. The real run returned nothing: Main’s team plan reports no weekly limit (seven_day: null), which was read as an unknown quota (fixed in 429f70b), and the copies on Spare were unsaved.",
+  "starts": [
+    {
+      "sessionId": "9f6a0000-0000-4000-8000-000000000001",
+      "from": "claude:spare",
+      "to": "claude:main",
+      "prompt": "resume"
+    },
+    {
+      "sessionId": "1aae0000-0000-4000-8000-000000000002",
+      "from": "claude:spare",
+      "to": "claude:main",
+      "prompt": "resume"
+    },
+    {
+      "sessionId": "e3d50000-0000-4000-8000-000000000003",
+      "from": "claude:spare",
+      "to": "claude:main",
+      "prompt": "resume"
+    },
+    {
+      "sessionId": "2cb40000-0000-4000-8000-000000000004",
+      "from": "claude:spare",
+      "to": "claude:main",
+      "prompt": "resume"
+    }
+  ],
+  "notices": [
+    "returned",
+    "returned",
+    "returned",
+    "returned"
+  ],
+  "cards": []
+}

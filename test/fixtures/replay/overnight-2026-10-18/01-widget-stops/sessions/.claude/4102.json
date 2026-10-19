@@ -1,0 +1,13 @@
+{
+  "pid": 4102,
+  "sessionId": "1aae0000-0000-4000-8000-000000000002",
+  "cwd": "C:\\work\\app\\.claude\\worktrees\\task",
+  "startedAt": 1792267200000,
+  "version": "2.1.302",
+  "kind": "interactive",
+  "entrypoint": "cli",
+  "pidDomain": "win32:developer",
+  "status": "busy",
+  "updatedAt": 1792283220000,
+  "statusUpdatedAt": 1792283220000
+}

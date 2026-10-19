@@ -1,0 +1,6 @@
+{
+  "note": "The stopped session's process is not listed and the system cannot list processes: whether it runs is unknown, so nothing starts and the stop waits for the next refresh.",
+  "starts": [],
+  "notices": [],
+  "cards": []
+}

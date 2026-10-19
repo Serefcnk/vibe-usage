@@ -1,0 +1,6 @@
+{
+  "note": "The main account stopped the session at its limit; the spare account has room, continuation is on for accounts: the whole session moves to the spare account and is told to go on.",
+  "starts": [{ "sessionId": "4d2f9a10-0000-4000-8000-00000000c0de", "from": "claude:main", "to": "claude:spare", "prompt": "resume" }],
+  "notices": ["continued"],
+  "cards": []
+}

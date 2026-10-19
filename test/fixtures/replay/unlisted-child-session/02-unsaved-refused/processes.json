@@ -1,0 +1,11 @@
+{
+  "alive": [7001],
+  "system": [
+    {
+      "pid": 7001,
+      "at": 1792283970000,
+      "ticks": "134365048700000000",
+      "command": "<home>/.local/bin/claude.exe --resume 7a11ce00-0000-4000-8000-00000000beef \"Continue.\""
+    }
+  ]
+}

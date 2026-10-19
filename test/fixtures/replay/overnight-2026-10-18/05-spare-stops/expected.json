@@ -1,0 +1,11 @@
+{
+  "note": "All four stopped on Spare at its limit; Main has no room until 03:00 and there is no other account: each is stranded, told once, with no card (no target has quota). The real run saw none of this: the moved sessions had been started with Claude Code’s child-session marker and saved nothing (fixed in e6d1ef6).",
+  "starts": [],
+  "notices": [
+    "stranded",
+    "stranded",
+    "stranded",
+    "stranded"
+  ],
+  "cards": []
+}

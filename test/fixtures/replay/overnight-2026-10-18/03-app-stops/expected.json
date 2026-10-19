@@ -1,0 +1,15 @@
+{
+  "note": "The app session stopped and moves.",
+  "starts": [
+    {
+      "sessionId": "e3d50000-0000-4000-8000-000000000003",
+      "from": "claude:main",
+      "to": "claude:spare",
+      "prompt": "resume"
+    }
+  ],
+  "notices": [
+    "continued"
+  ],
+  "cards": []
+}

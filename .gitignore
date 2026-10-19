@@ -1,0 +1,12 @@
+node_modules/
+build/
+release/
+artifacts/
+coverage/
+.worktrees/
+*.log
+*.secrets.json
+# Written into the project by a handover; not part of this repository.
+VIBE_HANDOVER.md
+*.tsbuildinfo
+.claude/worktrees/

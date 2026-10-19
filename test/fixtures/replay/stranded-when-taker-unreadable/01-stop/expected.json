@@ -1,0 +1,5 @@
+{
+  "note": "The main account stopped at its limit. The spare account's only reading is two hours old and every read since fails (expired sign-in): a failed reading is an answer, so no account has verified room and the stop is stranded at once, with the user told, rather than waiting for a reading that will not come.",
+  "starts": [],
+  "notices": ["stranded"]
+}

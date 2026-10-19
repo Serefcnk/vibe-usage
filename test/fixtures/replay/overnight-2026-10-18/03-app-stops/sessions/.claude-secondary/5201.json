@@ -1,0 +1,13 @@
+{
+  "pid": 5201,
+  "sessionId": "9f6a0000-0000-4000-8000-000000000001",
+  "cwd": "C:\\work\\widget",
+  "startedAt": 1792283225000,
+  "version": "2.1.302",
+  "kind": "interactive",
+  "entrypoint": "cli",
+  "pidDomain": "win32:developer",
+  "status": "busy",
+  "updatedAt": 1792284090000,
+  "statusUpdatedAt": 1792284090000
+}

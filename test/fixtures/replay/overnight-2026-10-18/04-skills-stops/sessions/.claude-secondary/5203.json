@@ -1,0 +1,13 @@
+{
+  "pid": 5203,
+  "sessionId": "e3d50000-0000-4000-8000-000000000003",
+  "cwd": "C:\\work\\app",
+  "startedAt": 1792284063000,
+  "version": "2.1.302",
+  "kind": "interactive",
+  "entrypoint": "cli",
+  "pidDomain": "win32:developer",
+  "status": "busy",
+  "updatedAt": 1792284360000,
+  "statusUpdatedAt": 1792284360000
+}

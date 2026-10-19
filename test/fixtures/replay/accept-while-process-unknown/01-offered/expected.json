@@ -1,0 +1,6 @@
+{
+  "note": "Continuing on its own is off: the stop is offered as a card, nothing starts.",
+  "starts": [],
+  "notices": ["suggested"],
+  "cards": ["low:claude:main:4d2f9a10-0000-4000-8000-00000000c0de"]
+}

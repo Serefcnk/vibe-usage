@@ -1,0 +1,15 @@
+{
+  "note": "The worktree session stopped next and moves the same way; the widget session, already on Spare and busy, is left alone.",
+  "starts": [
+    {
+      "sessionId": "1aae0000-0000-4000-8000-000000000002",
+      "from": "claude:main",
+      "to": "claude:spare",
+      "prompt": "resume"
+    }
+  ],
+  "notices": [
+    "continued"
+  ],
+  "cards": []
+}

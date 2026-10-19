@@ -1,0 +1,58 @@
+{
+  "settings": {
+    "autoContinue": "accounts",
+    "returnToPrimary": "auto",
+    "accounts": [
+      {
+        "id": "claude:main",
+        "providerId": "claude",
+        "label": "Main",
+        "configDir": "<home>/.claude",
+        "configDirExplicit": false,
+        "primary": true,
+        "enabled": true
+      },
+      {
+        "id": "claude:spare",
+        "providerId": "claude",
+        "label": "Spare",
+        "configDir": "<home>/.claude-secondary",
+        "configDirExplicit": true,
+        "primary": false,
+        "enabled": true
+      }
+    ]
+  },
+  "providers": [
+    {
+      "id": "claude",
+      "status": "ok",
+      "accounts": [
+        {
+          "id": "claude:main",
+          "providerId": "claude",
+          "label": "Main",
+          "configDir": "<home>/.claude",
+          "configDirExplicit": false,
+          "primary": true,
+          "enabled": true,
+          "status": "ok",
+          "fetchedAt": "<clock>",
+          "windows": [{ "id": "five_hour", "usedPercent": 0, "remainingPercent": 100, "resetsAt": null }]
+        },
+        {
+          "id": "claude:spare",
+          "providerId": "claude",
+          "label": "Spare",
+          "configDir": "<home>/.claude-secondary",
+          "configDirExplicit": true,
+          "primary": false,
+          "enabled": true,
+          "status": "ok",
+          "fetchedAt": "<clock>",
+          "windows": [{ "id": "five_hour", "usedPercent": 30, "remainingPercent": 70, "resetsAt": null }]
+        }
+      ]
+    }
+  ]
+}
