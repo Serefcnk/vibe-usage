@@ -127,7 +127,8 @@ function createWindow(settings: Settings, service: Service): BrowserWindow {
     show: false,
     alwaysOnTop: settings.pinned,
     backgroundColor: WINDOW.background,
-    icon: path.join(ASSETS, 'icon.png'),
+    // Shown by Windows (and Linux) only; macOS takes the app's own icon.
+    icon: path.join(ASSETS, 'icon-windows.png'),
     webPreferences: { preload: PRELOAD, nodeIntegration: false, contextIsolation: true, sandbox: true }
   });
   win.on('close', event => {
@@ -316,7 +317,8 @@ async function start(): Promise<void> {
   const format = (): FormatContext => ({ t, locale: service.snapshot().settings.language });
   startupT = t;
   const win = createWindow(service.snapshot().settings, service);
-  const tray = new Tray(nativeImage.createFromPath(path.join(ASSETS, 'tray.png')));
+  // The ring with nothing read yet, until the first snapshot fills it.
+  const tray = new Tray(trayImage(null, service.snapshot().settings.lowQuotaPercent));
   // Replaced by each tool's quota once the first snapshot is published.
   tray.setToolTip(APP_NAME);
   // The ring last drawn, by its percentage and low line.

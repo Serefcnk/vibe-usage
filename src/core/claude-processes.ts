@@ -27,6 +27,9 @@ import { isObject, readJson, type JsonObject } from './files.ts';
 
 const execFileAsync = promisify(execFile);
 const QUERY_TIMEOUT_MS = 10_000;
+// Windows PowerShell starts .NET first: on a busy machine a cold start alone has taken over 10 s
+// (measured on a CI runner). A timeout reads as "unknown" and delays the work, so it waits longer.
+const POWERSHELL_TIMEOUT_MS = 30_000;
 // Windows records process start times in 100 ns ticks since 1601.
 const TICKS_PER_MS = 10_000;
 const UNIX_EPOCH_TICKS = 116_444_736_000_000_000n;
@@ -99,7 +102,7 @@ const ticksToMs = (ticks: string): number => Number((BigInt(ticks) - UNIX_EPOCH_
 async function powershell(script: string): Promise<string> {
   const { stdout } = await execFileAsync(windowsPowerShell(), ['-NoLogo', '-NoProfile', '-NonInteractive', '-Command', script], {
     encoding: 'utf8',
-    timeout: QUERY_TIMEOUT_MS,
+    timeout: POWERSHELL_TIMEOUT_MS,
     windowsHide: true
   });
   return stdout;

@@ -38,15 +38,22 @@ test('a signed package needs every credential, and fails before building without
     });
 });
 
-// Without an icon of its own (at least 512 px for the .icns) a package shows Electron's.
-test('both packages use the app icon, large enough for macOS', async () => {
+// Without an icon of its own a package shows Electron's. macOS needs 512 px at 2x for its
+// .icns; electron-builder makes the Windows .ico from at least 256 px.
+test('both packages use their app icon, large enough for the platform', async () => {
   const { readFile } = await import('node:fs/promises');
   const pkg = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8')) as {
     build: Record<'win' | 'mac', { icon?: string }>;
   };
-  assert.deepEqual([pkg.build.win.icon, pkg.build.mac.icon], ['assets/icon.png', 'assets/icon.png']);
-  const icon = await readFile(new URL('../assets/icon.png', import.meta.url));
-  assert.ok(Math.min(icon.readUInt32BE(16), icon.readUInt32BE(20)) >= 512);
+  for (const [icon, minimum] of [
+    [pkg.build.mac.icon, 1024],
+    [pkg.build.win.icon, 256]
+  ] as const) {
+    assert.ok(icon, 'an icon is set');
+    const png = await readFile(new URL(`../${icon}`, import.meta.url));
+    assert.ok(Math.min(png.readUInt32BE(16), png.readUInt32BE(20)) >= minimum, `${icon} is at least ${minimum} px`);
+  }
+  assert.deepEqual([pkg.build.mac.icon, pkg.build.win.icon], ['assets/icon.png', 'assets/icon-windows.png']);
 });
 
 // electron-builder deep-merges the plan over package.json; an identity left there would win.

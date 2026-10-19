@@ -188,7 +188,7 @@ Unless a release says it is signed, the app is not code-signed, so on first laun
 
 ### macOS
 
-Download `Vibe-Usage-<version>-mac-arm64.dmg` (Apple silicon) from the
+Download `Vibe-Usage-<version>-mac-arm64.dmg` (Apple silicon) or `-mac-x64.dmg` (Intel) from the
 [latest release](https://github.com/mustafacagri/vibe-usage/releases/latest), open it and drag **Vibe Usage** to
 Applications. The app is not signed with an Apple Developer ID yet, so Gatekeeper blocks the first launch: open
 **System Settings › Privacy & Security** and click **Open Anyway**, or run:
@@ -197,7 +197,7 @@ Applications. The app is not signed with an Apple Developer ID yet, so Gatekeepe
 xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
 ```
 
-On an Intel Mac, or to skip that step, build it yourself. You only need Node.js 24:
+To skip that step, build it yourself. You only need Node.js 24:
 
 ```sh
 git clone https://github.com/mustafacagri/vibe-usage.git && cd vibe-usage

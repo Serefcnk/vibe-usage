@@ -1,6 +1,6 @@
 {
   "name": "vibe-usage-cli",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Track the quota left on Claude Code, Codex, Cursor and Antigravity from the Windows tray, the macOS menu bar or the terminal",
   "author": "Mustafa Çağrı Güven",
   "license": "MIT",
@@ -50,7 +50,7 @@
     "ui-check": "npm run build && electron scripts/ui-check/main.ts",
     "probe:claude": "node scripts/probe-claude.ts",
     "media": "npm run build && electron scripts/media/main.ts",
-    "icons": "node scripts/icons.ts",
+    "icons": "electron scripts/icons.ts",
     "release:manifests": "node scripts/release-manifests.ts",
     "lint": "eslint .",
     "format": "prettier --write .",
@@ -114,7 +114,7 @@
           ]
         }
       ],
-      "icon": "assets/icon.png",
+      "icon": "assets/icon-windows.png",
       "signExecutable": false
     },
     "nsis": {
@@ -124,8 +124,20 @@
     },
     "mac": {
       "target": [
-        "dmg",
-        "zip"
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
       ],
       "category": "public.app-category.developer-tools",
       "icon": "assets/icon.png",

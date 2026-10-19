@@ -120,13 +120,13 @@ Claude와 Codex는 프로필 폴더마다 하나의 로그인을 보관합니다
 
 ### macOS
 
-[최신 릴리스](https://github.com/mustafacagri/vibe-usage/releases/latest)에서 `Vibe-Usage-<버전>-mac-arm64.dmg`(Apple 실리콘)를 내려받아 열고 **Vibe Usage**를 응용 프로그램 폴더로 끌어 놓으세요. 앱이 아직 Apple Developer ID로 서명되지 않아 Gatekeeper가 첫 실행을 막습니다. **시스템 설정 › 개인정보 보호 및 보안**에서 **그래도 열기**를 클릭하거나 다음을 실행하세요:
+[최신 릴리스](https://github.com/mustafacagri/vibe-usage/releases/latest)에서 `Vibe-Usage-<버전>-mac-arm64.dmg`(Apple 실리콘, Intel은 `-mac-x64.dmg`)를 내려받아 열고 **Vibe Usage**를 응용 프로그램 폴더로 끌어 놓으세요. 앱이 아직 Apple Developer ID로 서명되지 않아 Gatekeeper가 첫 실행을 막습니다. **시스템 설정 › 개인정보 보호 및 보안**에서 **그래도 열기**를 클릭하거나 다음을 실행하세요:
 
 ```sh
 xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
 ```
 
-Intel Mac이거나 이 단계를 건너뛰려면 직접 빌드하세요. Node.js 24만 있으면 됩니다:
+이 단계를 건너뛰려면 직접 빌드하세요. Node.js 24만 있으면 됩니다:
 
 ```sh
 git clone https://github.com/mustafacagri/vibe-usage.git && cd vibe-usage

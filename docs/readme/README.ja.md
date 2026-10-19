@@ -120,13 +120,13 @@ Claude と Codex はプロファイルフォルダーごとに 1 つのサイン
 
 ### macOS
 
-[最新リリース](https://github.com/mustafacagri/vibe-usage/releases/latest) から `Vibe-Usage-<バージョン>-mac-arm64.dmg` (Apple シリコン) をダウンロードして開き、**Vibe Usage** をアプリケーションフォルダーにドラッグします。アプリはまだ Apple Developer ID で署名されていないため、初回起動は Gatekeeper にブロックされます。**システム設定 › プライバシーとセキュリティ** を開いて **このまま開く** をクリックするか、次を実行します:
+[最新リリース](https://github.com/mustafacagri/vibe-usage/releases/latest) から `Vibe-Usage-<バージョン>-mac-arm64.dmg` (Apple シリコン。Intel は `-mac-x64.dmg`) をダウンロードして開き、**Vibe Usage** をアプリケーションフォルダーにドラッグします。アプリはまだ Apple Developer ID で署名されていないため、初回起動は Gatekeeper にブロックされます。**システム設定 › プライバシーとセキュリティ** を開いて **このまま開く** をクリックするか、次を実行します:
 
 ```sh
 xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
 ```
 
-Intel Mac の場合、またはこの手順を省きたい場合は自分でビルドします。必要なのは Node.js 24 だけです:
+この手順を省きたい場合は自分でビルドします。必要なのは Node.js 24 だけです:
 
 ```sh
 git clone https://github.com/mustafacagri/vibe-usage.git && cd vibe-usage

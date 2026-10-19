@@ -144,13 +144,13 @@ De app is niet ondertekend, dus bij de eerste start kan Windows SmartScreen **Uw
 
 ### macOS
 
-Download `Vibe-Usage-<versie>-mac-arm64.dmg` (Apple silicon) uit de [nieuwste release](https://github.com/mustafacagri/vibe-usage/releases/latest), open hem en sleep **Vibe Usage** naar Apps. De app is nog niet ondertekend met een Apple Developer ID, dus Gatekeeper blokkeert de eerste start: open **Systeeminstellingen › Privacy en beveiliging** en klik op **Open toch**, of voer uit:
+Download `Vibe-Usage-<versie>-mac-arm64.dmg` (Apple silicon; Intel: `-mac-x64.dmg`) uit de [nieuwste release](https://github.com/mustafacagri/vibe-usage/releases/latest), open hem en sleep **Vibe Usage** naar Apps. De app is nog niet ondertekend met een Apple Developer ID, dus Gatekeeper blokkeert de eerste start: open **Systeeminstellingen › Privacy en beveiliging** en klik op **Open toch**, of voer uit:
 
 ```sh
 xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
 ```
 
-Op een Intel-Mac, of om die stap over te slaan, bouw je hem zelf. Je hebt alleen Node.js 24 nodig:
+Om die stap over te slaan, bouw je hem zelf. Je hebt alleen Node.js 24 nodig:
 
 ```sh
 git clone https://github.com/mustafacagri/vibe-usage.git && cd vibe-usage

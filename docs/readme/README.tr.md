@@ -142,13 +142,13 @@ Uygulama kod imzalı olmadığından ilk açılışta Windows SmartScreen **Wind
 
 ### macOS
 
-[Son sürümden](https://github.com/mustafacagri/vibe-usage/releases/latest) `Vibe-Usage-<sürüm>-mac-arm64.dmg` dosyasını (Apple silicon) indir, aç ve **Vibe Usage**'ı Uygulamalar klasörüne sürükle. Uygulama henüz Apple Developer ID ile imzalı olmadığından Gatekeeper ilk açılışı engeller: **Sistem Ayarları › Gizlilik ve Güvenlik**'i açıp **Yine de Aç**'a tıkla ya da şunu çalıştır:
+[Son sürümden](https://github.com/mustafacagri/vibe-usage/releases/latest) `Vibe-Usage-<sürüm>-mac-arm64.dmg` dosyasını (Apple silicon; Intel için `-mac-x64.dmg`) indir, aç ve **Vibe Usage**'ı Uygulamalar klasörüne sürükle. Uygulama henüz Apple Developer ID ile imzalı olmadığından Gatekeeper ilk açılışı engeller: **Sistem Ayarları › Gizlilik ve Güvenlik**'i açıp **Yine de Aç**'a tıkla ya da şunu çalıştır:
 
 ```sh
 xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
 ```
 
-Intel Mac'te ya da bu adımı atlamak için kendin derle. Yalnızca Node.js 24 gerekir:
+Bu adımı atlamak için kendin derle. Yalnızca Node.js 24 gerekir:
 
 ```sh
 git clone https://github.com/mustafacagri/vibe-usage.git && cd vibe-usage

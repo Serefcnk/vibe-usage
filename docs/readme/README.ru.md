@@ -144,13 +144,13 @@ e-mail, с которым выполнен вход, и каждый аккау�
 
 ### macOS
 
-Скачайте `Vibe-Usage-<версия>-mac-arm64.dmg` (Apple silicon) из [последнего релиза](https://github.com/mustafacagri/vibe-usage/releases/latest), откройте его и перетащите **Vibe Usage** в «Программы». Приложение ещё не подписано Apple Developer ID, поэтому Gatekeeper блокирует первый запуск: откройте **Системные настройки › Конфиденциальность и безопасность** и нажмите **Все равно открыть** или выполните:
+Скачайте `Vibe-Usage-<версия>-mac-arm64.dmg` (Apple silicon; Intel: `-mac-x64.dmg`) из [последнего релиза](https://github.com/mustafacagri/vibe-usage/releases/latest), откройте его и перетащите **Vibe Usage** в «Программы». Приложение ещё не подписано Apple Developer ID, поэтому Gatekeeper блокирует первый запуск: откройте **Системные настройки › Конфиденциальность и безопасность** и нажмите **Все равно открыть** или выполните:
 
 ```sh
 xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
 ```
 
-На Mac с Intel, или чтобы пропустить этот шаг, соберите приложение сами. Нужен только Node.js 24:
+Чтобы пропустить этот шаг, соберите приложение сами. Нужен только Node.js 24:
 
 ```sh
 git clone https://github.com/mustafacagri/vibe-usage.git && cd vibe-usage

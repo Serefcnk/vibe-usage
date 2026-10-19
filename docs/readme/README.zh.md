@@ -120,13 +120,13 @@ Claude 和 Codex 每个配置文件文件夹保存一个登录。**添加账户*
 
 ### macOS
 
-从[最新版本](https://github.com/mustafacagri/vibe-usage/releases/latest)下载 `Vibe-Usage-<版本>-mac-arm64.dmg`（Apple 芯片），打开后把 **Vibe Usage** 拖到"应用程序"。应用尚未使用 Apple Developer ID 签名，因此 Gatekeeper 会阻止首次启动：打开 **系统设置 › 隐私与安全性** 并点按 **仍要打开**，或运行：
+从[最新版本](https://github.com/mustafacagri/vibe-usage/releases/latest)下载 `Vibe-Usage-<版本>-mac-arm64.dmg`（Apple 芯片；Intel 为 `-mac-x64.dmg`），打开后把 **Vibe Usage** 拖到"应用程序"。应用尚未使用 Apple Developer ID 签名，因此 Gatekeeper 会阻止首次启动：打开 **系统设置 › 隐私与安全性** 并点按 **仍要打开**，或运行：
 
 ```sh
 xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
 ```
 
-在 Intel Mac 上，或想跳过这一步，可以自己构建。只需要 Node.js 24：
+想跳过这一步，可以自己构建。只需要 Node.js 24：
 
 ```sh
 git clone https://github.com/mustafacagri/vibe-usage.git && cd vibe-usage

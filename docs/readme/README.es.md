@@ -145,13 +145,13 @@ La app no está firmada, así que en el primer arranque Windows SmartScreen pued
 
 ### macOS
 
-Descarga `Vibe-Usage-<versión>-mac-arm64.dmg` (Apple silicon) de la [última versión](https://github.com/mustafacagri/vibe-usage/releases/latest), ábrelo y arrastra **Vibe Usage** a Aplicaciones. La app aún no está firmada con un Apple Developer ID, así que Gatekeeper bloquea el primer inicio: abre **Ajustes del Sistema › Privacidad y seguridad** y pulsa **Abrir igualmente**, o ejecuta:
+Descarga `Vibe-Usage-<versión>-mac-arm64.dmg` (Apple silicon; Intel: `-mac-x64.dmg`) de la [última versión](https://github.com/mustafacagri/vibe-usage/releases/latest), ábrelo y arrastra **Vibe Usage** a Aplicaciones. La app aún no está firmada con un Apple Developer ID, así que Gatekeeper bloquea el primer inicio: abre **Ajustes del Sistema › Privacidad y seguridad** y pulsa **Abrir igualmente**, o ejecuta:
 
 ```sh
 xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
 ```
 
-En un Mac Intel, o para saltarte ese paso, compílala tú mismo. Solo necesitas Node.js 24:
+Para saltarte ese paso, compílala tú mismo. Solo necesitas Node.js 24:
 
 ```sh
 git clone https://github.com/mustafacagri/vibe-usage.git && cd vibe-usage

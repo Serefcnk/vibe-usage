@@ -145,13 +145,13 @@ Aplikacja nie jest podpisana, więc przy pierwszym uruchomieniu Windows SmartScr
 
 ### macOS
 
-Pobierz `Vibe-Usage-<wersja>-mac-arm64.dmg` (Apple silicon) z [najnowszego wydania](https://github.com/mustafacagri/vibe-usage/releases/latest), otwórz i przeciągnij **Vibe Usage** do Aplikacji. Aplikacja nie jest jeszcze podpisana Apple Developer ID, więc Gatekeeper blokuje pierwsze uruchomienie: otwórz **Ustawienia systemowe › Prywatność i ochrona** i kliknij **Otwórz mimo to** albo uruchom:
+Pobierz `Vibe-Usage-<wersja>-mac-arm64.dmg` (Apple silicon; Intel: `-mac-x64.dmg`) z [najnowszego wydania](https://github.com/mustafacagri/vibe-usage/releases/latest), otwórz i przeciągnij **Vibe Usage** do Aplikacji. Aplikacja nie jest jeszcze podpisana Apple Developer ID, więc Gatekeeper blokuje pierwsze uruchomienie: otwórz **Ustawienia systemowe › Prywatność i ochrona** i kliknij **Otwórz mimo to** albo uruchom:
 
 ```sh
 xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
 ```
 
-Na Macu z procesorem Intel, albo by pominąć ten krok, zbuduj ją sam. Wystarczy Node.js 24:
+Aby pominąć ten krok, zbuduj ją sam. Wystarczy Node.js 24:
 
 ```sh
 git clone https://github.com/mustafacagri/vibe-usage.git && cd vibe-usage
