@@ -13,6 +13,8 @@ your session continues on another account or tool, without re-explaining the tas
 
 Windows tray · macOS menu bar · 13 languages · no passwords, no tokens stored
 
+**[Download for Windows and macOS](https://github.com/mustafacagri/vibe-usage/releases/latest)** · Terminal: `npm install -g vibe-usage-cli`
+
 <img src="docs/media/demo.gif" width="400" alt="Vibe Usage walkthrough: switching accounts, every account side by side, the compact view, Smart Launch and Handover" />
 
 <sub>[Watch in full resolution (MP4)](docs/media/demo.mp4)</sub>
@@ -176,7 +178,7 @@ Found a security issue? Please report it privately as described in [SECURITY.md]
 
 ### Windows
 
-Download `Vibe-Usage-<version>-win-setup.exe` from [Releases](https://github.com/mustafacagri/vibe-usage/releases) and
+Download `Vibe-Usage-<version>-win-setup.exe` from the [latest release](https://github.com/mustafacagri/vibe-usage/releases/latest) and
 run it: it installs for your user only (no administrator rights), and once releases are signed it updates itself from
 inside the app. Or take the
 portable `Vibe-Usage-<version>-win-x64.zip` (or `-arm64`), unzip it and run `Vibe Usage.exe`; a portable copy
@@ -186,8 +188,16 @@ Unless a release says it is signed, the app is not code-signed, so on first laun
 
 ### macOS
 
-The app is not signed with an Apple Developer ID yet, so building it yourself is the smoothest path. You only need
-Node.js 24:
+Download `Vibe-Usage-<version>-mac-arm64.dmg` (Apple silicon) from the
+[latest release](https://github.com/mustafacagri/vibe-usage/releases/latest), open it and drag **Vibe Usage** to
+Applications. The app is not signed with an Apple Developer ID yet, so Gatekeeper blocks the first launch: open
+**System Settings › Privacy & Security** and click **Open Anyway**, or run:
+
+```sh
+xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
+```
+
+On an Intel Mac, or to skip that step, build it yourself. You only need Node.js 24:
 
 ```sh
 git clone https://github.com/mustafacagri/vibe-usage.git && cd vibe-usage
@@ -196,13 +206,7 @@ npm run build:mac
 cp -R "release/mac-arm64/Vibe Usage.app" /Applications/
 ```
 
-On an Intel Mac the folder is `release/mac`. An app you build yourself is not quarantined and opens directly. If you
-download the `.zip` or `.dmg` instead, Gatekeeper blocks it on first launch: right-click the app and choose **Open**,
-or run:
-
-```sh
-xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
-```
+On an Intel Mac the folder is `release/mac`. An app you build yourself is not quarantined and opens directly.
 
 macOS lets only a signed app replace itself, so until releases are signed a new version is installed the same way
 (the app links to it when one is out).
@@ -213,7 +217,7 @@ The same data is available in the terminal on Windows and macOS, with or without
 or later and reads the same signed-in sessions as the app; when both are installed they share settings and language.
 
 ```sh
-npm install -g vibe-usage
+npm install -g vibe-usage-cli
 vibe-usage status
 ```
 
@@ -227,7 +231,7 @@ vibe-usage handover [--from TOOL] [--to TOOL] [--session ID] [--cwd PATH]
 vibe-usage help
 ```
 
-To try it without installing, run `npx vibe-usage status`.
+To try it without installing, run `npx vibe-usage-cli status`.
 
 `run` starts the tool in this terminal with an account whose quota is verified; otherwise name one with `--account`
 (the IDs are in `status --json`). `--dry-run` prints the account and the command without starting anything.

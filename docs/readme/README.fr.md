@@ -13,6 +13,8 @@ une tâche à moitié faite d'un outil à l'autre sans avoir à la réexpliquer.
 
 Zone de notification Windows · barre des menus macOS · 13 langues · aucun mot de passe, aucun jeton conservé
 
+**[Télécharger pour Windows et macOS](https://github.com/mustafacagri/vibe-usage/releases/latest)** · Terminal: `npm install -g vibe-usage-cli`
+
 <img src="../media/demo.gif" width="400" alt="Démonstration de Vibe Usage : changement de compte, tous les comptes côte à côte, la vue compacte, Lancement Intelligent et Transférer" />
 
 <sub>[Voir en pleine résolution (MP4)](../media/demo.mp4)</sub>
@@ -137,16 +139,19 @@ utilisés, le cache de modèles de Codex et `cursor-agent --list-models` (mis en
 
 ### Windows
 
-Téléchargez `Vibe-Usage-<version>-win-x64.zip` (ou `-arm64`) depuis les
-[Releases](https://github.com/mustafacagri/vibe-usage/releases), décompressez-le et lancez `Vibe Usage.exe`.
-L'application se loge dans la zone de notification.
+Téléchargez `Vibe-Usage-<version>-win-setup.exe` depuis la [dernière version](https://github.com/mustafacagri/vibe-usage/releases/latest) et lancez-le : il s’installe pour votre seul utilisateur, sans droits d’administrateur. Ou prenez le portable `Vibe-Usage-<version>-win-x64.zip` (ou `-arm64`), décompressez-le et lancez `Vibe Usage.exe`. L’app vit dans la zone de notification et renvoie vers chaque nouvelle version.
 
 L'application n'est pas signée ; au premier lancement, Windows SmartScreen peut afficher **Windows a protégé votre ordinateur**. Cliquez sur **Informations complémentaires**, puis sur **Exécuter quand même**.
 
 ### macOS
 
-L'application n'est pas encore signée avec un Apple Developer ID ; la compiler soi-même est donc le plus simple. Il
-suffit de Node.js 24 :
+Téléchargez `Vibe-Usage-<version>-mac-arm64.dmg` (Apple silicon) depuis la [dernière version](https://github.com/mustafacagri/vibe-usage/releases/latest), ouvrez-le et glissez **Vibe Usage** dans Applications. L’app n’est pas encore signée avec un Apple Developer ID, donc Gatekeeper bloque le premier lancement : ouvrez **Réglages Système › Confidentialité et sécurité** et cliquez sur **Ouvrir quand même**, ou exécutez :
+
+```sh
+xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
+```
+
+Sur un Mac Intel, ou pour éviter cette étape, compilez-la vous-même. Il suffit de Node.js 24 :
 
 ```sh
 git clone https://github.com/mustafacagri/vibe-usage.git && cd vibe-usage
@@ -155,20 +160,14 @@ npm run build:mac
 cp -R "release/mac-arm64/Vibe Usage.app" /Applications/
 ```
 
-Sur un Mac Intel, le dossier est `release/mac`. Une application compilée sur votre machine n'est pas mise en quarantaine
-et s'ouvre directement. Si vous téléchargez plutôt le `.zip` ou le `.dmg`, Gatekeeper la bloque au premier lancement :
-faites un clic droit sur l'application et choisissez **Ouvrir**, ou lancez :
-
-```sh
-xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
-```
+Sur un Mac Intel, le dossier est `release/mac`. Une app compilée par vous n’est pas mise en quarantaine et s’ouvre directement. L’app renvoie vers chaque nouvelle version, qui s’installe de la même façon.
 
 ## Ligne de commande
 
 Les mêmes données sont disponibles dans le terminal, sous Windows et macOS, avec ou sans l’app de bureau. Il faut Node.js 24 ou plus récent ; la CLI lit les mêmes sessions connectées que l’app et, si les deux sont installées, elles partagent réglages et langue.
 
 ```sh
-npm install -g vibe-usage
+npm install -g vibe-usage-cli
 vibe-usage status
 ```
 
@@ -182,7 +181,7 @@ vibe-usage handover [--from TOOL] [--to TOOL] [--session ID] [--cwd PATH]
 vibe-usage help
 ```
 
-Pour l’essayer sans l’installer : `npx vibe-usage status`.
+Pour l’essayer sans l’installer : `npx vibe-usage-cli status`.
 
 `run` lance l’outil dans ce terminal avec un compte dont le quota est vérifié ; sinon, indiquez-en un avec `--account` (les ID figurent dans `status --json`). `--dry-run` affiche le compte et la commande sans rien lancer. `handover` écrit `VIBE_HANDOVER.md` pour la session la plus récente du dossier (ou `--session`) et ouvre l’outil cible avec.
 

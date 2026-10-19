@@ -112,3 +112,33 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh release create "$GITHUB_REF_NAME" packages/* --verify-tag --title "Vibe Usage $GITHUB_REF_NAME" --generate-notes
+
+  # A pushed version tag also publishes the CLI to npm through trusted publishing: npm accepts this
+  # workflow's OIDC identity (set up in the package's settings on npmjs.com), so no token is stored,
+  # and npm attaches provenance that points back to this run.
+  npm:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: package
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          # Node 24 bundles npm 11, which trusted publishing needs (11.5.1 or later).
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          cache: npm
+      - name: Check that the tag names the package version
+        run: test "v$(node -p "require('./package.json').version")" = "$GITHUB_REF_NAME"
+      # The CLI is plain Node: the Electron binary is not needed to build or publish it.
+      - run: npm ci
+        env:
+          ELECTRON_SKIP_BINARY_DOWNLOAD: 1
+      # prepublishOnly builds the package first.
+      - run: npm publish

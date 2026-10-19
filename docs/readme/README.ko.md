@@ -12,6 +12,8 @@ Claude Code, Codex, Cursor, Antigravity의 남은 할당량을 확인하고, 아
 
 Windows 트레이 · macOS 메뉴 막대 · 13개 언어 · 비밀번호 없음, 토큰 저장 안 함
 
+**[Windows·macOS용 다운로드](https://github.com/mustafacagri/vibe-usage/releases/latest)** · 터미널: `npm install -g vibe-usage-cli`
+
 <img src="../media/demo.gif" width="400" alt="Vibe Usage 둘러보기: 계정 전환, 모든 계정 나란히 보기, 간단히 보기, 스마트 실행, 작업 인계" />
 
 <sub>[원본 해상도로 보기 (MP4)](../media/demo.mp4)</sub>
@@ -112,13 +114,19 @@ Claude와 Codex는 프로필 폴더마다 하나의 로그인을 보관합니다
 
 ### Windows
 
-[Releases](https://github.com/mustafacagri/vibe-usage/releases)에서 `Vibe-Usage-<버전>-win-x64.zip`(또는 `-arm64`)을 내려받아 압축을 풀고 `Vibe Usage.exe`를 실행하세요. 앱은 시스템 트레이에 상주합니다.
+[최신 릴리스](https://github.com/mustafacagri/vibe-usage/releases/latest)에서 `Vibe-Usage-<버전>-win-setup.exe`를 내려받아 실행하세요. 현재 사용자에게만 설치되며 관리자 권한이 필요 없습니다. 포터블 `Vibe-Usage-<버전>-win-x64.zip`(또는 `-arm64`)의 압축을 풀고 `Vibe Usage.exe`를 실행해도 됩니다. 앱은 시스템 트레이에 상주하며 새 버전이 나오면 링크를 보여 줍니다.
 
 앱이 코드 서명되지 않았기 때문에 처음 실행할 때 Windows SmartScreen이 **Windows의 PC 보호**를 표시할 수 있습니다. **추가 정보**를 클릭한 뒤 **실행**을 누르세요.
 
 ### macOS
 
-아직 Apple Developer ID로 서명되지 않았으므로 직접 빌드하는 것이 가장 간편합니다. Node.js 24만 있으면 됩니다:
+[최신 릴리스](https://github.com/mustafacagri/vibe-usage/releases/latest)에서 `Vibe-Usage-<버전>-mac-arm64.dmg`(Apple 실리콘)를 내려받아 열고 **Vibe Usage**를 응용 프로그램 폴더로 끌어 놓으세요. 앱이 아직 Apple Developer ID로 서명되지 않아 Gatekeeper가 첫 실행을 막습니다. **시스템 설정 › 개인정보 보호 및 보안**에서 **그래도 열기**를 클릭하거나 다음을 실행하세요:
+
+```sh
+xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
+```
+
+Intel Mac이거나 이 단계를 건너뛰려면 직접 빌드하세요. Node.js 24만 있으면 됩니다:
 
 ```sh
 git clone https://github.com/mustafacagri/vibe-usage.git && cd vibe-usage
@@ -127,18 +135,14 @@ npm run build:mac
 cp -R "release/mac-arm64/Vibe Usage.app" /Applications/
 ```
 
-Intel Mac에서는 폴더 이름이 `release/mac`입니다. 직접 빌드한 앱은 격리되지 않아 바로 열립니다. `.zip`이나 `.dmg`를 내려받은 경우 처음 실행할 때 Gatekeeper가 차단합니다. 앱을 오른쪽 클릭해 **열기**를 선택하거나 다음을 실행하세요:
-
-```sh
-xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
-```
+Intel Mac에서는 폴더 이름이 `release/mac`입니다. 직접 빌드한 앱은 격리되지 않아 바로 열립니다. 새 버전은 앱이 링크를 보여 주며 같은 방법으로 설치합니다.
 
 ## 명령줄
 
 같은 데이터를 터미널에서도 볼 수 있습니다. Windows와 macOS에서 데스크톱 앱 없이도 동작합니다. Node.js 24 이상이 필요하며 앱과 같은 로그인된 세션을 읽습니다. 둘 다 설치되어 있으면 설정과 언어를 공유합니다.
 
 ```sh
-npm install -g vibe-usage
+npm install -g vibe-usage-cli
 vibe-usage status
 ```
 
@@ -152,7 +156,7 @@ vibe-usage handover [--from TOOL] [--to TOOL] [--session ID] [--cwd PATH]
 vibe-usage help
 ```
 
-설치하지 않고 써 보려면 `npx vibe-usage status`를 실행하세요.
+설치하지 않고 써 보려면 `npx vibe-usage-cli status`를 실행하세요.
 
 `run`은 할당량이 확인된 계정으로 이 터미널에서 도구를 시작합니다. 그렇지 않으면 `--account`로 계정을 지정하세요 (ID는 `status --json`에 있습니다). `--dry-run`은 아무것도 시작하지 않고 계정과 명령을 출력합니다. `handover`는 폴더의 최신 세션(또는 `--session`)에 대한 `VIBE_HANDOVER.md`를 쓰고 그것으로 대상 도구를 엽니다.
 

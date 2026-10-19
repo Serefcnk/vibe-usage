@@ -12,6 +12,8 @@
 
 Windows 托盘 · macOS 菜单栏 · 13 种语言 · 无需密码，不保存令牌
 
+**[下载 Windows 和 macOS 版](https://github.com/mustafacagri/vibe-usage/releases/latest)** · 终端: `npm install -g vibe-usage-cli`
+
 <img src="../media/demo.gif" width="400" alt="Vibe Usage 演示：切换账户、所有账户并排显示、紧凑视图、智能启动和移交任务" />
 
 <sub>[观看全分辨率视频 (MP4)](../media/demo.mp4)</sub>
@@ -112,13 +114,19 @@ Claude 和 Codex 每个配置文件文件夹保存一个登录。**添加账户*
 
 ### Windows
 
-从 [Releases](https://github.com/mustafacagri/vibe-usage/releases) 下载 `Vibe-Usage-<版本>-win-x64.zip`（或 `-arm64`），解压后运行 `Vibe Usage.exe`。应用常驻在系统托盘中。
+从[最新版本](https://github.com/mustafacagri/vibe-usage/releases/latest)下载 `Vibe-Usage-<版本>-win-setup.exe` 并运行：只为当前用户安装，无需管理员权限。也可以下载便携版 `Vibe-Usage-<版本>-win-x64.zip`（或 `-arm64`），解压后运行 `Vibe Usage.exe`。应用常驻在系统托盘中，有新版本时会给出链接。
 
 由于应用未经代码签名，首次启动时 Windows SmartScreen 可能会显示“**Windows 已保护你的电脑**”。点击**更多信息**，然后点击**仍要运行**。
 
 ### macOS
 
-应用尚未使用 Apple Developer ID 签名，因此自行构建是最省事的方式。只需要 Node.js 24：
+从[最新版本](https://github.com/mustafacagri/vibe-usage/releases/latest)下载 `Vibe-Usage-<版本>-mac-arm64.dmg`（Apple 芯片），打开后把 **Vibe Usage** 拖到"应用程序"。应用尚未使用 Apple Developer ID 签名，因此 Gatekeeper 会阻止首次启动：打开 **系统设置 › 隐私与安全性** 并点按 **仍要打开**，或运行：
+
+```sh
+xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
+```
+
+在 Intel Mac 上，或想跳过这一步，可以自己构建。只需要 Node.js 24：
 
 ```sh
 git clone https://github.com/mustafacagri/vibe-usage.git && cd vibe-usage
@@ -127,18 +135,14 @@ npm run build:mac
 cp -R "release/mac-arm64/Vibe Usage.app" /Applications/
 ```
 
-在 Intel Mac 上，文件夹为 `release/mac`。自行构建的应用不会被隔离，可以直接打开。如果下载的是 `.zip` 或 `.dmg`，首次启动时会被 Gatekeeper 拦截：右键点击应用并选择**打开**，或运行：
-
-```sh
-xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
-```
+在 Intel Mac 上文件夹是 `release/mac`。自己构建的应用不会被隔离，可以直接打开。有新版本时应用会给出链接，用同样的方式安装。
 
 ## 命令行
 
 同样的数据也可以在终端中查看，支持 Windows 和 macOS，无论是否安装桌面应用。需要 Node.js 24 或更高版本，读取的是与应用相同的已登录会话；两者都安装时共享设置和语言。
 
 ```sh
-npm install -g vibe-usage
+npm install -g vibe-usage-cli
 vibe-usage status
 ```
 
@@ -152,7 +156,7 @@ vibe-usage handover [--from TOOL] [--to TOOL] [--session ID] [--cwd PATH]
 vibe-usage help
 ```
 
-不安装也可以试用：`npx vibe-usage status`。
+不安装也可以试用：`npx vibe-usage-cli status`。
 
 `run` 会用额度已验证的账户在当前终端启动工具；否则请用 `--account` 指定一个（ID 见 `status --json`）。`--dry-run` 只打印账户和命令，不启动任何程序。`handover` 为文件夹中最新的会话（或 `--session`）写入 `VIBE_HANDOVER.md`，并用它打开目标工具。
 

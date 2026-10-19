@@ -12,6 +12,8 @@ Claude Code、Codex、Cursor、Antigravity の残りクォータを確認し、�
 
 Windows タスクトレイ · macOS メニューバー · 13 言語 · パスワード不要、トークンは保存しません
 
+**[Windows・macOS 版をダウンロード](https://github.com/mustafacagri/vibe-usage/releases/latest)** · ターミナル: `npm install -g vibe-usage-cli`
+
 <img src="../media/demo.gif" width="400" alt="Vibe Usage の操作デモ: アカウントの切り替え、全アカウントの並列表示、コンパクト表示、スマート起動、引き継ぎ" />
 
 <sub>[フル解像度で見る (MP4)](../media/demo.mp4)</sub>
@@ -112,13 +114,19 @@ Claude と Codex はプロファイルフォルダーごとに 1 つのサイン
 
 ### Windows
 
-[Releases](https://github.com/mustafacagri/vibe-usage/releases) から `Vibe-Usage-<バージョン>-win-x64.zip` (または `-arm64`) をダウンロードして展開し、`Vibe Usage.exe` を実行します。アプリはタスクトレイに常駐します。
+[最新リリース](https://github.com/mustafacagri/vibe-usage/releases/latest) から `Vibe-Usage-<バージョン>-win-setup.exe` をダウンロードして実行します。現在のユーザーにだけインストールされ、管理者権限は不要です。ポータブル版の `Vibe-Usage-<バージョン>-win-x64.zip` (または `-arm64`) を展開して `Vibe Usage.exe` を実行することもできます。アプリはタスクトレイに常駐し、新しいバージョンが出るとそのリンクを表示します。
 
 アプリはコード署名されていないため、初回起動時に Windows SmartScreen が「**Windows によって PC が保護されました**」と表示することがあります。**詳細情報**をクリックし、**実行**を選んでください。
 
 ### macOS
 
-アプリはまだ Apple Developer ID で署名されていないため、自分でビルドするのがいちばん確実です。必要なのは Node.js 24 だけです:
+[最新リリース](https://github.com/mustafacagri/vibe-usage/releases/latest) から `Vibe-Usage-<バージョン>-mac-arm64.dmg` (Apple シリコン) をダウンロードして開き、**Vibe Usage** をアプリケーションフォルダーにドラッグします。アプリはまだ Apple Developer ID で署名されていないため、初回起動は Gatekeeper にブロックされます。**システム設定 › プライバシーとセキュリティ** を開いて **このまま開く** をクリックするか、次を実行します:
+
+```sh
+xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
+```
+
+Intel Mac の場合、またはこの手順を省きたい場合は自分でビルドします。必要なのは Node.js 24 だけです:
 
 ```sh
 git clone https://github.com/mustafacagri/vibe-usage.git && cd vibe-usage
@@ -127,18 +135,14 @@ npm run build:mac
 cp -R "release/mac-arm64/Vibe Usage.app" /Applications/
 ```
 
-Intel Mac ではフォルダー名が `release/mac` になります。自分でビルドしたアプリは隔離属性が付かないため、そのまま開けます。`.zip` や `.dmg` をダウンロードした場合は、初回起動時に Gatekeeper にブロックされます。アプリを右クリックして**開く**を選ぶか、次のコマンドを実行してください:
-
-```sh
-xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
-```
+Intel Mac ではフォルダー名が `release/mac` になります。自分でビルドしたアプリは隔離されず、そのまま開きます。新しいバージョンはアプリがリンクを表示し、同じ方法でインストールします。
 
 ## コマンドライン
 
 同じデータはターミナルでも見られます。Windows と macOS で、デスクトップアプリの有無にかかわらず動きます。Node.js 24 以降が必要で、アプリと同じサインイン済みセッションを読みます。両方をインストールしている場合は設定と言語を共有します。
 
 ```sh
-npm install -g vibe-usage
+npm install -g vibe-usage-cli
 vibe-usage status
 ```
 
@@ -152,7 +156,7 @@ vibe-usage handover [--from TOOL] [--to TOOL] [--session ID] [--cwd PATH]
 vibe-usage help
 ```
 
-インストールせずに試すには `npx vibe-usage status` を実行します。
+インストールせずに試すには `npx vibe-usage-cli status` を実行します。
 
 `run` はクォータが確認できたアカウントでツールをこのターミナルで起動します。そうでない場合は `--account` でアカウントを指定してください (ID は `status --json` に出ます)。`--dry-run` は何も起動せずにアカウントとコマンドを表示します。`handover` はフォルダーの最新セッション (または `--session`) の `VIBE_HANDOVER.md` を書き、それを使って移行先のツールを開きます。
 

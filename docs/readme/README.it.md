@@ -13,6 +13,8 @@ lavoro a metà da uno strumento all'altro senza doverlo rispiegare.
 
 Area di notifica di Windows · barra dei menu di macOS · 13 lingue · nessuna password, nessun token salvato
 
+**[Scarica per Windows e macOS](https://github.com/mustafacagri/vibe-usage/releases/latest)** · Terminale: `npm install -g vibe-usage-cli`
+
 <img src="../media/demo.gif" width="400" alt="Panoramica di Vibe Usage: cambio di account, tutti gli account affiancati, la vista compatta, Avvio Intelligente e Trasferisci" />
 
 <sub>[Guarda a piena risoluzione (MP4)](../media/demo.mp4)</sub>
@@ -137,16 +139,19 @@ dei modelli di Codex e `cursor-agent --list-models` (in cache per 24 ore).
 
 ### Windows
 
-Scarica `Vibe-Usage-<versione>-win-x64.zip` (o `-arm64`) dalle
-[Releases](https://github.com/mustafacagri/vibe-usage/releases), estrailo ed esegui `Vibe Usage.exe`. L'app vive
-nell'area di notifica.
+Scarica `Vibe-Usage-<versione>-win-setup.exe` dall’[ultima versione](https://github.com/mustafacagri/vibe-usage/releases/latest) ed eseguilo: si installa solo per il tuo utente, senza diritti di amministratore. Oppure usa il portatile `Vibe-Usage-<versione>-win-x64.zip` (o `-arm64`), estrailo ed esegui `Vibe Usage.exe`. L’app vive nell’area di notifica e rimanda a ogni nuova versione.
 
 L'app non è firmata, quindi al primo avvio Windows SmartScreen può mostrare **PC protetto da Windows**. Fai clic su **Ulteriori informazioni** e poi su **Esegui comunque**.
 
 ### macOS
 
-L'app non è ancora firmata con un Apple Developer ID, quindi compilarla da te è la strada più semplice. Ti serve solo
-Node.js 24:
+Scarica `Vibe-Usage-<versione>-mac-arm64.dmg` (Apple silicon) dall’[ultima versione](https://github.com/mustafacagri/vibe-usage/releases/latest), aprilo e trascina **Vibe Usage** in Applicazioni. L’app non è ancora firmata con un Apple Developer ID, quindi Gatekeeper blocca il primo avvio: apri **Impostazioni di Sistema › Privacy e sicurezza** e fai clic su **Apri comunque**, oppure esegui:
+
+```sh
+xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
+```
+
+Su un Mac Intel, o per saltare questo passaggio, compilala tu. Serve solo Node.js 24:
 
 ```sh
 git clone https://github.com/mustafacagri/vibe-usage.git && cd vibe-usage
@@ -155,20 +160,14 @@ npm run build:mac
 cp -R "release/mac-arm64/Vibe Usage.app" /Applications/
 ```
 
-Su un Mac Intel la cartella è `release/mac`. Un'app compilata da te non viene messa in quarantena e si apre subito. Se
-invece scarichi lo `.zip` o il `.dmg`, Gatekeeper la blocca al primo avvio: fai clic destro sull'app e scegli **Apri**,
-oppure esegui:
-
-```sh
-xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
-```
+Su un Mac Intel la cartella è `release/mac`. Un’app compilata da te non finisce in quarantena e si apre direttamente. L’app rimanda a ogni nuova versione, che si installa allo stesso modo.
 
 ## Riga di comando
 
 Gli stessi dati sono disponibili nel terminale, su Windows e macOS, con o senza l’app desktop. Serve Node.js 24 o successivo; la CLI legge le stesse sessioni connesse dell’app e, se sono installate entrambe, condividono impostazioni e lingua.
 
 ```sh
-npm install -g vibe-usage
+npm install -g vibe-usage-cli
 vibe-usage status
 ```
 
@@ -182,7 +181,7 @@ vibe-usage handover [--from TOOL] [--to TOOL] [--session ID] [--cwd PATH]
 vibe-usage help
 ```
 
-Per provarlo senza installarlo, esegui `npx vibe-usage status`.
+Per provarlo senza installarlo, esegui `npx vibe-usage-cli status`.
 
 `run` avvia lo strumento in questo terminale con un account con quota verificata; altrimenti indicane uno con `--account` (gli ID sono in `status --json`). `--dry-run` mostra l’account e il comando senza avviare nulla. `handover` scrive `VIBE_HANDOVER.md` per la sessione più recente della cartella (o `--session`) e apre con esso lo strumento di destinazione.
 

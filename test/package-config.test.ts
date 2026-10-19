@@ -64,6 +64,10 @@ test('the npm package installs the vibe-usage command with what the CLI needs', 
   assert.ok(typeof pkg === 'object' && pkg !== null && 'bin' in pkg && 'files' in pkg && !('private' in pkg));
   assert.deepEqual(pkg.bin, { 'vibe-usage': 'build/cli.js' });
   assert.deepEqual(pkg.files, ['build/cli.js', 'build/core/', 'build/providers/', 'build/shared/', 'build/launchers/']);
+  // npm refuses `vibe-usage` (too close to another package), so the package has its own name. The
+  // desktop app keeps `vibe-usage`, which names its Windows install folder and updater cache.
+  assert.ok('name' in pkg && 'build' in pkg && typeof pkg.build === 'object' && pkg.build !== null && 'extraMetadata' in pkg.build);
+  assert.deepEqual([pkg.name, pkg.build.extraMetadata], ['vibe-usage-cli', { name: 'vibe-usage' }]);
   const cli = await readFile(new URL('../src/cli.ts', import.meta.url), 'utf8');
   assert.ok(cli.startsWith('#!/usr/bin/env node\n'), 'the command runs with node on macOS and Linux');
 });

@@ -13,6 +13,8 @@ bir işi baştan anlatmadan bir araçtan diğerine devret.
 
 Windows sistem tepsisi · macOS menü çubuğu · 13 dil · şifre yok, token saklanmaz
 
+**[Windows ve macOS için indir](https://github.com/mustafacagri/vibe-usage/releases/latest)** · Terminal: `npm install -g vibe-usage-cli`
+
 <img src="../media/demo.gif" width="400" alt="Vibe Usage tanıtımı: hesaplar arasında geçiş, tüm hesaplar yan yana, kompakt görünüm, Akıllı Başlat ve Görev Devret" />
 
 <sub>[Tam çözünürlükte izle (MP4)](../media/demo.mp4)</sub>
@@ -134,15 +136,19 @@ Model listeleri her aracın kendi verisinden gelir: Claude Code takma adları ve
 
 ### Windows
 
-[Releases](https://github.com/mustafacagri/vibe-usage/releases) sayfasından `Vibe-Usage-<sürüm>-win-x64.zip` (veya
-`-arm64`) dosyasını indir, zip'i aç ve `Vibe Usage.exe`'yi çalıştır. Uygulama sistem tepsisinde durur.
+[Son sürümden](https://github.com/mustafacagri/vibe-usage/releases/latest) `Vibe-Usage-<sürüm>-win-setup.exe` dosyasını indirip çalıştır: yalnızca senin kullanıcın için kurulur, yönetici yetkisi gerekmez. Ya da taşınabilir `Vibe-Usage-<sürüm>-win-x64.zip` (veya `-arm64`) dosyasını indir, zip'i aç ve `Vibe Usage.exe`'yi çalıştır. Uygulama sistem tepsisinde durur; yeni sürüm çıkınca ona bağlantı verir.
 
 Uygulama kod imzalı olmadığından ilk açılışta Windows SmartScreen **Windows bilgisayarınızı korudu** diyebilir. **Ek bilgi**'ye, ardından **Yine de çalıştır**'a tıkla.
 
 ### macOS
 
-Uygulama henüz Apple Developer ID ile imzalı değil, bu yüzden en sorunsuz yol kendin derlemek. Yalnızca Node.js 24
-gerekir:
+[Son sürümden](https://github.com/mustafacagri/vibe-usage/releases/latest) `Vibe-Usage-<sürüm>-mac-arm64.dmg` dosyasını (Apple silicon) indir, aç ve **Vibe Usage**'ı Uygulamalar klasörüne sürükle. Uygulama henüz Apple Developer ID ile imzalı olmadığından Gatekeeper ilk açılışı engeller: **Sistem Ayarları › Gizlilik ve Güvenlik**'i açıp **Yine de Aç**'a tıkla ya da şunu çalıştır:
+
+```sh
+xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
+```
+
+Intel Mac'te ya da bu adımı atlamak için kendin derle. Yalnızca Node.js 24 gerekir:
 
 ```sh
 git clone https://github.com/mustafacagri/vibe-usage.git && cd vibe-usage
@@ -151,20 +157,14 @@ npm run build:mac
 cp -R "release/mac-arm64/Vibe Usage.app" /Applications/
 ```
 
-Intel Mac'te klasör adı `release/mac` olur. Kendi derlediğin uygulama karantinaya alınmaz ve doğrudan açılır. `.zip`
-veya `.dmg` indirirsen Gatekeeper ilk açılışta uygulamayı engeller: uygulamaya sağ tıklayıp **Aç**'ı seç ya da şunu
-çalıştır:
-
-```sh
-xattr -dr com.apple.quarantine "/Applications/Vibe Usage.app"
-```
+Intel Mac'te klasör adı `release/mac` olur. Kendi derlediğin uygulama karantinaya alınmaz ve doğrudan açılır. Uygulama yeni sürüm çıkınca ona bağlantı verir; aynı şekilde kurarsın.
 
 ## Komut satırı
 
 Aynı veriler terminalde de var; Windows ve macOS’ta, masaüstü uygulamasıyla ya da onsuz çalışır. Node.js 24 veya üstü gerekir ve uygulamanın okuduğu, oturumu açık aynı hesapları okur; ikisi birlikte kuruluysa ayarları ve dili paylaşırlar.
 
 ```sh
-npm install -g vibe-usage
+npm install -g vibe-usage-cli
 vibe-usage status
 ```
 
@@ -178,7 +178,7 @@ vibe-usage handover [--from TOOL] [--to TOOL] [--session ID] [--cwd PATH]
 vibe-usage help
 ```
 
-Kurmadan denemek için `npx vibe-usage status` çalıştır.
+Kurmadan denemek için `npx vibe-usage-cli status` çalıştır.
 
 `run`, aracı bu terminalde kotası doğrulanmış bir hesapla başlatır; yoksa `--account` ile birini belirt (kimlikler `status --json` çıktısında). `--dry-run` hiçbir şey başlatmadan hesabı ve komutu yazdırır. `handover`, klasörün en son oturumu (ya da `--session`) için `VIBE_HANDOVER.md` yazar ve hedef aracı onunla açar.
 

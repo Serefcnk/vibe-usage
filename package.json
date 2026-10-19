@@ -1,7 +1,7 @@
 {
-  "name": "vibe-usage",
+  "name": "vibe-usage-cli",
   "version": "0.1.1",
-  "description": "Track the quota left on Claude Code, Codex, Cursor and Antigravity from the Windows tray or the macOS menu bar",
+  "description": "Track the quota left on Claude Code, Codex, Cursor and Antigravity from the Windows tray, the macOS menu bar or the terminal",
   "author": "Mustafa Çağrı Güven",
   "license": "MIT",
   "repository": {
@@ -70,6 +70,9 @@
   "build": {
     "appId": "dev.vibe.usage",
     "productName": "Vibe Usage",
+    "extraMetadata": {
+      "name": "vibe-usage"
+    },
     "publish": {
       "provider": "github",
       "owner": "mustafacagri",
