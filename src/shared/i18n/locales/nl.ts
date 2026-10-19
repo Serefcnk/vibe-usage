@@ -342,10 +342,12 @@ export const nl: Messages = {
   updateDownload: 'Downloaden',
   updateDownloading: 'Downloaden {n}',
   updateRestart: 'Herstarten om bij te werken',
+  updateReady: 'Versie {version} staat klaar: herstart om hem te installeren.',
   updateRetry: 'Download mislukt · Opnieuw',
   updateUnsupportedPortable:
     'Deze draagbare kopie kan zichzelf niet bijwerken; download de nieuwe versie of gebruik het installatieprogramma voor updates in de app.',
-  updateUnsupportedUnsigned: 'Alleen een ondertekende kopie kan zichzelf bijwerken; download de nieuwe versie van de releasepagina.',
+  updateUnsupportedUnsigned:
+    'Open het gedownloade bestand en sleep Vibe Usage naar Apps; alleen een app die met een Apple Developer ID is ondertekend, werkt zichzelf bij.',
   updateUnsupportedUnpackaged: 'Een ontwikkelversie wordt bijgewerkt vanuit de repository.',
   updateUnsupportedPlatform: 'Download de nieuwe versie van de releasepagina.'
 };

@@ -341,11 +341,12 @@ export const fr: Messages = {
   updateDownload: 'Télécharger',
   updateDownloading: 'Téléchargement {n}',
   updateRestart: 'Redémarrer pour mettre à jour',
+  updateReady: 'La version {version} est prête : redémarrez pour l’installer.',
   updateRetry: 'Échec du téléchargement · Réessayer',
   updateUnsupportedPortable:
     'Cette copie portable ne peut pas se mettre à jour ; téléchargez la nouvelle version ou utilisez l’installateur pour les mises à jour dans l’app.',
   updateUnsupportedUnsigned:
-    'Seule une copie signée peut se mettre à jour ; téléchargez la nouvelle version depuis la page de publication.',
+    'Ouvrez le fichier téléchargé et glissez Vibe Usage dans Applications ; seule une app signée avec un Apple Developer ID se met à jour seule.',
   updateUnsupportedUnpackaged: 'Une version de développement se met à jour depuis le dépôt.',
   updateUnsupportedPlatform: 'Téléchargez la nouvelle version depuis la page de publication.'
 };

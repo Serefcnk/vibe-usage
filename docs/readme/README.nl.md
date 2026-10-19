@@ -138,7 +138,7 @@ modelcache van Codex en `cursor-agent --list-models` (24 uur gecachet).
 
 ### Windows
 
-Download `Vibe-Usage-<versie>-win-setup.exe` uit de [nieuwste release](https://github.com/mustafacagri/vibe-usage/releases/latest) en voer het uit: het installeert alleen voor jouw gebruiker, zonder beheerdersrechten. Of neem de draagbare `Vibe-Usage-<versie>-win-x64.zip` (of `-arm64`), pak hem uit en start `Vibe Usage.exe`. De app staat in het systeemvak en linkt naar elke nieuwe versie.
+Download `Vibe-Usage-<versie>-win-setup.exe` uit de [nieuwste release](https://github.com/mustafacagri/vibe-usage/releases/latest) en voer het uit: het installeert alleen voor jouw gebruiker, zonder beheerdersrechten. Of neem de draagbare `Vibe-Usage-<versie>-win-x64.zip` (of `-arm64`), pak hem uit en start `Vibe Usage.exe`. De geïnstalleerde app houdt zichzelf bij: een nieuwe versie wordt op de achtergrond gedownload en met **Herstarten om bij te werken** geïnstalleerd. De draagbare kopie linkt naar elke nieuwe versie. De app staat in het systeemvak.
 
 De app is niet ondertekend, dus bij de eerste start kan Windows SmartScreen **Uw pc is beveiligd door Windows** tonen. Klik op **Meer informatie** en daarna op **Toch uitvoeren**.
 
@@ -159,7 +159,7 @@ npm run build:mac
 cp -R "release/mac-arm64/Vibe Usage.app" /Applications/
 ```
 
-Op een Intel-Mac heet de map `release/mac`. Een app die je zelf bouwt, staat niet in quarantaine en opent direct. De app linkt naar elke nieuwe versie, die je op dezelfde manier installeert.
+Op een Intel-Mac heet de map `release/mac`. Een app die je zelf bouwt, staat niet in quarantaine en opent direct. macOS laat alleen een ondertekende app zichzelf vervangen, dus een nieuwe versie installeer je op dezelfde manier: de knop **Downloaden** in de app haalt de schijfkopie voor jouw Mac op.
 
 ## Opdrachtregel
 

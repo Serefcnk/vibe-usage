@@ -343,10 +343,12 @@ export const it: Messages = {
   updateDownload: 'Scarica',
   updateDownloading: 'Download {n}',
   updateRestart: 'Riavvia per aggiornare',
+  updateReady: 'La versione {version} è pronta: riavvia per installarla.',
   updateRetry: 'Download non riuscito · Riprova',
   updateUnsupportedPortable:
     'Questa copia portatile non può aggiornarsi da sola; scarica la nuova versione o usa il programma di installazione per gli aggiornamenti nell’app.',
-  updateUnsupportedUnsigned: 'Solo una copia firmata può aggiornarsi da sola; scarica la nuova versione dalla pagina della release.',
+  updateUnsupportedUnsigned:
+    'Apri il file scaricato e trascina Vibe Usage in Applicazioni; solo un’app firmata con un Apple Developer ID si aggiorna da sola.',
   updateUnsupportedUnpackaged: 'Una build di sviluppo si aggiorna dal repository.',
   updateUnsupportedPlatform: 'Scarica la nuova versione dalla pagina della release.'
 };

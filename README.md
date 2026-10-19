@@ -159,8 +159,9 @@ Model lists come from each tool's own data: Claude Code aliases and the models y
 - **Few endpoints.** Quota requests go only to the Anthropic and Cursor usage endpoints, with TLS verification on
   (and the renewal above goes through Claude Code).
   Codex and Antigravity are read locally. Once a day the app asks GitHub for its latest release (Settings → General
-  turns this off). An update is downloaded only when you click **Download**, only from this repository's releases, and
-  checked against the release's SHA-512 checksums before **Restart to update** installs it.
+  turns this off). An installed Windows copy then downloads a new version itself, only from this repository's
+  releases, checks it against the release's SHA-512 checksums (and, for a signed release, its publisher), and installs
+  it only when you click **Restart to update**.
 - **Nothing secret on disk.** Settings live in `%APPDATA%\Vibe Usage\settings.json` (Windows) or
   `~/Library/Application Support/Vibe Usage/settings.json` (macOS), with `settings.json.bak` (the previous good copy)
   and, if the file was ever damaged, `settings.json.damaged-<time>`. Next to them, `history.json` keeps a week of quota
@@ -179,10 +180,10 @@ Found a security issue? Please report it privately as described in [SECURITY.md]
 ### Windows
 
 Download `Vibe-Usage-<version>-win-setup.exe` from the [latest release](https://github.com/mustafacagri/vibe-usage/releases/latest) and
-run it: it installs for your user only (no administrator rights), and once releases are signed it updates itself from
-inside the app. Or take the
-portable `Vibe-Usage-<version>-win-x64.zip` (or `-arm64`), unzip it and run `Vibe Usage.exe`; a portable copy
-links to the release page when there is a new version. Either way it lives in the system tray.
+run it: it installs for your user only (no administrator rights) and keeps itself up to date. A new version downloads
+in the background, and the app tells you when **Restart to update** installs it. Or take the portable
+`Vibe-Usage-<version>-win-x64.zip` (or `-arm64`), unzip it and run `Vibe Usage.exe`; a portable copy links to the
+release page when there is a new version. Either way it lives in the system tray.
 
 Unless a release says it is signed, the app is not code-signed, so on first launch Windows SmartScreen may say **Windows protected your PC**. Click **More info**, then **Run anyway**.
 
@@ -208,8 +209,8 @@ cp -R "release/mac-arm64/Vibe Usage.app" /Applications/
 
 On an Intel Mac the folder is `release/mac`. An app you build yourself is not quarantined and opens directly.
 
-macOS lets only a signed app replace itself, so until releases are signed a new version is installed the same way
-(the app links to it when one is out).
+macOS lets only a signed app replace itself, so until releases are signed a new version is installed the same way:
+when one is out, the app's **Download** button fetches the disk image for your Mac.
 
 ## Command line
 

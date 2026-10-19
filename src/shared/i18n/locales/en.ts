@@ -340,10 +340,12 @@ export const en = {
   updateDownload: 'Download',
   updateDownloading: 'Downloading {n}',
   updateRestart: 'Restart to update',
+  updateReady: 'Version {version} is ready: restart to install it.',
   updateRetry: 'Download failed · Retry',
   updateUnsupportedPortable:
     'This portable copy cannot update itself; download the new version, or use the installer to get updates in the app.',
-  updateUnsupportedUnsigned: 'Only a signed copy can update itself; download the new version from the release page.',
+  updateUnsupportedUnsigned:
+    'Open the downloaded file and drag Vibe Usage to Applications; only an app signed with an Apple Developer ID updates itself.',
   updateUnsupportedUnpackaged: 'A development build updates from the repository.',
   updateUnsupportedPlatform: 'Download the new version from the release page.'
   // Every code the app reports has its message: an app error as error_<code>, a status as status_<code>.

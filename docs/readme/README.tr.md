@@ -136,7 +136,7 @@ Model listeleri her aracın kendi verisinden gelir: Claude Code takma adları ve
 
 ### Windows
 
-[Son sürümden](https://github.com/mustafacagri/vibe-usage/releases/latest) `Vibe-Usage-<sürüm>-win-setup.exe` dosyasını indirip çalıştır: yalnızca senin kullanıcın için kurulur, yönetici yetkisi gerekmez. Ya da taşınabilir `Vibe-Usage-<sürüm>-win-x64.zip` (veya `-arm64`) dosyasını indir, zip'i aç ve `Vibe Usage.exe`'yi çalıştır. Uygulama sistem tepsisinde durur; yeni sürüm çıkınca ona bağlantı verir.
+[Son sürümden](https://github.com/mustafacagri/vibe-usage/releases/latest) `Vibe-Usage-<sürüm>-win-setup.exe` dosyasını indirip çalıştır: yalnızca senin kullanıcın için kurulur, yönetici yetkisi gerekmez. Ya da taşınabilir `Vibe-Usage-<sürüm>-win-x64.zip` (veya `-arm64`) dosyasını indir, zip'i aç ve `Vibe Usage.exe`'yi çalıştır. Kurulan uygulama kendini günceller: yeni sürüm arka planda iner, **Güncellemek için yeniden başlat** ile kurulur. Taşınabilir kopya yeni sürüm için bağlantı verir. Uygulama sistem tepsisinde durur.
 
 Uygulama kod imzalı olmadığından ilk açılışta Windows SmartScreen **Windows bilgisayarınızı korudu** diyebilir. **Ek bilgi**'ye, ardından **Yine de çalıştır**'a tıkla.
 
@@ -157,7 +157,7 @@ npm run build:mac
 cp -R "release/mac-arm64/Vibe Usage.app" /Applications/
 ```
 
-Intel Mac'te klasör adı `release/mac` olur. Kendi derlediğin uygulama karantinaya alınmaz ve doğrudan açılır. Uygulama yeni sürüm çıkınca ona bağlantı verir; aynı şekilde kurarsın.
+Intel Mac'te klasör adı `release/mac` olur. Kendi derlediğin uygulama karantinaya alınmaz ve doğrudan açılır. macOS yalnızca imzalı bir uygulamanın kendini güncellemesine izin verir; bu yüzden yeni sürüm de aynı şekilde kurulur: uygulamadaki **İndir** düğmesi Mac'ine uygun disk görüntüsünü indirir.
 
 ## Komut satırı
 

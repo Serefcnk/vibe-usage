@@ -339,10 +339,12 @@ export const pt: Messages = {
   updateDownload: 'Transferir',
   updateDownloading: 'A transferir {n}',
   updateRestart: 'Reiniciar para atualizar',
+  updateReady: 'A versão {version} está pronta: reinicie para a instalar.',
   updateRetry: 'Falha na transferência · Repetir',
   updateUnsupportedPortable:
     'Esta cópia portátil não se pode atualizar sozinha; transfira a nova versão ou use o instalador para atualizações na app.',
-  updateUnsupportedUnsigned: 'Só uma cópia assinada se pode atualizar sozinha; transfira a nova versão a partir da página da versão.',
+  updateUnsupportedUnsigned:
+    'Abra o ficheiro transferido e arraste o Vibe Usage para Aplicações; só uma app assinada com um Apple Developer ID se atualiza sozinha.',
   updateUnsupportedUnpackaged: 'Uma versão de desenvolvimento atualiza-se a partir do repositório.',
   updateUnsupportedPlatform: 'Transfira a nova versão a partir da página da versão.'
 };

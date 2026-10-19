@@ -139,7 +139,7 @@ Codex-Modellcache und `cursor-agent --list-models` (24 Stunden zwischengespeiche
 
 ### Windows
 
-Lade `Vibe-Usage-<version>-win-setup.exe` aus dem [neuesten Release](https://github.com/mustafacagri/vibe-usage/releases/latest) herunter und starte es: Es installiert nur für deinen Benutzer, ohne Administratorrechte. Oder nimm die portable `Vibe-Usage-<version>-win-x64.zip` (oder `-arm64`), entpacke sie und starte `Vibe Usage.exe`. Die App sitzt im Infobereich und verlinkt eine neue Version, sobald es eine gibt.
+Lade `Vibe-Usage-<version>-win-setup.exe` aus dem [neuesten Release](https://github.com/mustafacagri/vibe-usage/releases/latest) herunter und starte es: Es installiert nur für deinen Benutzer, ohne Administratorrechte. Oder nimm die portable `Vibe-Usage-<version>-win-x64.zip` (oder `-arm64`), entpacke sie und starte `Vibe Usage.exe`. Die installierte App hält sich selbst aktuell: Eine neue Version wird im Hintergrund geladen und mit **Neu starten und aktualisieren** installiert. Die portable Kopie verlinkt eine neue Version. Die App sitzt im Infobereich.
 
 Die App ist nicht codesigniert, daher meldet Windows SmartScreen beim ersten Start eventuell **Der Computer wurde durch Windows geschützt**. Klicke auf **Weitere Informationen** und dann auf **Trotzdem ausführen**.
 
@@ -160,7 +160,7 @@ npm run build:mac
 cp -R "release/mac-arm64/Vibe Usage.app" /Applications/
 ```
 
-Auf einem Intel-Mac heißt der Ordner `release/mac`. Eine selbst gebaute App wird nicht unter Quarantäne gestellt und öffnet sich direkt. Eine neue Version verlinkt die App; sie wird genauso installiert.
+Auf einem Intel-Mac heißt der Ordner `release/mac`. Eine selbst gebaute App wird nicht unter Quarantäne gestellt und öffnet sich direkt. macOS lässt nur eine signierte App sich selbst ersetzen, daher wird eine neue Version genauso installiert: Die Schaltfläche **Herunterladen** in der App lädt das passende Disk-Image für deinen Mac.
 
 ## Kommandozeile
 

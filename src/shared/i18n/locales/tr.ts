@@ -331,10 +331,12 @@ export const tr: Messages = {
   updateDownload: 'İndir',
   updateDownloading: 'İndiriliyor {n}',
   updateRestart: 'Güncellemek için yeniden başlat',
+  updateReady: 'Sürüm {version} hazır: kurmak için yeniden başlatın.',
   updateRetry: 'İndirme başarısız · Yeniden dene',
   updateUnsupportedPortable:
     'Bu taşınabilir kopya kendini güncelleyemez; yeni sürümü indirin ya da uygulama içi güncellemeler için yükleyiciyi kullanın.',
-  updateUnsupportedUnsigned: 'Yalnızca imzalı bir kopya kendini güncelleyebilir; yeni sürümü sürüm sayfasından indirin.',
+  updateUnsupportedUnsigned:
+    "İndirilen dosyayı açıp Vibe Usage'ı Uygulamalar klasörüne sürükleyin; yalnızca Apple Developer ID ile imzalı bir uygulama kendini günceller.",
   updateUnsupportedUnpackaged: 'Geliştirme sürümü depodan güncellenir.',
   updateUnsupportedPlatform: 'Yeni sürümü sürüm sayfasından indirin.'
 };

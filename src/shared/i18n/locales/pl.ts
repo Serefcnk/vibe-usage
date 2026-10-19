@@ -342,10 +342,12 @@ export const pl: Messages = {
   updateDownload: 'Pobierz',
   updateDownloading: 'Pobieranie {n}',
   updateRestart: 'Uruchom ponownie, aby zaktualizować',
+  updateReady: 'Wersja {version} jest gotowa: uruchom ponownie, aby ją zainstalować.',
   updateRetry: 'Pobieranie nieudane · Ponów',
   updateUnsupportedPortable:
     'Ta przenośna kopia nie zaktualizuje się sama; pobierz nową wersję albo użyj instalatora, by aktualizować w aplikacji.',
-  updateUnsupportedUnsigned: 'Tylko podpisana kopia może zaktualizować się sama; pobierz nową wersję ze strony wydania.',
+  updateUnsupportedUnsigned:
+    'Otwórz pobrany plik i przeciągnij Vibe Usage do Aplikacji; tylko aplikacja podpisana Apple Developer ID aktualizuje się sama.',
   updateUnsupportedUnpackaged: 'Wersja deweloperska aktualizuje się z repozytorium.',
   updateUnsupportedPlatform: 'Pobierz nową wersję ze strony wydania.'
 };

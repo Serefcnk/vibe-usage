@@ -114,7 +114,7 @@ Claude 和 Codex 每个配置文件文件夹保存一个登录。**添加账户*
 
 ### Windows
 
-从[最新版本](https://github.com/mustafacagri/vibe-usage/releases/latest)下载 `Vibe-Usage-<版本>-win-setup.exe` 并运行：只为当前用户安装，无需管理员权限。也可以下载便携版 `Vibe-Usage-<版本>-win-x64.zip`（或 `-arm64`），解压后运行 `Vibe Usage.exe`。应用常驻在系统托盘中，有新版本时会给出链接。
+从[最新版本](https://github.com/mustafacagri/vibe-usage/releases/latest)下载 `Vibe-Usage-<版本>-win-setup.exe` 并运行：只为当前用户安装，无需管理员权限。也可以下载便携版 `Vibe-Usage-<版本>-win-x64.zip`（或 `-arm64`），解压后运行 `Vibe Usage.exe`。安装版会自动保持最新：新版本在后台下载，点按 **重启以更新** 即可安装。便携版会给出新版本的链接。应用常驻在系统托盘中。
 
 由于应用未经代码签名，首次启动时 Windows SmartScreen 可能会显示“**Windows 已保护你的电脑**”。点击**更多信息**，然后点击**仍要运行**。
 
@@ -135,7 +135,7 @@ npm run build:mac
 cp -R "release/mac-arm64/Vibe Usage.app" /Applications/
 ```
 
-在 Intel Mac 上文件夹是 `release/mac`。自己构建的应用不会被隔离，可以直接打开。有新版本时应用会给出链接，用同样的方式安装。
+在 Intel Mac 上文件夹是 `release/mac`。自己构建的应用不会被隔离，可以直接打开。macOS 只允许已签名的应用自行替换，因此新版本也用同样的方式安装：应用中的 **下载** 按钮会下载适合你的 Mac 的磁盘映像。
 
 ## 命令行
 

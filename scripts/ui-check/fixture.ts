@@ -99,8 +99,13 @@ export function snapshot(language: Language, now = Date.now()): Snapshot {
         sessionProvider: 'claude'
       }
     ],
-    update: { version: '0.2.0', url: 'https://github.com/mustafacagri/vibe-usage/releases/tag/v0.2.0' },
-    updateInstall: { state: 'downloading', percent: 42 },
+    // The banner with the most text: an unsigned macOS copy, its Download button and the note.
+    update: {
+      version: '0.2.0',
+      url: 'https://github.com/mustafacagri/vibe-usage/releases/tag/v0.2.0',
+      download: 'https://github.com/mustafacagri/vibe-usage/releases/download/v0.2.0/Vibe-Usage-0.2.0-mac-arm64.dmg'
+    },
+    updateInstall: { state: 'unsupported', reason: 'unsigned' },
     providers: [
       provider('codex', 'stale', [
         measured('codex:default', {

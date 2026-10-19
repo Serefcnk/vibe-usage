@@ -94,32 +94,12 @@ test('a copy that cannot update itself says why and never starts the updater', a
   assert.deepEqual(installer.state(), { state: 'unsupported', reason: 'portable' });
 });
 
-test('only a signed installed Windows copy and a Developer ID signed macOS app update themselves', async () => {
+test('an installed Windows copy and a Developer ID signed macOS app update themselves', async () => {
   const winExe = path.join('C:', 'Users', 'me', 'AppData', 'Local', 'Programs', 'vibe-usage', 'Vibe Usage.exe');
   const uninstaller = path.join(path.dirname(winExe), 'Uninstall Vibe Usage.exe');
-  const updateConfig = path.join(path.dirname(winExe), 'resources', 'app-update.yml');
-  const feed = 'owner: mustafacagri\nrepo: vibe-usage\nprovider: github\n';
   const installed = { packaged: true, execPath: winExe, platform: 'win32' as const, exists: (file: string) => file === uninstaller };
-  const config = (text: string) => (file: string) => {
-    assert.equal(file, updateConfig);
-    return text;
-  };
   assert.equal(await updateSupport({ ...installed, packaged: false }), 'unpackaged');
-  assert.equal(await updateSupport({ ...installed, readText: config(`${feed}publisherName:\n  - Someone Ltd\n`) }), null);
-  assert.equal(
-    await updateSupport({ ...installed, readText: config(feed) }),
-    'unsigned',
-    'without a publisher the updater would check only the checksum'
-  );
-  assert.equal(
-    await updateSupport({
-      ...installed,
-      readText: () => {
-        throw new Error('ENOENT');
-      }
-    }),
-    'unsigned'
-  );
+  assert.equal(await updateSupport(installed), null, 'signed or not: the checksums are checked, and a publisher once signed');
   assert.equal(await updateSupport({ ...installed, exists: () => false }), 'portable');
   const probe = { packaged: true, execPath: winExe };
   assert.equal(await updateSupport({ ...probe, platform: 'linux' }), 'platform');

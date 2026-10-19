@@ -330,10 +330,12 @@ export const ko: Messages = {
   updateDownload: '다운로드',
   updateDownloading: '다운로드 중 {n}',
   updateRestart: '다시 시작하여 업데이트',
+  updateReady: '버전 {version}이(가) 준비되었습니다. 다시 시작하면 설치됩니다.',
   updateRetry: '다운로드 실패 · 다시 시도',
   updateUnsupportedPortable:
     '이 휴대용 사본은 스스로 업데이트할 수 없습니다. 새 버전을 내려받거나 앱 내 업데이트를 위해 설치 프로그램을 사용하세요.',
-  updateUnsupportedUnsigned: '서명된 사본만 스스로 업데이트할 수 있습니다. 릴리스 페이지에서 새 버전을 내려받으세요.',
+  updateUnsupportedUnsigned:
+    '내려받은 파일을 열고 Vibe Usage를 응용 프로그램으로 끌어 놓으세요. Apple Developer ID로 서명된 앱만 스스로 업데이트합니다.',
   updateUnsupportedUnpackaged: '개발 빌드는 저장소에서 업데이트합니다.',
   updateUnsupportedPlatform: '릴리스 페이지에서 새 버전을 내려받으세요.'
 };

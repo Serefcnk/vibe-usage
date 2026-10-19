@@ -114,7 +114,7 @@ Claude와 Codex는 프로필 폴더마다 하나의 로그인을 보관합니다
 
 ### Windows
 
-[최신 릴리스](https://github.com/mustafacagri/vibe-usage/releases/latest)에서 `Vibe-Usage-<버전>-win-setup.exe`를 내려받아 실행하세요. 현재 사용자에게만 설치되며 관리자 권한이 필요 없습니다. 포터블 `Vibe-Usage-<버전>-win-x64.zip`(또는 `-arm64`)의 압축을 풀고 `Vibe Usage.exe`를 실행해도 됩니다. 앱은 시스템 트레이에 상주하며 새 버전이 나오면 링크를 보여 줍니다.
+[최신 릴리스](https://github.com/mustafacagri/vibe-usage/releases/latest)에서 `Vibe-Usage-<버전>-win-setup.exe`를 내려받아 실행하세요. 현재 사용자에게만 설치되며 관리자 권한이 필요 없습니다. 포터블 `Vibe-Usage-<버전>-win-x64.zip`(또는 `-arm64`)의 압축을 풀고 `Vibe Usage.exe`를 실행해도 됩니다. 설치한 앱은 스스로 최신 상태를 유지합니다. 새 버전은 백그라운드에서 내려받아지고 **다시 시작하여 업데이트**로 설치됩니다. 포터블 사본은 새 버전 링크를 보여 줍니다. 앱은 시스템 트레이에 상주합니다.
 
 앱이 코드 서명되지 않았기 때문에 처음 실행할 때 Windows SmartScreen이 **Windows의 PC 보호**를 표시할 수 있습니다. **추가 정보**를 클릭한 뒤 **실행**을 누르세요.
 
@@ -135,7 +135,7 @@ npm run build:mac
 cp -R "release/mac-arm64/Vibe Usage.app" /Applications/
 ```
 
-Intel Mac에서는 폴더 이름이 `release/mac`입니다. 직접 빌드한 앱은 격리되지 않아 바로 열립니다. 새 버전은 앱이 링크를 보여 주며 같은 방법으로 설치합니다.
+Intel Mac에서는 폴더 이름이 `release/mac`입니다. 직접 빌드한 앱은 격리되지 않아 바로 열립니다. macOS는 서명된 앱만 스스로를 교체하도록 허용하므로 새 버전도 같은 방법으로 설치합니다. 앱의 **다운로드** 버튼이 내 Mac에 맞는 디스크 이미지를 내려받습니다.
 
 ## 명령줄
 

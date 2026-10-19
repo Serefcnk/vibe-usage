@@ -67,6 +67,7 @@ import type {
   Snapshot,
   Suggestion,
   TransitionRecord,
+  UpdateInfo,
   UpdateInstall,
   UpdateUnsupportedReason
 } from '../shared/types.ts';
@@ -891,12 +892,15 @@ function providerCard(state: ProviderState): HTMLElement {
 }
 
 // Where the copy can update itself: download, then restart into it. Elsewhere the release page
-// stays the way, with the reason.
-function renderUpdateInstall(install: UpdateInstall | undefined): void {
-  ui.updateInstall.hidden = !install || install.state === 'unsupported';
+// stays the way, with the reason, and Download opens this machine's installer when the release
+// has one.
+function renderUpdateInstall(install: UpdateInstall | undefined, update: UpdateInfo | undefined): void {
+  const byHand = install?.state === 'unsupported' && Boolean(update?.download);
+  ui.updateInstall.hidden = !install || (install.state === 'unsupported' && !byHand);
   ui.updateNote.hidden = install?.state !== 'unsupported';
   ui.updateNote.textContent = install?.state === 'unsupported' ? t(UNSUPPORTED_UPDATE[install.reason]) : '';
   ui.updateInstall.disabled = install?.state === 'downloading';
+  if (byHand) ui.updateInstall.textContent = t('updateDownload');
   if (!install || install.state === 'unsupported') return;
   ui.updateInstall.textContent =
     install.state === 'downloading'
@@ -955,7 +959,7 @@ function render(snapshot: Snapshot, focused: Element | null = document.activeEle
   ui.settingsNoticeAction.textContent = t(notice === 'recovered' ? 'dismissSuggestion' : 'settings');
   ui.updateBanner.hidden = !snapshot.update;
   ui.updateText.textContent = snapshot.update ? t('updateAvailable', { version: snapshot.update.version }) : '';
-  renderUpdateInstall(snapshot.updateInstall);
+  renderUpdateInstall(snapshot.updateInstall, snapshot.update);
   ui.overallStatus.textContent = snapshot.refreshing ? t('readingQuotas') : t('servicesOnDevice', { n: snapshot.providers.length });
   ui.refresh.disabled = snapshot.refreshing;
   ui.pin.setAttribute('aria-pressed', String(snapshot.settings.pinned));

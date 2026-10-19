@@ -333,10 +333,12 @@ export const ja: Messages = {
   updateDownload: 'ダウンロード',
   updateDownloading: 'ダウンロード中 {n}',
   updateRestart: '再起動して更新',
+  updateReady: 'バージョン {version} の準備ができました。再起動するとインストールされます。',
   updateRetry: 'ダウンロード失敗 · 再試行',
   updateUnsupportedPortable:
     'このポータブル版は自動で更新できません。新しいバージョンをダウンロードするか、アプリ内で更新するにはインストーラーをお使いください。',
-  updateUnsupportedUnsigned: '署名済みのコピーだけが自動で更新できます。リリースページから新しいバージョンをダウンロードしてください。',
+  updateUnsupportedUnsigned:
+    'ダウンロードしたファイルを開き、Vibe Usage をアプリケーションにドラッグしてください。Apple Developer ID で署名されたアプリだけが自動で更新できます。',
   updateUnsupportedUnpackaged: '開発ビルドはリポジトリから更新します。',
   updateUnsupportedPlatform: 'リリースページから新しいバージョンをダウンロードしてください。'
 };

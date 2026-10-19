@@ -33,7 +33,7 @@ import { createService, type Service } from '../core/service.ts';
 import { appDataDir, inQuietHours, settingsPath } from '../core/settings.ts';
 import { ringIcon } from '../core/tray-icon.ts';
 import { createInstaller, updateSupport, type UpdaterBackend } from '../core/updater.ts';
-import { checkForUpdate, isReleasePage } from '../core/updates.ts';
+import { checkForUpdate, isReleaseDownload, isReleasePage, macInstallerSuffix } from '../core/updates.ts';
 import { APP_NAME, APP_REPOSITORY, DURATION_MS } from '../shared/catalog.ts';
 import { DEFAULT_LANGUAGE, translator, type Translate } from '../shared/i18n/index.ts';
 import { SUGGESTION_BUTTONS, type FormatContext } from '../shared/format.ts';
@@ -267,8 +267,9 @@ const fetchJson = async (url: string): Promise<unknown> => {
   return response.json();
 };
 
-// The feed is fixed to the app's repository and nothing happens without the user: no automatic
-// download, no install on quit, no prerelease or older version.
+// The feed is fixed to the app's repository, with no prerelease or older version. The app
+// downloads a release itself once its check finds one (see fetchUpdate); it is installed only
+// when the user restarts into it, never on quit.
 function releaseUpdater(): UpdaterBackend {
   const { autoUpdater } = electronUpdater;
   autoUpdater.autoDownload = false;
@@ -439,6 +440,33 @@ async function start(): Promise<void> {
     const [width = WINDOW.defaultWidth] = win.getContentSize();
     win.setContentSize(width, Math.max(service.snapshot().settings.window?.height ?? WINDOW.defaultHeight, WINDOW.minHeight));
   };
+  // A copy that can install a release downloads it as soon as it is found, then says once that a
+  // restart installs it (again at the next check when quiet hours held that back).
+  let announcedUpdate: string | undefined;
+  const fetchUpdate = (): void => {
+    void installer.download().then(() => {
+      const ready = installer.state();
+      if (ready.state !== 'downloaded' || ready.version === announcedUpdate || quiet()) return;
+      announcedUpdate = ready.version;
+      notify(
+        tray,
+        win,
+        { title: APP_NAME, body: t('updateReady', { version: ready.version }) },
+        {
+          text: t('updateRestart'),
+          run: () => {
+            installer.install();
+          }
+        }
+      );
+    });
+  };
+  // A copy that cannot install it opens this machine's installer in the browser instead.
+  const downloadUpdate = (): Promise<void> => {
+    if (installer.state().state !== 'unsupported') return installer.download();
+    if (isReleaseDownload(update?.download)) void shell.openExternal(update.download);
+    return Promise.resolve();
+  };
   const checkUpdates = (delayMs = UPDATE_FIRST_CHECK_DELAY_MS): void => {
     clearTimeout(updateTimer);
     if (!service.snapshot().settings.checkUpdates) {
@@ -447,11 +475,12 @@ async function start(): Promise<void> {
       return;
     }
     updateTimer = setTimeout(() => {
-      checkForUpdate(app.getVersion(), fetchJson)
+      checkForUpdate(app.getVersion(), fetchJson, process.platform === 'darwin' ? macInstallerSuffix(process.arch) : undefined)
         .then(found => {
           if (!service.snapshot().settings.checkUpdates) return;
           update = found ?? undefined;
           send(view());
+          if (found) fetchUpdate();
         })
         .catch(() => undefined)
         .finally(() => {
@@ -470,7 +499,12 @@ async function start(): Promise<void> {
     refresh,
     continuity,
     history,
-    installer,
+    installer: {
+      download: downloadUpdate,
+      install: () => {
+        installer.install();
+      }
+    },
     openUpdate() {
       if (update && isReleasePage(update.url)) void shell.openExternal(update.url);
     },

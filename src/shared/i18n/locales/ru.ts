@@ -341,10 +341,12 @@ export const ru: Messages = {
   updateDownload: 'Скачать',
   updateDownloading: 'Загрузка {n}',
   updateRestart: 'Перезапустить и обновить',
+  updateReady: 'Версия {version} готова: перезапустите, чтобы установить её.',
   updateRetry: 'Ошибка загрузки · Повторить',
   updateUnsupportedPortable:
     'Эта портативная копия не может обновиться сама; скачайте новую версию или используйте установщик для обновлений в приложении.',
-  updateUnsupportedUnsigned: 'Обновиться сама может только подписанная копия; скачайте новую версию со страницы релиза.',
+  updateUnsupportedUnsigned:
+    'Откройте загруженный файл и перетащите Vibe Usage в «Программы»; обновляться сама может только программа, подписанная Apple Developer ID.',
   updateUnsupportedUnpackaged: 'Сборка для разработки обновляется из репозитория.',
   updateUnsupportedPlatform: 'Скачайте новую версию со страницы релиза.'
 };

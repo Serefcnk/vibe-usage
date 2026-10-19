@@ -263,7 +263,11 @@ export interface TransitionRecord {
 
 export interface UpdateInfo {
   version: string;
+  // The release page.
   url: string;
+  // The release's installer for this machine, for a copy that installs it by hand (an unsigned
+  // macOS app opens the disk image for its processor).
+  download?: string;
 }
 
 // Why this copy cannot install an update itself: a development build, a portable zip, an
