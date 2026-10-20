@@ -98,10 +98,10 @@ const fileVersion = (file: string): string => {
   return stat ? [stat.dev, stat.ino, stat.size, stat.mtimeNs, stat.ctimeNs].join(':') : 'missing';
 };
 const SESSION_CACHE_LIMIT = 512;
-function cacheEntry<T>(cache: Map<string, T>, file: string, value: T): void {
+function cacheEntry<T>(cache: Map<string, T>, file: string, value: T, limit = SESSION_CACHE_LIMIT): void {
   cache.delete(file);
   cache.set(file, value);
-  if (cache.size > SESSION_CACHE_LIMIT) cache.delete(cache.keys().next().value ?? '');
+  if (cache.size > limit) cache.delete(cache.keys().next().value ?? '');
 }
 
 function sourceAccount(providerId: ProviderId, profile: string | undefined, sources: SessionSources): string | undefined {
@@ -731,7 +731,9 @@ const matchesSession = (session: RecentSession, identity?: SessionIdentity): boo
   !identity || (samePath(session.projectDir, identity.projectDir) && session.sessionId === identity.sessionId);
 
 // Claude Code writes the working directory into its records; it is near the top of the file.
-const PROJECT_SCAN_BYTES = 64 * 1024;
+const PROJECT_HEAD_BYTES = 256 * 1024;
+// Metadata only (a path and a version), so far more files than the content caches.
+const PROJECT_CACHE_LIMIT = 50_000;
 interface ClaudeProject {
   version: string;
   projectDir: string | null;
@@ -750,49 +752,82 @@ export async function recentSessionModel(session: RecentSession): Promise<string
 // The folder a Claude Code session belongs to, as Claude Code itself attributes it: where it was
 // relocated to (a worktree), else where it started. The `cwd` of later records follows the
 // agent's shell and can point anywhere inside the project.
-function projectParser(): { append(chunk: string): void; finish(): string | null } {
-  let pending = '';
+// The owner is the first record's cwd (head of the file) unless a later `relocated` record moved
+// the session. A transcript can be gigabytes, so the body is searched as raw bytes for the
+// marker and only the lines containing it are decoded.
+const RELOCATION_MARKER = Buffer.from('"relocatedCwd"');
+const SCAN_CHUNK_BYTES = 1024 * 1024;
+const MAX_CARRIED_LINE_BYTES = 4 * 1024 * 1024;
+const NEWLINE = 10;
+
+function projectScan(): { feed(chunk: Buffer): void; finish(): string | null } {
   const owner: { initial: string | null; relocated: string | null } = { initial: null, relocated: null };
-  const inspect = (line: string): void => {
-    if (!line.includes('"cwd"') && !line.includes('"relocatedCwd"')) return;
-    const [record] = jsonLines(line);
-    if (!record) return;
-    if (!owner.initial && typeof record.cwd === 'string' && record.cwd) owner.initial = record.cwd;
-    if (record.type === 'relocated' && typeof record.relocatedCwd === 'string' && record.relocatedCwd)
+  const head = new StringDecoder('utf8');
+  let headText = '';
+  let headRead = 0;
+  let carry: Buffer = Buffer.alloc(0);
+  const inspectRelocation = (line: Buffer): void => {
+    const [record] = jsonLines(line.toString('utf8'));
+    if (record?.type === 'relocated' && typeof record.relocatedCwd === 'string' && record.relocatedCwd)
       owner.relocated = record.relocatedCwd;
   };
   return {
-    append(chunk) {
-      pending += chunk;
-      let newline: number;
-      while ((newline = pending.indexOf('\n')) !== -1) {
-        inspect(pending.slice(0, newline));
-        pending = pending.slice(newline + 1);
+    feed(chunk) {
+      if (headRead < PROJECT_HEAD_BYTES) {
+        headText += head.write(chunk);
+        headRead += chunk.length;
       }
+      const data = carry.length ? Buffer.concat([carry, chunk]) : chunk;
+      let position = 0;
+      for (;;) {
+        const at = data.indexOf(RELOCATION_MARKER, position);
+        if (at < 0) break;
+        const end = data.indexOf(NEWLINE, at);
+        if (end < 0) {
+          // The line continues in the next chunk.
+          carry = data.subarray(data.lastIndexOf(NEWLINE, at) + 1);
+          return;
+        }
+        inspectRelocation(data.subarray(data.lastIndexOf(NEWLINE, at) + 1, end));
+        position = end + 1;
+      }
+      // Keep the unfinished line so a marker split across chunks is still found whole.
+      const unfinished = data.subarray(data.lastIndexOf(NEWLINE) + 1);
+      carry = unfinished.length <= MAX_CARRIED_LINE_BYTES ? unfinished : Buffer.alloc(0);
     },
     finish() {
-      inspect(pending);
+      if (carry.length && carry.includes(RELOCATION_MARKER)) inspectRelocation(carry);
+      const first = jsonLines(headText).find(record => typeof record.cwd === 'string' && record.cwd);
+      owner.initial = typeof first?.cwd === 'string' ? first.cwd : null;
       return owner.relocated ?? owner.initial;
     }
   };
 }
 
-// Listing can inspect many projects: stream metadata asynchronously, sharing the same
-// parser and cache with the targeted synchronous continuity lookup below.
+// Listing inspects many projects: read asynchronously and cache per file version, shared with
+// the targeted synchronous lookup below.
 async function readClaudeProject(file: string): Promise<ClaudeProject | null> {
   const version = fileVersion(file);
   const hit = claudeProjectMemo.get(file);
   if (hit?.version === version) return hit;
   const project = await attempt(async () => {
-    const parser = projectParser();
-    for await (const read of fs.createReadStream(file, { encoding: 'utf8', highWaterMark: PROJECT_SCAN_BYTES })) {
-      const chunk: unknown = read;
-      if (typeof chunk === 'string') parser.append(chunk);
+    const scan = projectScan();
+    const handle = await fsp.open(file, 'r');
+    try {
+      const buffer = Buffer.alloc(SCAN_CHUNK_BYTES);
+      for (
+        let read = await handle.read(buffer, 0, buffer.length, null);
+        read.bytesRead;
+        read = await handle.read(buffer, 0, buffer.length, null)
+      )
+        scan.feed(Buffer.from(buffer.subarray(0, read.bytesRead)));
+    } finally {
+      await handle.close();
     }
-    return { version, projectDir: parser.finish() };
+    return { version, projectDir: scan.finish() };
   });
   if (!project || fileVersion(file) !== version) return null;
-  cacheEntry(claudeProjectMemo, file, project);
+  cacheEntry(claudeProjectMemo, file, project, PROJECT_CACHE_LIMIT);
   return project;
 }
 
@@ -800,25 +835,19 @@ export function claudeProjectDir(file: string): string | null {
   const version = fileVersion(file);
   const hit = claudeProjectMemo.get(file);
   if (hit?.version === version) return hit.projectDir;
-  // Relocation can be in the middle of a large transcript, outside both head and tail.
-  // Scan once per file version in chunks; cache metadata rather than file contents.
   const project = attemptSync(() => {
     const fd = fs.openSync(file, 'r');
-    const decoder = new StringDecoder('utf8');
-    const buffer = Buffer.alloc(PROJECT_SCAN_BYTES);
-    const parser = projectParser();
+    const buffer = Buffer.alloc(SCAN_CHUNK_BYTES);
+    const scan = projectScan();
     try {
-      for (let size = fs.readSync(fd, buffer); size; size = fs.readSync(fd, buffer)) {
-        parser.append(decoder.write(buffer.subarray(0, size)));
-      }
-      parser.append(decoder.end());
-      return { version, projectDir: parser.finish() };
+      for (let size = fs.readSync(fd, buffer); size; size = fs.readSync(fd, buffer)) scan.feed(Buffer.from(buffer.subarray(0, size)));
+      return { version, projectDir: scan.finish() };
     } finally {
       fs.closeSync(fd);
     }
   });
   if (!project || fileVersion(file) !== version) return null;
-  cacheEntry(claudeProjectMemo, file, project);
+  cacheEntry(claudeProjectMemo, file, project, PROJECT_CACHE_LIMIT);
   return project.projectDir;
 }
 

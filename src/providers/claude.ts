@@ -18,7 +18,7 @@ import {
   type RunProcess
 } from './common.ts';
 import { defaultProfileDir, isRegularFile, profileAccountId, profileFolders, profileLabel, shortHash } from './profiles.ts';
-import { discoverSafely, type DiscoveredAccount, type ParsedQuota, type ProviderAdapter, type RefreshContext } from './types.ts';
+import { type Discovery, type DiscoveredAccount, type ParsedQuota, type ProviderAdapter, type RefreshContext } from './types.ts';
 
 // Required by the OAuth usage endpoint.
 const OAUTH_BETA = 'oauth-2025-04-20';
@@ -168,13 +168,20 @@ export async function isSignedInProfile(root: string, platform: NodeJS.Platform 
 const PROFILE_RANK: Readonly<Record<string, number>> = { [DEFAULT_ACCOUNT_ID]: 0, [SECONDARY_ACCOUNT_ID]: 1 };
 const rank = (account: DiscoveredAccount): number => PROFILE_RANK[account.id] ?? 2;
 
-export async function discoverClaudeAccounts({
+// One profile that cannot be read (a half-written or locked credentials file) must not hide the
+// others, and must not count as absent either: the discovery is then reported as unknown.
+export async function discoverClaudeProfiles({
   home = os.homedir(),
   platform = process.platform
-}: { home?: string; platform?: NodeJS.Platform } = {}): Promise<DiscoveredAccount[]> {
+}: { home?: string; platform?: NodeJS.Platform } = {}): Promise<Discovery> {
   const accounts: DiscoveredAccount[] = [];
+  let complete = true;
   for (const root of await profileFolders('claude', home)) {
-    if (await isSignedInProfile(root, platform)) accounts.push(claudeProfile(root, home));
+    try {
+      if (await isSignedInProfile(root, platform)) accounts.push(claudeProfile(root, home));
+    } catch {
+      complete = false;
+    }
   }
   // The default profile always exists on macOS (its Keychain entry may hold the sign-in),
   // and is the fallback everywhere when nothing was found.
@@ -183,7 +190,11 @@ export async function discoverClaudeAccounts({
   accounts.sort((a, b) => rank(a) - rank(b) || a.id.localeCompare(b.id));
   const [first] = accounts;
   if (first && !accounts.some(a => a.primary)) first.primary = true;
-  return accounts;
+  return { kind: complete ? 'complete' : 'unknown', accounts };
+}
+
+export async function discoverClaudeAccounts(options: { home?: string; platform?: NodeJS.Platform } = {}): Promise<DiscoveredAccount[]> {
+  return (await discoverClaudeProfiles(options)).accounts;
 }
 
 export interface ClaudeProviderOptions {
@@ -242,7 +253,7 @@ export function createClaudeProvider(options: ClaudeProviderOptions = {}): Provi
     id: 'claude',
     // Keychain (8s), then HTTPS (15s), plus bounded local work, share this budget.
     fetchTimeoutMs: 25000,
-    discover: () => discoverSafely(() => discoverClaudeAccounts(options)),
+    discover: () => discoverClaudeProfiles(options).catch((): Discovery => ({ kind: 'unknown', accounts: [] })),
     async fetch(account, context) {
       remainingTimeout(25000, context);
       const oauth = oauthCredentials(await readCredentials(account, context));

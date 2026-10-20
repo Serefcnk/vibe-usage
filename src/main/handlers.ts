@@ -263,7 +263,9 @@ export function createHandlers(context: MainContext): Handlers {
     async addAccount(providerId) {
       if (!isProviderId(providerId) || !isProfileProvider(providerId)) throw new AppError('invalid_provider');
       const used = new Set(settings().accounts.flatMap(a => (a.configDir ? [pathKey(a.configDir)] : [])));
-      const isFree = async (dir: string): Promise<boolean> => !used.has(pathKey(dir)) && !(await PROFILES[providerId].isSignedIn(dir));
+      // A folder that cannot be inspected is not free: it may hold a sign-in.
+      const isFree = async (dir: string): Promise<boolean> =>
+        !used.has(pathKey(dir)) && !(await PROFILES[providerId].isSignedIn(dir).catch(() => true));
       const {
         label: _folderName,
         primary: _primary,

@@ -526,4 +526,13 @@ test('a Claude session belongs to the folder Claude Code attributes it to, where
   ]);
   assert.equal(claudeProjectDir(relocated), worktree);
   assert.equal(claudeProjectDir(await write('empty.jsonl', [{ type: 'summary' }])), null);
+  // A relocation in the middle of a multi-megabyte transcript is found wherever the 1 MiB read
+  // boundary falls, including inside the marker itself.
+  const filler = { type: 'assistant', cwd: project, message: { role: 'assistant', content: [{ type: 'text', text: 'x'.repeat(1000) }] } };
+  for (const padding of [0, 1, 7, 13, 500]) {
+    const lines: Record<string, unknown>[] = [{ type: 'user', cwd: project, message: { role: 'user', content: 'go' } }];
+    for (let size = 0; size < 1024 * 1024 + padding; size += 1100) lines.push(filler);
+    lines.push({ type: 'relocated', sessionId: 'big', relocatedCwd: worktree }, ...Array.from({ length: 1500 }, () => filler));
+    assert.equal(claudeProjectDir(await write(`big-${padding}.jsonl`, lines)), worktree, `padding ${padding}`);
+  }
 });

@@ -21,7 +21,7 @@ import {
 } from './common.ts';
 import { defaultProfileDir, isRegularFile, profileAccountId, profileFolders, profileLabel } from './profiles.ts';
 import {
-  discoverSafely,
+  type Discovery,
   type DiscoveredAccount,
   type FetchResult,
   type ParsedQuota,
@@ -262,13 +262,22 @@ export const isSignedInCodexHome = (root: string): Promise<boolean> => isRegular
 
 // The default folder always counts: its app server reports a signed-out state itself. Other
 // profile folders count once they hold a sign-in.
-async function discoverCodexAccounts(home: string, env: Environment): Promise<DiscoveredAccount[]> {
+// A profile folder that cannot be inspected is unknown, not absent, and does not hide the others.
+async function discoverCodexAccounts(home: string, env: Environment): Promise<Discovery> {
   const defaultDir = path.resolve(codexDefaultDir(home, env));
   const others: DiscoveredAccount[] = [];
+  let complete = true;
   for (const root of await profileFolders('codex', home)) {
-    if (path.resolve(root) !== defaultDir && (await isSignedInCodexHome(root))) others.push(codexProfile(root, home, env));
+    try {
+      if (path.resolve(root) !== defaultDir && (await isSignedInCodexHome(root))) others.push(codexProfile(root, home, env));
+    } catch {
+      complete = false;
+    }
   }
-  return [codexProfile(defaultDir, home, env), ...others.sort((a, b) => a.id.localeCompare(b.id))];
+  return {
+    kind: complete ? 'complete' : 'unknown',
+    accounts: [codexProfile(defaultDir, home, env), ...others.sort((a, b) => a.id.localeCompare(b.id))]
+  };
 }
 
 export interface CodexProviderOptions extends BinaryLocation {
@@ -283,7 +292,7 @@ export function createCodexProvider(options: CodexProviderOptions = {}): Provide
   return {
     id: 'codex',
     fetchTimeoutMs: PROBE_REQUESTS * RPC_TIMEOUT_MS + SHUTDOWN_GRACE_MS,
-    discover: () => discoverSafely(() => discoverCodexAccounts(home, env)),
+    discover: () => discoverCodexAccounts(home, env).catch((): Discovery => ({ kind: 'unknown', accounts: [] })),
     async fetch(account, context) {
       const configDir = account.configDir ?? defaultConfigDir;
       const signedInAs = await readLocalSignIn(configDir, options.clock, context);
