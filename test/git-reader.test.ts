@@ -43,7 +43,7 @@ test('Git reads ignore inherited config, repository and trace overrides', () => 
     'GIT_EXTERNAL_DIFF'
   ])
     assert.equal(environment[name], undefined, name);
-  assert.equal(environment.GIT_CONFIG_GLOBAL, os.devNull);
+  assert.equal(environment.GIT_CONFIG_GLOBAL, process.platform === 'win32' ? 'NUL' : os.devNull);
   assert.equal(environment.GIT_CONFIG_NOSYSTEM, '1');
   assert.equal(environment.GIT_NO_LAZY_FETCH, '1');
 });

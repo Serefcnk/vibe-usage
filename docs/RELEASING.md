@@ -11,20 +11,18 @@ no longer holds; fix the app before releasing.
 ## 1. Publish the packages
 
 1. Raise `version` in `package.json` and commit.
-2. Configure the signing and npm publishing prerequisites below before pushing a public version tag.
-3. Tag the commit `v<version>` and push the tag. The **Build desktop** workflow builds and tests signed Windows
-   and notarized macOS packages with update metadata. It then builds the CLI tarball, publishes it to npm and
-   verifies the registry's exact version, SHA-512 integrity and matching `latest` tag. Only after those jobs succeed
-   does it upload desktop assets to a draft GitHub release. It checks every uploaded asset's name, size and
-   server-reported SHA-256 against the local build before making that release public.
+2. Tag the commit `v<version>` and push the tag. The **Build desktop** workflow builds and tests the Windows and macOS
+   packages with update metadata (signed when requested, see section 4). It uploads them to a draft GitHub release,
+   checks every asset's name, size and server-reported SHA-256 against the local build, and only then makes the release
+   public. In parallel, a separate job publishes the CLI tarball to npm and verifies the registry's exact version,
+   SHA-512 integrity and matching `latest` tag.
 
-GitHub and npm cannot commit a release atomically. If the last GitHub step fails, the npm version may already exist;
-rerun the failed job with the existing artifacts. The npm step accepts an existing immutable version only if its
-tarball integrity and `latest` tag match this build. Different content requires a new version, never an overwrite.
-An older version does not automatically move `latest` backward. A draft release can be resumed; an already public
-release is verified against the artifacts and left unchanged. A full rebuild of signed binaries may produce
-different bytes, so it is not interchangeable with retrying publication of the same artifacts. A network or
-authentication failure is not treated as a missing npm package.
+The desktop release never waits for npm: a missing npm binding fails only the npm job. A draft release can be resumed;
+an already public release is verified against the artifacts and left unchanged. A full rebuild of signed binaries may
+produce different bytes, so it is not interchangeable with retrying publication of the same artifacts. The npm step
+accepts an existing immutable version only if its tarball integrity and `latest` tag match this build; different
+content requires a new version, never an overwrite. A network or authentication failure is not treated as a missing
+npm package.
 
 ### npm trusted publisher prerequisite
 
@@ -95,8 +93,8 @@ unsigned unless a signed build is asked for (`--signed` or `VIBE_SIGNED_RELEASE=
 credentials first and **fails without building** when one is missing, so a release meant to be signed is never
 published unsigned.
 
-The workflow requires a signed build for every version tag. A manual run may also request signing with **signed**.
-Ordinary branch/PR builds remain unsigned. The secrets go only to the package step and never to pull requests.
+The workflow asks for a signed build on a manual run with **signed** checked, or for every version tag once the
+repository variable `SIGNED_RELEASE` is `true`. The secrets go only to the package step and never to pull requests.
 
 - **Windows**: an OV/EV code-signing certificate as the secrets `WIN_CSC_LINK` (base64 `.pfx`) and
   `WIN_CSC_KEY_PASSWORD`. The signed build turns on `signExecutable` (unsigned builds still get the icon and version information). (Azure Trusted Signing would need

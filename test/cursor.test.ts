@@ -80,9 +80,6 @@ test('the macOS read-only URI sees a new token committed only to the live SQLite
   const file = path.join(home, 'Library/Application Support/Cursor/User/globalStorage/state.vscdb');
   await fs.mkdir(path.dirname(file), { recursive: true });
   const writer = new DatabaseSync(file);
-  t.after(() => {
-    writer.close();
-  });
   writer.exec('CREATE TABLE ItemTable (key TEXT PRIMARY KEY, value TEXT);');
   writer.prepare('INSERT INTO ItemTable VALUES (?, ?)').run('cursorAuth/accessToken', 'previous-account-token');
   writer.exec('PRAGMA journal_mode=WAL; PRAGMA wal_autocheckpoint=0;');
@@ -104,8 +101,14 @@ test('the macOS read-only URI sees a new token committed only to the live SQLite
       }
     }
   });
-  assert.equal((await provider.fetch(cursorAccount)).plan, 'pro');
-  assert.ok(requests[0]?.headers?.Cookie?.endsWith(valid));
+  try {
+    assert.equal((await provider.fetch(cursorAccount)).plan, 'pro');
+    assert.ok(requests[0]?.headers?.Cookie?.endsWith(valid));
+  } finally {
+    // Windows cannot remove the temporary directory while the WAL database is open, and
+    // cleanup hooks run in registration order, so close before the test ends.
+    writer.close();
+  }
 });
 
 test('a Cursor HTTPS response at 13 seconds fits the shared 25 second refresh budget', async t => {

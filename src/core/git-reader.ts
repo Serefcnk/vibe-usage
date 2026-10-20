@@ -13,6 +13,8 @@ import { attempt } from './files.ts';
 const execFileAsync = promisify(execFile);
 const TIMEOUT_MS = 5000;
 const MAX_BYTES = 1024 * 1024;
+// Git for Windows rejects Node's device path for the null device; it accepts NUL.
+const NULL_DEVICE = process.platform === 'win32' ? 'NUL' : os.devNull;
 
 // No shell lookup and no empty/relative PATH entry: on Windows a bare executable name
 // would search the selected project before PATH, even with shell:false.
@@ -58,8 +60,8 @@ export function gitReadEnvironment(source: NodeJS.ProcessEnv = process.env): Nod
   return {
     ...environment,
     GIT_CONFIG_NOSYSTEM: '1',
-    GIT_CONFIG_GLOBAL: os.devNull,
-    GIT_CONFIG_SYSTEM: os.devNull,
+    GIT_CONFIG_GLOBAL: NULL_DEVICE,
+    GIT_CONFIG_SYSTEM: NULL_DEVICE,
     GIT_OPTIONAL_LOCKS: '0',
     GIT_NO_LAZY_FETCH: '1',
     GIT_TERMINAL_PROMPT: '0'
@@ -107,7 +109,7 @@ export async function openGitRepository(projectDir: string, env: NodeJS.ProcessE
         '-c',
         'core.fsmonitor=false',
         '-c',
-        `core.hooksPath=${os.devNull}`,
+        `core.hooksPath=${NULL_DEVICE}`,
         '-c',
         'core.untrackedCache=false',
         '-c',
