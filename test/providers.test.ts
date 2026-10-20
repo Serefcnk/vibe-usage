@@ -250,7 +250,9 @@ test('Codex profiles: the default folder, then signed-in siblings; copies and li
     }
   });
   await folder('.codex-empty', 'none');
-  const accounts = await createCodexProvider({ home, env: {} }).discover();
+  const discovery = await createCodexProvider({ home, env: {} }).discover();
+  assert.ok(!Array.isArray(discovery) && discovery.kind === 'complete');
+  const accounts = discovery.accounts;
   assert.deepEqual(
     accounts.map(a => [a.id, a.label ?? a.labelKey, a.configDir, a.primary]),
     [

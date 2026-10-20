@@ -11,9 +11,33 @@ no longer holds; fix the app before releasing.
 ## 1. Publish the packages
 
 1. Raise `version` in `package.json` and commit.
-2. Tag the commit `v<version>` and push the tag. The **Build desktop** workflow builds the Windows installer and
-   zips and the macOS dmg/zip with the update metadata (section 3), then publishes them as a GitHub release (it
-   checks that the tag matches the version).
+2. Configure the signing and npm publishing prerequisites below before pushing a public version tag.
+3. Tag the commit `v<version>` and push the tag. The **Build desktop** workflow builds and tests signed Windows
+   and notarized macOS packages with update metadata. It then builds the CLI tarball, publishes it to npm and
+   verifies the registry's exact version, SHA-512 integrity and matching `latest` tag. Only after those jobs succeed
+   does it upload desktop assets to a draft GitHub release. It checks every uploaded asset's name, size and
+   server-reported SHA-256 against the local build before making that release public.
+
+GitHub and npm cannot commit a release atomically. If the last GitHub step fails, the npm version may already exist;
+rerun the failed job with the existing artifacts. The npm step accepts an existing immutable version only if its
+tarball integrity and `latest` tag match this build. Different content requires a new version, never an overwrite.
+An older version does not automatically move `latest` backward. A draft release can be resumed; an already public
+release is verified against the artifacts and left unchanged. A full rebuild of signed binaries may produce
+different bytes, so it is not interchangeable with retrying publication of the same artifacts. A network or
+authentication failure is not treated as a missing npm package.
+
+### npm trusted publisher prerequisite
+
+An owner of `vibe-usage-cli` must configure its [npm trusted publisher](https://docs.npmjs.com/trusted-publishers/):
+GitHub Actions, owner `mustafacagri`, repository `vibe-usage`, workflow filename `build.yml`. Keep the filename exact;
+if an npm environment is configured, the workflow job must use that same protected GitHub environment. The current
+workflow does not name an environment. Node 24 supplies an npm version supporting OIDC; provenance is also requested
+explicitly. No long-lived npm token is added to this repository.
+
+An E404/ENEEDAUTH publish failure requires checking package ownership and that binding; repeated tags or changing
+the package name do not repair the trust relationship. The workflow cannot create npm account settings or signing
+certificates. Verify the first configured publish and a signed upgrade on both operating systems before calling the
+release process validated.
 
 Packages are named `Vibe-Usage-<version>-<os>-<arch>.<ext>`, the installer `Vibe-Usage-<version>-win-setup.exe` (no
 spaces, so their download URLs are predictable). The app checks the latest release once a day (Settings → General) and
@@ -71,8 +95,8 @@ unsigned unless a signed build is asked for (`--signed` or `VIBE_SIGNED_RELEASE=
 credentials first and **fails without building** when one is missing, so a release meant to be signed is never
 published unsigned.
 
-The workflow asks for a signed build on a manual run with **signed** checked, or for every version tag once the
-repository variable `SIGNED_RELEASE` is `true`. The secrets go only to the package step and never to pull requests.
+The workflow requires a signed build for every version tag. A manual run may also request signing with **signed**.
+Ordinary branch/PR builds remain unsigned. The secrets go only to the package step and never to pull requests.
 
 - **Windows**: an OV/EV code-signing certificate as the secrets `WIN_CSC_LINK` (base64 `.pfx`) and
   `WIN_CSC_KEY_PASSWORD`. The signed build turns on `signExecutable` (unsigned builds still get the icon and version information). (Azure Trusted Signing would need
