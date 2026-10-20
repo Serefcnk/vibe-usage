@@ -59,14 +59,18 @@ test('project-local Git files cannot replace the installed executable, even when
   const reader = await openGitRepository(repo, environment);
   assert.ok(reader);
   assert.equal((await reader.metadata()).branch, 'review');
-  await assert.rejects(resolveGitExecutable(repo, { PATH: `${repo}${path.delimiter}.` }), /No trusted Git/);
+  // macOS adds its system locations because Finder does not pass the shell PATH.
+  if (process.platform === 'darwin')
+    assert.match(await resolveGitExecutable(repo, { PATH: `${repo}${path.delimiter}.` }), /^\/(usr|opt)\//);
+  else await assert.rejects(resolveGitExecutable(repo, { PATH: `${repo}${path.delimiter}.` }), /No trusted Git/);
 });
 
 test('broken repositories fail closed while plain folders do not need Git', async t => {
   const folder = await tempDir(t, 'vibe-git-absent-');
   assert.equal(await openGitRepository(folder, { PATH: '' }), null);
   await fs.mkdir(path.join(folder, '.git'));
-  await assert.rejects(openGitRepository(folder, { PATH: '' }), /No trusted Git/);
+  // On macOS the system Git is found, and refuses the broken repository itself.
+  await assert.rejects(openGitRepository(folder, { PATH: '' }), process.platform === 'darwin' ? /not a git repository/ : /No trusted Git/);
 });
 
 test('ref and index metadata do not run local or global clean, process, signature or fsmonitor helpers', async t => {
